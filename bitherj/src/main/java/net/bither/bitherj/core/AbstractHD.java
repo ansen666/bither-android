@@ -101,8 +101,7 @@ public abstract class AbstractHD {
         return master;
     }
 
-    protected void decryptHDSeed(CharSequence password) throws MnemonicException
-            .MnemonicLengthException {
+    protected void decryptHDSeed(CharSequence password) throws MnemonicException.MnemonicLengthException {
         if (hdSeedId < 0 || password == null) {
             return;
         }
@@ -215,8 +214,7 @@ public abstract class AbstractHD {
         return hdSeedId;
     }
 
-    public static final byte[] seedFromMnemonic(byte[] mnemonicSeed, MnemonicCode... mnemonicCode) throws MnemonicException
-            .MnemonicLengthException {
+    public static final byte[] seedFromMnemonic(byte[] mnemonicSeed, MnemonicCode... mnemonicCode) throws MnemonicException.MnemonicLengthException {
         MnemonicCode mnemonic = mnemonicCode.length > 0 ? mnemonicCode[0] : MnemonicCode.instance();
         return mnemonic.toSeed(mnemonic.toMnemonic(mnemonicSeed), "");
     }

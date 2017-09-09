@@ -29,9 +29,8 @@ import org.json.JSONArray;
 import java.util.List;
 
 public class GetKLineRunnable extends BaseRunnable {
-
-    private MarketType marketType;
-    private KlineTimeType mKlineTimeType;
+    private MarketType marketType;//网站类型(火币网／中国比特币等)
+    private KlineTimeType mKlineTimeType;//时间类型(1分钟／5分钟／1小时/1天)
 
     public GetKLineRunnable(MarketType marketType, KlineTimeType klineTimeType) {
         this.marketType = marketType;
@@ -43,18 +42,14 @@ public class GetKLineRunnable extends BaseRunnable {
         boolean hasCache = false;
         obtainMessage(HandlerMessage.MSG_PREPARE);
         try {
-            KLine kLine = KLineUtil.getKLine(this.marketType,
-                    this.mKlineTimeType);
+            KLine kLine = KLineUtil.getKLine(this.marketType, this.mKlineTimeType);
             hasCache = kLine != null;
             obtainMessage(HandlerMessage.MSG_SUCCESS_FROM_CACHE, kLine);
-            GetKlineApi getKlineApi = new GetKlineApi(this.marketType,
-                    this.mKlineTimeType);
+            GetKlineApi getKlineApi = new GetKlineApi(this.marketType, this.mKlineTimeType);
             getKlineApi.handleHttpGet();
 
             JSONArray jsonArray = new JSONArray(getKlineApi.getResult());
-            List<IStickEntity> entityList = ChartsUtil.formatJsonArray(this.marketType,
-                    this.mKlineTimeType, jsonArray);
-
+            List<IStickEntity> entityList = ChartsUtil.formatJsonArray(this.marketType, this.mKlineTimeType, jsonArray);
             kLine = new KLine(this.marketType, this.mKlineTimeType, entityList);
             obtainMessage(HandlerMessage.MSG_SUCCESS, kLine);
             KLineUtil.addKline(kLine);

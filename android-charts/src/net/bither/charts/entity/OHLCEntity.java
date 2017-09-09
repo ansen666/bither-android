@@ -22,18 +22,16 @@
 package net.bither.charts.entity;
 
 public class OHLCEntity implements IStickEntity {
-
     private static final long serialVersionUID = 1L;
 
-    private double open;
-    private double high;
-    private double low;
-    private double close;
-    private long date;
+    private double open;//开盘
+    private double high;//最高
+    private double low;//最低
+    private double close;//收盘
+    private long date;//时间
     private String title;
 
-    public OHLCEntity(double open, double high, double low, double close,
-                      long date) {
+    public OHLCEntity(double open, double high, double low, double close,long date) {
         super();
         this.open = open;
         this.high = high;
@@ -42,8 +40,7 @@ public class OHLCEntity implements IStickEntity {
         this.date = date;
     }
 
-    public OHLCEntity(double open, double high, double low, double close,
-                      String title, long date) {
+    public OHLCEntity(double open, double high, double low, double close,String title, long date) {
         super();
         this.open = open;
         this.high = high;
@@ -99,13 +96,11 @@ public class OHLCEntity implements IStickEntity {
 
     @Override
     public String getTitle() {
-
         return this.title;
     }
 
     @Override
     public void setTitle(String title) {
         this.title = title;
-
     }
 }

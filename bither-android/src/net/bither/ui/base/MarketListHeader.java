@@ -52,6 +52,7 @@ import net.bither.model.PriceAlert;
 import net.bither.model.Ticker;
 import net.bither.preference.AppSharedPreference;
 import net.bither.util.ExchangeUtil;
+import net.bither.util.LogUtil;
 import net.bither.util.MarketUtil;
 import net.bither.util.UnitUtilWrapper;
 import net.bither.util.WalletUtils;
@@ -417,8 +418,9 @@ public class MarketListHeader extends FrameLayout implements MarketTickerChanged
         @Override
         public void onClick(View v) {
             if (mMarket != null) {
+                LogUtil.i("ansen","进入折线图详细");
                 Intent intent = new Intent(getContext(), MarketDetailActivity.class);
-                intent.putExtra(BitherSetting.INTENT_REF.MARKET_INTENT, mMarket.getMarketType());
+                intent.putExtra(BitherSetting.INTENT_REF.MARKET_INTENT,mMarket.getMarketType());
                 getContext().startActivity(intent);
             }
         }

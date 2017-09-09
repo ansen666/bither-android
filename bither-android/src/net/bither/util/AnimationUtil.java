@@ -99,27 +99,16 @@ public class AnimationUtil {
         view.startAnimation(alphaAnimation);
     }
 
-    public static void moveMarginAnimation(View view, int leftMargin,
-                                           int bottomMargin) {
+    public static void moveMarginAnimation(View view, int leftMargin,int bottomMargin) {
         if (view.getVisibility() != View.VISIBLE) {
             view.setVisibility(View.VISIBLE);
         }
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view
-                .getLayoutParams();
-        WrapFrameLayoutForAnimation wrapLayoutParamsForAnimator = new WrapFrameLayoutForAnimation(
-                view, layoutParams);
-        ObjectAnimator animatorLeftMargin = ObjectAnimator.ofInt(
-                wrapLayoutParamsForAnimator, "leftMargin", leftMargin)
-                .setDuration(MOVE_MARGIN_DURATION);
-        ObjectAnimator animatorBottomMargin = ObjectAnimator.ofInt(
-                new WrapFrameLayoutForAnimation(
-                        view, layoutParams), "bottomMargin", bottomMargin
-        )
-                .setDuration(MOVE_MARGIN_DURATION);
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
+        WrapFrameLayoutForAnimation wrapLayoutParamsForAnimator = new WrapFrameLayoutForAnimation(view, layoutParams);
+        ObjectAnimator animatorLeftMargin = ObjectAnimator.ofInt(wrapLayoutParamsForAnimator, "leftMargin", leftMargin).setDuration(MOVE_MARGIN_DURATION);
+        ObjectAnimator animatorBottomMargin = ObjectAnimator.ofInt(new WrapFrameLayoutForAnimation(view, layoutParams), "bottomMargin", bottomMargin).setDuration(MOVE_MARGIN_DURATION);
         AnimatorSet animSetXY = new AnimatorSet();
         animSetXY.playTogether(animatorLeftMargin, animatorBottomMargin);
         animSetXY.start();
-
     }
-
 }

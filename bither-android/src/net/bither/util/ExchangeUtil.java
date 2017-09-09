@@ -140,8 +140,7 @@ public class ExchangeUtil {
     }
 
     public static double getRate(BitherjSettings.MarketType marketType) {
-        Currency defaultCurrency = AppSharedPreference.getInstance()
-                .getDefaultExchangeType();
+        Currency defaultCurrency = AppSharedPreference.getInstance().getDefaultExchangeType();
         Currency currency = getExchangeType(marketType);
         double rate = 1;
         if (currency != null && getCurrenciesRate() != null && currency != defaultCurrency) {

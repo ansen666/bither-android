@@ -2170,8 +2170,7 @@ public class GridChart extends BaseChart {
         return iTouchEventResponse;
     }
 
-    public void setTouchEventResponse(
-            ITouchEventResponse iViewTouchEventResponse) {
+    public void setTouchEventResponse(ITouchEventResponse iViewTouchEventResponse) {
         this.iTouchEventResponse = iViewTouchEventResponse;
     }
 

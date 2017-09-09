@@ -20,6 +20,7 @@ import net.bither.bitherj.BitherjSettings;
 import net.bither.bitherj.utils.Utils;
 import net.bither.charts.entity.DateValueEntity;
 import net.bither.util.ExchangeUtil;
+import net.bither.util.LogUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +43,7 @@ public class Depth implements Serializable {
     private List<DateValueEntity> dateValueEntities;
 
     private double maxVolume;
-    private int splitIndex;
+    private int splitIndex;//买入价集合长度
 
     public List<DateValueEntity> getDateValueEntities() {
         return dateValueEntities;
@@ -60,21 +61,20 @@ public class Depth implements Serializable {
         this.maxVolume = maxVolume;
     }
 
-    public static Depth formatJsonOfMarketDepth(BitherjSettings.MarketType marketType,
-                                                JSONObject json) throws JSONException {
+    public static Depth formatJsonOfMarketDepth(BitherjSettings.MarketType marketType,JSONObject json) throws JSONException {
         Depth depth = new Depth();
 
-        double rate = ExchangeUtil.getRate(marketType);
+        double rate = ExchangeUtil.getRate(marketType);//汇率 1.0
+        LogUtil.i("ansen","Depth 获取汇率:"+rate);
         int bidMaxPrice = 0;
         int askMinPrice = Integer.MAX_VALUE;
 
-        List<DateValueEntity> bidDateValueEntities = new ArrayList<DateValueEntity>();
-        List<DateValueEntity> askDateValueEntities = new ArrayList<DateValueEntity>();
+        List<DateValueEntity> bidDateValueEntities = new ArrayList<>();//买入价 买入叫做多 做多就是你买了一笔交易然后等价钱涨上去再卖这样你就赢利了
+        List<DateValueEntity> askDateValueEntities = new ArrayList<>();//卖出价 卖出叫做空 卖空就是你付了保证金后公司借给你这些保证金的货币，然后等价格跌下去了你再把这些货币还给公司
         double bidSumVolume = 0;
         int splitIndex = 0;
         if (!json.isNull(BIDS)) {
             JSONArray bidArray = json.getJSONArray(BIDS);
-
             for (int i = bidArray.length() - 1; i >= 0; i--) {
                 JSONArray bid = bidArray.getJSONArray(i);
                 int bidPrice = bid.getInt(0);
@@ -83,15 +83,12 @@ public class Depth implements Serializable {
                 if (bidMaxPrice < bidPrice) {
                     bidMaxPrice = bidPrice;
                 }
+//                LogUtil.i("ansen","Depth price:"+price+" bidSumVolume:"+bidSumVolume);
                 bidSumVolume = bidSumVolume + volume;
-                DateValueEntity dateValueEntity = new DateValueEntity(
-                        (float) bidSumVolume,
-                        Utils.formatDoubleToMoneyString(price), bidPrice);
+                DateValueEntity dateValueEntity = new DateValueEntity((float) bidSumVolume,Utils.formatDoubleToMoneyString(price), bidPrice);
                 bidDateValueEntities.add(dateValueEntity);
-
             }
             splitIndex = bidArray.length();
-
         }
         double askSumVolume = 0;
         if (!json.isNull(ASKS)) {
@@ -106,17 +103,12 @@ public class Depth implements Serializable {
                 if (askPrice < askMinPrice) {
                     askMinPrice = askPrice;
                 }
-                DateValueEntity dateValueEntity = new DateValueEntity(
-                        (float) askSumVolume,
-                        Utils.formatDoubleToMoneyString(price), askPrice);
+                DateValueEntity dateValueEntity = new DateValueEntity((float) askSumVolume,Utils.formatDoubleToMoneyString(price), askPrice);
                 askDateValueEntities.add(dateValueEntity);
             }
-
         }
         int mixPrice = (askMinPrice + bidMaxPrice) / 2;
-        DateValueEntity zeroDateValue = new DateValueEntity(0,
-                Utils.formatDoubleToMoneyString(((double) mixPrice) / 100
-                        * rate), mixPrice);
+        DateValueEntity zeroDateValue = new DateValueEntity(0,Utils.formatDoubleToMoneyString(((double) mixPrice) / 100 * rate), mixPrice);
         List<DateValueEntity> dateValueEntities = new ArrayList<DateValueEntity>();
         dateValueEntities.addAll(bidDateValueEntities);
         dateValueEntities.add(zeroDateValue);
@@ -126,7 +118,6 @@ public class Depth implements Serializable {
         depth.setDateValueEntities(dateValueEntities);
         depth.setSplitIndex(splitIndex);
         return depth;
-
     }
 
     public BitherjSettings.MarketType getMarketType() {

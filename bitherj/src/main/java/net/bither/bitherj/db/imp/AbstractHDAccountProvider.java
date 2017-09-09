@@ -32,8 +32,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import sun.rmi.runtime.Log;
-
 public abstract class AbstractHDAccountProvider extends AbstractProvider implements IHDAccountProvider {
 
     @Override

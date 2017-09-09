@@ -23,7 +23,6 @@ package net.bither.charts.entity;
 
 import java.io.Serializable;
 
-public interface IStickEntity extends IMeasurable, IHasDate, IHasXTitle,
-        Serializable {
+public interface IStickEntity extends IMeasurable, IHasDate, IHasXTitle,Serializable {
 
 }

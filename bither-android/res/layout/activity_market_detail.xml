@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <net.bither.ui.base.SwipeRightTouchView
         android:id="@+id/swipe_right_touch_view"
@@ -51,7 +51,7 @@
                                 android:padding="5dp"
                                 android:text="@string/market_line_one_minute"
                                 android:textColor="@color/market_detail_radio_button_text_color"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <RadioButton
                                 android:id="@+id/rb_five_minute"
@@ -64,7 +64,7 @@
                                 android:padding="5dp"
                                 android:text="@string/market_line_five_minute"
                                 android:textColor="@color/market_detail_radio_button_text_color"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <RadioButton
                                 android:id="@+id/rb_one_hour"
@@ -78,7 +78,7 @@
                                 android:padding="5dp"
                                 android:text="@string/market_line_one_hour"
                                 android:textColor="@color/market_detail_radio_button_text_color"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <RadioButton
                                 android:id="@+id/rb_one_day"
@@ -91,7 +91,7 @@
                                 android:padding="5dp"
                                 android:text="@string/market_line_one_day"
                                 android:textColor="@color/market_detail_radio_button_text_color"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
                         </RadioGroup>
 
                         <FrameLayout
@@ -107,13 +107,13 @@
                                 android:layout_height="240dip"
                                 android:background="@drawable/transparent"/>
 
+                            <!--点击时显示-->
                             <net.bither.ui.base.KlineDetailView
                                 android:id="@+id/klinedetailview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom|left"
-                                android:visibility="invisible">
-                            </net.bither.ui.base.KlineDetailView>
+                                android:visibility="invisible"/>
 
                             <TextView
                                 android:id="@+id/tv_kline_error"
@@ -123,7 +123,7 @@
                                 android:text="@string/network_or_connection_error"
                                 android:textColor="@android:color/white"
                                 android:textSize="15sp"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
 
                             <ProgressBar
                                 android:id="@+id/pb_kline"
@@ -142,7 +142,7 @@
                         android:layout_height="1px"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="30dp"
-                        android:background="@android:color/black"/>
+                        android:background="@android:color/black" />
 
                     <LinearLayout
                         android:id="@+id/ll_ticker"
@@ -163,7 +163,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/market_detail_new_price"
                                 android:textColor="@color/yellow"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:id="@+id/tv_price"
@@ -171,7 +171,7 @@
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="3dp"
                                 android:textColor="@color/white"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -179,7 +179,7 @@
                             android:layout_height="1px"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
-                            android:background="@android:color/black"/>
+                            android:background="@android:color/black" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -194,7 +194,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/market_detail_buy_price"
                                 android:textColor="@color/yellow"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:id="@+id/tv_buy"
@@ -202,7 +202,7 @@
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="3dp"
                                 android:textColor="@color/white"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -210,7 +210,7 @@
                             android:layout_height="1px"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
-                            android:background="@android:color/black"/>
+                            android:background="@android:color/black" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -225,7 +225,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/market_detail_sell_price"
                                 android:textColor="@color/yellow"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:id="@+id/tv_sell"
@@ -233,7 +233,7 @@
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="3dp"
                                 android:textColor="@color/white"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -241,7 +241,7 @@
                             android:layout_height="1px"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
-                            android:background="@android:color/black"/>
+                            android:background="@android:color/black" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -256,7 +256,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/market_detail_high_price"
                                 android:textColor="@color/yellow"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:id="@+id/tv_high"
@@ -264,7 +264,7 @@
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="3dp"
                                 android:textColor="@color/white"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -272,7 +272,7 @@
                             android:layout_height="1px"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
-                            android:background="@android:color/black"/>
+                            android:background="@android:color/black" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -287,7 +287,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/market_detail_low_price"
                                 android:textColor="@color/yellow"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:id="@+id/tv_low"
@@ -295,7 +295,7 @@
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="3dp"
                                 android:textColor="@color/white"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -303,7 +303,7 @@
                             android:layout_height="1px"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
-                            android:background="@android:color/black"/>
+                            android:background="@android:color/black" />
                     </LinearLayout>
 
                     <TextView
@@ -313,7 +313,7 @@
                         android:gravity="center"
                         android:text="@string/market_detail_depth"
                         android:textColor="@color/yellow"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -323,19 +323,20 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp">
 
+                        <!--市场深度图-->
                         <net.bither.charts.view.MarketDepthChart
                             android:id="@+id/marketdepthchart"
                             android:layout_width="fill_parent"
                             android:layout_height="240dip"
-                            android:background="@drawable/transparent"/>
+                            android:background="@drawable/transparent" />
 
+                        <!--点击市场深度图之后显示-->
                         <net.bither.ui.base.MarketDepthDetailView
                             android:id="@+id/market_depth_detail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom|left"
-                            android:visibility="invisible">
-                        </net.bither.ui.base.MarketDepthDetailView>
+                            android:visibility="invisible"/>
 
                         <TextView
                             android:id="@+id/tv_depth_error"
@@ -345,7 +346,7 @@
                             android:text="@string/network_or_connection_error"
                             android:textColor="@android:color/white"
                             android:textSize="15sp"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <ProgressBar
                             android:id="@+id/pb_depth"
@@ -355,12 +356,12 @@
                             android:indeterminateDrawable="@drawable/check_progress_bar"
                             android:indeterminateDuration="600"
                             android:indeterminateOnly="true"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
                     </FrameLayout>
                 </LinearLayout>
             </net.bither.ui.base.OverScrollableScrollView>
 
-            <include layout="@layout/layout_dropdown_message"/>
+            <include layout="@layout/layout_dropdown_message" />
         </FrameLayout>
 
         <FrameLayout
@@ -382,12 +383,12 @@
                     android:layout_width="@dimen/title_bar_height"
                     android:layout_height="match_parent"
                     android:background="@drawable/tab_button_background"
-                    android:src="@drawable/title_bar_back"/>
+                    android:src="@drawable/title_bar_back" />
 
                 <ImageView
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/title_bar_seperator"/>
+                    android:background="@drawable/title_bar_seperator" />
 
                 <TextView
                     android:id="@+id/tv_market_name"
@@ -401,24 +402,24 @@
                     android:shadowRadius="0.5"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/title_bar_seperator"/>
+                    android:background="@drawable/title_bar_seperator" />
 
                 <ImageButton
                     android:id="@+id/ibtn_option"
                     android:layout_width="@dimen/title_bar_height"
                     android:layout_height="match_parent"
                     android:background="@drawable/tab_button_background"
-                    android:src="@drawable/title_bar_option_icon"/>
+                    android:src="@drawable/title_bar_option_icon" />
             </LinearLayout>
         </FrameLayout>
     </net.bither.ui.base.SwipeRightTouchView>

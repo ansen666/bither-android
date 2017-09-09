@@ -35,13 +35,10 @@ public class CandleStickChart extends StickChart {
 
     public static final int DEFAULT_POSITIVE_STICK_BORDER_COLOR = Color.RED;
 
-    public final int DEFAULT_POSITIVE_STICK_FILL_COLOR = getContext()
-            .getResources().getColor(R.drawable.k_line_red);
+    public final int DEFAULT_POSITIVE_STICK_FILL_COLOR = getContext().getResources().getColor(R.drawable.k_line_red);
     public static final int DEFAULT_NEGATIVE_STICK_BORDER_COLOR = Color.GREEN;
 
-    public final int DEFAULT_NEGATIVE_STICK_FILL_COLOR = getContext()
-            .getResources().getColor(R.drawable.k_line_green);
-    ;
+    public final int DEFAULT_NEGATIVE_STICK_FILL_COLOR = getContext().getResources().getColor(R.drawable.k_line_green);
 
     public static final int DEFAULT_CROSS_STAR_COLOR = Color.LTGRAY;
 

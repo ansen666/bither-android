@@ -56,8 +56,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AddressDetailActivity extends SwipeRightFragmentActivity implements
-        DialogAddressAlias.DialogAddressAliasDelegate {
+public class AddressDetailActivity extends SwipeRightFragmentActivity implements DialogAddressAlias.DialogAddressAliasDelegate {
     private int page = 1;
     private boolean hasMore = true;
     private boolean isLoding = false;
@@ -272,9 +271,7 @@ public class AddressDetailActivity extends SwipeRightFragmentActivity implements
         @Override
         public void onReceive(Context context, Intent intent) {
             int itemCount = lv.getChildCount();
-            for (int i = 0;
-                 i < itemCount;
-                 i++) {
+            for (int i = 0;i < itemCount;i++) {
                 View v = lv.getChildAt(i);
                 if (v instanceof MarketTickerChangedObserver) {
                     MarketTickerChangedObserver o = (MarketTickerChangedObserver) v;

@@ -56,10 +56,7 @@ public class KlineDetailView extends LinearLayout {
     private void initView() {
         isFirst = true;
         removeAllViews();
-        addView(LayoutInflater.from(getContext()).inflate(
-                        R.layout.kline_detail_view, null), LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT
-        );
+        addView(LayoutInflater.from(getContext()).inflate(R.layout.kline_detail_view, null), LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         this.tvTime = (TextView) findViewById(R.id.tv_kline_time);
         this.tvOpen = (TextView) findViewById(R.id.tv_price_open);
         this.tvHigh = (TextView) findViewById(R.id.tv_price_high);
@@ -70,12 +67,9 @@ public class KlineDetailView extends LinearLayout {
         this.tvVolume = (TextView) findViewById(R.id.tv_volume);
         //TODO Used to calculate the widht, set the default value
         this.tvVolume.setText("10000.00");
-
     }
 
-    public void setContent(String time, String open, String high, String low,
-                           String close, String tenLine, String thirtyLine, String volume) {
-
+    public void setContent(String time, String open, String high, String low,String close, String tenLine, String thirtyLine, String volume) {
         this.tvTime.setText(time);
         this.tvOpen.setText(open);
         this.tvHigh.setText(high);
@@ -91,12 +85,10 @@ public class KlineDetailView extends LinearLayout {
         AnimationUtil.fadeIn(KlineDetailView.this);
     }
 
-
     public void notifyViewMove(int x, int y, int parentWidth, int parentHight) {
         clearAnimation();
 
         moveView(x, y, parentWidth, parentHight);
-
     }
 
     private void moveView(int x, int y, int parentWidth, int parentHight) {
@@ -120,8 +112,7 @@ public class KlineDetailView extends LinearLayout {
             isFirst = false;
             display(leftMargin, bottomMargin);
         } else {
-            AnimationUtil.moveMarginAnimation(KlineDetailView.this, leftMargin,
-                    bottomMargin);
+            AnimationUtil.moveMarginAnimation(KlineDetailView.this, leftMargin,bottomMargin);
         }
     }
 

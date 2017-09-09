@@ -62,23 +62,23 @@ import net.bither.util.DateTimeUtil;
 import net.bither.util.ExchangeUtil;
 import net.bither.util.FileUtil;
 import net.bither.util.ImageManageUtil;
+import net.bither.util.LogUtil;
 import net.bither.util.MarketUtil;
 
 import java.util.Date;
 
-public class MarketDetailActivity extends SwipeRightActivity implements OnCheckedChangeListener,
-        MarketDetailDialogDelegate {
+public class MarketDetailActivity extends SwipeRightActivity implements OnCheckedChangeListener,MarketDetailDialogDelegate {
     private final int DISAPPEAR_TIME = 3 * 1000;
 
     private TextView tvMarketName;
     private RadioGroup rg;
-    private MACandleStickChart chartKline;
-    private MarketDepthChart chartDepth;
+    private MACandleStickChart chartKline;//表格折线图
+    private MarketDepthChart chartDepth;//市场深度图
     private ProgressBar pbKline;
     private ProgressBar pbDepth;
     private TextView tvKlineError;
     private TextView tvDepthError;
-    private LinearLayout llTicker;
+    private LinearLayout llTicker;//最新价 买一价 卖一价 最高价 最低价  这些的父ViewGroup
     private TextView tvPrice;
     private TextView tvHigh;
     private TextView tvLow;
@@ -90,7 +90,7 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
 
     private MarketDepthDetailView marketDepthDetailView;
 
-    private KlineDetailView mKLineDetailView;
+    private KlineDetailView mKLineDetailView;//点击折线图时显示
 
     private MarketType marketType = null;
     private boolean isKlineRefresh = false;
@@ -103,8 +103,7 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
         overridePendingTransition(R.anim.slide_in_right, 0);
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(BitherSetting.INTENT_REF.MARKET_INTENT)) {
-            marketType = (MarketType) intent.getSerializableExtra(BitherSetting.INTENT_REF
-                    .MARKET_INTENT);
+            marketType = (MarketType) intent.getSerializableExtra(BitherSetting.INTENT_REF.MARKET_INTENT);
         }
         boolean isFromNotif = false;
         if (intent != null && intent.hasExtra(BitherSetting.INTENT_REF.INTENT_FROM_NOTIF)) {
@@ -116,6 +115,8 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
         } else {
             setContentView(R.layout.activity_market_detail);
             initView();
+
+            LogUtil.i("ansen","MarketDetailActivity 是否从通知栏过来:"+isFromNotif);
             if (isFromNotif && BitherApplication.hotActivity != null) {
                 chartKline.postDelayed(new Runnable() {
                     @Override
@@ -125,7 +126,6 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
                         }
                     }
                 }, 500);
-
             }
         }
     }
@@ -157,8 +157,8 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
         onCheckedChanged(rg, rg.getCheckedRadioButtonId());
         dialogOption = new DialogMarketDetailOption(this, this);
         dp = new DialogProgress(this, R.string.please_wait);
-        loadDepthData();
-        showMarket();
+        loadDepthData();//市场深度
+        showMarket();//
     }
 
     @Override
@@ -169,8 +169,9 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
 
     private void showMarket() {
         Market market = MarketUtil.getMarket(marketType);
-        tvMarketName.setText(market.getName());
+        tvMarketName.setText(market.getName());//网站名称
         Ticker ticker = market.getTicker();
+        LogUtil.i("ansen","MarketDetailActivity showMarket ticker:"+ticker);
         if (ticker != null) {
             llTicker.setVisibility(View.VISIBLE);
             String symbol;
@@ -179,16 +180,11 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
             } else {
                 symbol = ExchangeUtil.getExchangeType(marketType).getSymbol();
             }
-            tvPrice.setText(symbol + Utils.formatDoubleToMoneyString(ticker
-                    .getDefaultExchangePrice()));
-            tvHigh.setText(symbol + Utils.formatDoubleToMoneyString(ticker
-                    .getDefaultExchangeHigh()));
-            tvLow.setText(symbol + Utils.formatDoubleToMoneyString(ticker
-                    .getDefaultExchangeLow()));
-            tvSell.setText(symbol + Utils.formatDoubleToMoneyString(ticker
-                    .getDefaultExchangeSell()));
-            tvBuy.setText(symbol + Utils.formatDoubleToMoneyString(ticker
-                    .getDefaultExchangeBuy()));
+            tvPrice.setText(symbol + Utils.formatDoubleToMoneyString(ticker.getDefaultExchangePrice()));
+            tvHigh.setText(symbol + Utils.formatDoubleToMoneyString(ticker.getDefaultExchangeHigh()));
+            tvLow.setText(symbol + Utils.formatDoubleToMoneyString(ticker.getDefaultExchangeLow()));
+            tvSell.setText(symbol + Utils.formatDoubleToMoneyString(ticker.getDefaultExchangeSell()));
+            tvBuy.setText(symbol + Utils.formatDoubleToMoneyString(ticker.getDefaultExchangeBuy()));
         } else {
             llTicker.setVisibility(View.GONE);
         }
@@ -209,11 +205,9 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
         pbDepth.setVisibility(View.VISIBLE);
         tvDepthError.setVisibility(View.GONE);
         chartDepth.setVisibility(View.INVISIBLE);
-        GetExchangeDepthRunnable getExchangeDepthRunnable = new GetExchangeDepthRunnable
-                (marketType);
+        GetExchangeDepthRunnable getExchangeDepthRunnable = new GetExchangeDepthRunnable(marketType);
         getExchangeDepthRunnable.setHandler(loadDepthHandler);
         new Thread(getExchangeDepthRunnable).start();
-
     }
 
     private Handler loadDepthHandler = new Handler() {
@@ -249,8 +243,6 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
                     break;
             }
         }
-
-        ;
     };
 
     private Handler loadKlineDataHandler = new Handler() {
@@ -261,8 +253,7 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
                 case HandlerMessage.MSG_SUCCESS_FROM_CACHE:
                     if (msg.obj != null) {
                         KLine kLine = (KLine) msg.obj;
-                        ChartsUtil.initMACandleStickChart(chartKline, kLine.getStickEntities(),
-                                isKlineRefresh);
+                        ChartsUtil.initMACandleStickChart(chartKline, kLine.getStickEntities(),isKlineRefresh);
                         if (!isKlineRefresh) {
                             isKlineRefresh = true;
                         }
@@ -274,8 +265,7 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
                     break;
                 case HandlerMessage.MSG_SUCCESS:
                     KLine kLine = (KLine) msg.obj;
-                    ChartsUtil.initMACandleStickChart(chartKline, kLine.getStickEntities(),
-                            isKlineRefresh);
+                    ChartsUtil.initMACandleStickChart(chartKline, kLine.getStickEntities(),isKlineRefresh);
                     if (!isKlineRefresh) {
                         isKlineRefresh = true;
                     }
@@ -301,16 +291,16 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
-            case R.id.rb_one_minute:
+            case R.id.rb_one_minute://1分钟
                 loadKlineData(KlineTimeType.ONE_MINUTE);
                 break;
-            case R.id.rb_five_minute:
+            case R.id.rb_five_minute://5分钟
                 loadKlineData(KlineTimeType.FIVE_MINUTES);
                 break;
-            case R.id.rb_one_hour:
+            case R.id.rb_one_hour://1小时
                 loadKlineData(KlineTimeType.ONE_HOUR);
                 break;
-            case R.id.rb_one_day:
+            case R.id.rb_one_day://1天
                 loadKlineData(KlineTimeType.ONE_DAY);
                 break;
             default:
@@ -369,12 +359,10 @@ public class MarketDetailActivity extends SwipeRightActivity implements OnChecke
                             startActivity(intent);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            DropdownMessage.showDropdownMessage(MarketDetailActivity.this,
-                                    R.string.market_share_failed);
+                            DropdownMessage.showDropdownMessage(MarketDetailActivity.this,R.string.market_share_failed);
                         }
                     } else {
-                        DropdownMessage.showDropdownMessage(MarketDetailActivity.this,
-                                R.string.market_share_failed);
+                        DropdownMessage.showDropdownMessage(MarketDetailActivity.this,R.string.market_share_failed);
                     }
                 }
             });

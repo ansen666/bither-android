@@ -22,7 +22,6 @@ import net.bither.R;
 import net.bither.bitherj.BitherjSettings.MarketType;
 
 public class Market {
-
     private Ticker mTicker;
     private MarketType marketType;
     private boolean showDetail;

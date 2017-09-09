@@ -103,22 +103,6 @@ public abstract class AbstractDb {
             "(address text not null primary key" +
             " , vanity_len integer );";
 
-    public static final String CREATE_BLOCK_NO_INDEX = "create index idx_blocks_block_no on " +
-            "blocks (block_no);";
-    public static final String CREATE_BLOCK_PREV_INDEX = "create index idx_blocks_block_prev on " +
-            "blocks (block_prev);";
-
-    // new index
-    public static final String CREATE_OUT_OUT_ADDRESS_INDEX = "create index idx_out_out_address " +
-            "on outs (out_address);";
-    public static final String CREATE_OUT_HD_ACCOUNT_ID_INDEX = "create index idx_out_hd_account_id " +
-            "on outs (hd_account_id);";
-    public static final String CREATE_TX_BLOCK_NO_INDEX = "create index idx_tx_block_no on txs " +
-            "(block_no);";
-    public static final String CREATE_IN_PREV_TX_HASH_INDEX = "create index idx_in_prev_tx_hash " +
-            "on ins (prev_tx_hash);";
-
-
     //hd account
     public static final String CREATE_HD_ACCOUNT = "create table if not exists  hd_account " +
             "( hd_account_id integer not null primary key autoincrement" +
@@ -141,13 +125,6 @@ public abstract class AbstractDb {
             ", primary key (address));";
 
 
-    // hd Account index
-    public static final String CREATE_HD_ACCOUNT_ADDRESS_INDEX = "create index " +
-            "idx_hd_address_address on hd_account_addresses (address);";
-    public static final String CREATE_HD_ACCOUNT_ACCOUNT_ID_AND_PATH_TYPE_INDEX = "create index " +
-            "idx_hd_address_account_id_path on hd_account_addresses (hd_account_id, path_type);";
-
-
     //add hd_accont_id for outs
     public static final String ADD_HD_ACCOUNT_ID_FOR_OUTS = "alter table outs add column " +
             "hd_account_id integer;";
@@ -160,6 +137,7 @@ public abstract class AbstractDb {
             ", encrypt_mnemonic_seed text" +
             ", hd_address text not null" +
             ", is_xrandom integer not null);";
+
     public static final String CREATE_MULTI_SIGN_SET = "create table if not exists " +
             "enterprise_multi_sign_set " +
             " (multi_sign_id integer not null primary key autoincrement" +
@@ -182,6 +160,28 @@ public abstract class AbstractDb {
             ", pub_key_9 text" +
             ", is_synced integer " +
             ", primary key (hdm_index));";
+
+
+    public static final String CREATE_BLOCK_NO_INDEX = "create index idx_blocks_block_no on " +
+            "blocks (block_no);";
+    public static final String CREATE_BLOCK_PREV_INDEX = "create index idx_blocks_block_prev on " +
+            "blocks (block_prev);";
+
+    // new index
+    public static final String CREATE_OUT_OUT_ADDRESS_INDEX = "create index idx_out_out_address " +
+            "on outs (out_address);";
+    public static final String CREATE_OUT_HD_ACCOUNT_ID_INDEX = "create index idx_out_hd_account_id " +
+            "on outs (hd_account_id);";
+    public static final String CREATE_TX_BLOCK_NO_INDEX = "create index idx_tx_block_no on txs " +
+            "(block_no);";
+    public static final String CREATE_IN_PREV_TX_HASH_INDEX = "create index idx_in_prev_tx_hash " +
+            "on ins (prev_tx_hash);";
+
+    // hd Account index
+    public static final String CREATE_HD_ACCOUNT_ADDRESS_INDEX = "create index " +
+            "idx_hd_address_address on hd_account_addresses (address);";
+    public static final String CREATE_HD_ACCOUNT_ACCOUNT_ID_AND_PATH_TYPE_INDEX = "create index " +
+            "idx_hd_address_account_id_path on hd_account_addresses (hd_account_id, path_type);";
 
     public static IBlockProvider blockProvider;
     public static IPeerProvider peerProvider;

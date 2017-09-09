@@ -20,6 +20,7 @@ import net.bither.bitherj.BitherjSettings.MarketType;
 import net.bither.bitherj.api.GetExchangeDepthApi;
 import net.bither.model.Depth;
 import net.bither.util.DepthUtil;
+import net.bither.util.LogUtil;
 
 import org.json.JSONObject;
 
@@ -40,11 +41,13 @@ public class GetExchangeDepthRunnable extends BaseRunnable {
             Depth depth = DepthUtil.getKDepth(this.marketType);
             hasCache = depth != null;
             obtainMessage(HandlerMessage.MSG_SUCCESS_FROM_CACHE, depth);
-            GetExchangeDepthApi getExchangeDepthApi = new GetExchangeDepthApi(
-                    marketType);
+            GetExchangeDepthApi getExchangeDepthApi = new GetExchangeDepthApi(marketType);
             getExchangeDepthApi.handleHttpGet();
+            LogUtil.i("ansen","GetExchangeDepthRunnable getExchangeDepthUrl:"+getExchangeDepthApi.getUrl());
             JSONObject json = new JSONObject(getExchangeDepthApi.getResult());
+//            LogUtil.i("ansen","GetExchangeDepthRunnable getResult:"+getExchangeDepthApi.getResult());
             depth = Depth.formatJsonOfMarketDepth(this.marketType, json);
+
             depth.setMarketType(this.marketType);
             DepthUtil.addDepth(depth);
             obtainMessage(HandlerMessage.MSG_SUCCESS, depth);

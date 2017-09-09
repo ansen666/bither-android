@@ -42,11 +42,9 @@ import java.util.Date;
 import java.util.List;
 
 public class ChartsUtil {
-	public static List<IStickEntity> formatJsonArray(MarketType marketType,
-			KlineTimeType klineTimeType, JSONArray jsonArray)
-			throws JSONException {
+	public static List<IStickEntity> formatJsonArray(MarketType marketType,KlineTimeType klineTimeType, JSONArray jsonArray)throws JSONException {
 		double rate = ExchangeUtil.getRate(marketType);
-		List<IStickEntity> ohlc = new ArrayList<IStickEntity>();
+		List<IStickEntity> ohlc = new ArrayList<>();
 		for (int i = jsonArray.length() - 1; i >= 0; i--) {
 			JSONArray tickerArray = jsonArray.getJSONArray(i);
 			long time = tickerArray.getLong(0) * 1000;
@@ -61,8 +59,7 @@ public class ChartsUtil {
 				if (i == 0) {
 					continue;
 				} else {
-					BitherOHLCEntity bitherOHLCEntity = (BitherOHLCEntity) ohlc
-							.get(i - 1);
+					BitherOHLCEntity bitherOHLCEntity = (BitherOHLCEntity) ohlc.get(i - 1);
 					open = bitherOHLCEntity.getOpen();
 					high = bitherOHLCEntity.getHigh();
 					low = bitherOHLCEntity.getLow();
@@ -70,24 +67,18 @@ public class ChartsUtil {
 				}
 
 			}
-			BitherOHLCEntity bitherOHLCEntity = new BitherOHLCEntity(open,
-					high, low, close, volume, title, time);
-
+			BitherOHLCEntity bitherOHLCEntity = new BitherOHLCEntity(open,high, low, close, volume, title, time);
 			ohlc.add(bitherOHLCEntity);
 		}
-
 		return ohlc;
 	}
 
-	public static synchronized void initMarketDepth(
-			MarketDepthChart marketDepthChart, Depth depth, boolean isRefresh) {
-
-		List<LineEntity<DateValueEntity>> lines = new ArrayList<LineEntity<DateValueEntity>>();
-		LineEntity<DateValueEntity> MALineData = new LineEntity<DateValueEntity>();
+	public static synchronized void initMarketDepth(MarketDepthChart marketDepthChart, Depth depth, boolean isRefresh) {
+		List<LineEntity<DateValueEntity>> lines = new ArrayList<>();
+		LineEntity<DateValueEntity> MALineData = new LineEntity<>();
 		MALineData.setLineData(depth.getDateValueEntities());
 		lines.add(MALineData);
-		MarketDepthEntity marketDepthEntity = new MarketDepthEntity(lines,
-				depth.getSplitIndex());
+		MarketDepthEntity marketDepthEntity = new MarketDepthEntity(lines,depth.getSplitIndex());
 		marketDepthChart.setMareketDepthEntity(marketDepthEntity);
 
 		int lineColor = Color.argb(30, 255, 255, 255);
@@ -101,10 +92,8 @@ public class ChartsUtil {
 		marketDepthChart.setMaxValue((int) depth.getMaxVolume());
 		marketDepthChart.setMinValue(0);
 		// marketDepthChart.setDisplayFrom(0);
-		marketDepthChart
-				.setDisplayNumber(depth.getDateValueEntities().size() - 1);
-		marketDepthChart.setMinDisplayNumber(depth.getDateValueEntities()
-				.size() - 1);
+		marketDepthChart.setDisplayNumber(depth.getDateValueEntities().size() - 1);
+		marketDepthChart.setMinDisplayNumber(depth.getDateValueEntities().size() - 1);
 		marketDepthChart.setZoomBaseLine(0);
 		marketDepthChart.setDisplayLongitudeTitle(true);
 		marketDepthChart.setDisplayLatitudeTitle(true);
@@ -124,22 +113,18 @@ public class ChartsUtil {
 		}
 	}
 
-	public synchronized static void initMACandleStickChart(
-			MACandleStickChart macandlestickchart, List<IStickEntity> ohlc,
-			boolean isRefresh) {
-		List<LineEntity<DateValueEntity>> lines = new ArrayList<LineEntity<DateValueEntity>>();
+	public synchronized static void initMACandleStickChart(MACandleStickChart macandlestickchart, List<IStickEntity> ohlc,boolean isRefresh) {
+		List<LineEntity<DateValueEntity>> lines = new ArrayList<>();
 
-		LineEntity<DateValueEntity> MA10 = new LineEntity<DateValueEntity>();
+		LineEntity<DateValueEntity> MA10 = new LineEntity<>();
 		MA10.setTitle("MA10");
-		MA10.setLineColor(BitherApplication.mContext.getResources().getColor(
-				R.color.ten_kline));
+		MA10.setLineColor(BitherApplication.mContext.getResources().getColor(R.color.ten_kline));
 		MA10.setLineData(initMA(ohlc, 10));
 		lines.add(MA10);
 
 		LineEntity<DateValueEntity> MA30 = new LineEntity<DateValueEntity>();
 		MA30.setTitle("MA25");
-		MA30.setLineColor(BitherApplication.mContext.getResources().getColor(
-				R.color.thrity_kline));
+		MA30.setLineColor(BitherApplication.mContext.getResources().getColor(R.color.thrity_kline));
 		MA30.setLineData(initMA(ohlc, 30));
 		lines.add(MA30);
 

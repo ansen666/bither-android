@@ -22,12 +22,8 @@ import net.bither.bitherj.api.http.HttpGetResponse;
 import net.bither.bitherj.utils.Utils;
 
 public class GetExchangeDepthApi extends HttpGetResponse<String> {
-
-
     public GetExchangeDepthApi(BitherjSettings.MarketType marketType) {
-
-        String url = Utils.format(BitherUrl.BITHER_DEPTH_URL,
-                BitherjSettings.getMarketValue(marketType));
+        String url = Utils.format(BitherUrl.BITHER_DEPTH_URL,BitherjSettings.getMarketValue(marketType));
         setUrl(url);
     }
 

@@ -22,12 +22,8 @@ import net.bither.bitherj.api.http.HttpGetResponse;
 import net.bither.bitherj.utils.Utils;
 
 public class GetKlineApi extends HttpGetResponse<String> {
-
-
     public GetKlineApi(BitherjSettings.MarketType marketType, BitherjSettings.KlineTimeType klineTimeType) {
-
-        String url = Utils.format(BitherUrl.BITHER_KLINE_URL,
-                BitherjSettings.getMarketValue(marketType), klineTimeType.getValue());
+        String url = Utils.format(BitherUrl.BITHER_KLINE_URL,BitherjSettings.getMarketValue(marketType), klineTimeType.getValue());
         setUrl(url);
 
     }
@@ -35,7 +31,5 @@ public class GetKlineApi extends HttpGetResponse<String> {
     @Override
     public void setResult(String response) throws Exception {
         this.result = response;
-
     }
-
 }

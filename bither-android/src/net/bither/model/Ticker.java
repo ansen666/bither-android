@@ -104,7 +104,6 @@ public class Ticker implements Serializable {
 
     public double getDefaultExchangePrice() {
         return pNew * ExchangeUtil.getRate(getMarketType());
-
     }
 
     public double getPrice() {

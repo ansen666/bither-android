@@ -22,7 +22,6 @@
 package net.bither.charts.entity;
 
 public interface IHasDate {
-
     long getDate();
 
     void setDate(long date);

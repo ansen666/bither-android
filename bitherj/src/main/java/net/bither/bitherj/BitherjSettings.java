@@ -129,8 +129,6 @@ public class BitherjSettings {
     public enum MarketType {
         BITSTAMP, BTCE, BTCCHINA, OKCOIN, HUOBI, CHBTC, BTCTRADE, BITFINEX,
         COINBASE, MARKET796;
-
-
     }
 
     public static MarketType getMarketType(int value) {

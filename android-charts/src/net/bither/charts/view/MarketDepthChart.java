@@ -19,11 +19,8 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 
 public class MarketDepthChart extends SlipLineChart {
-
-    private final int buyOrderColor = getContext().getResources().getColor(
-            R.drawable.buy_order);
-    private final int sellOrderColor = getContext().getResources().getColor(
-            R.drawable.sell_order);
+    private final int buyOrderColor = getContext().getResources().getColor(R.drawable.buy_order);
+    private final int sellOrderColor = getContext().getResources().getColor(R.drawable.sell_order);
     private int splitIndex;
 
     public MarketDepthChart(Context context, AttributeSet attrs, int defStyle) {
@@ -55,8 +52,7 @@ public class MarketDepthChart extends SlipLineChart {
         super.beginRedrawOnTouch(clickPostX);
 
         for (LineEntity<DateValueEntity> lineDateEntity : linesData) {
-            List<DateValueEntity> dataValueEntities = lineDateEntity
-                    .getLineData();
+            List<DateValueEntity> dataValueEntities = lineDateEntity.getLineData();
             int index = (int) (dataValueEntities.size() * getTounchPrepcentage());
             if (index > dataValueEntities.size() - 1) {
                 index = dataValueEntities.size() - 1;
@@ -65,36 +61,27 @@ public class MarketDepthChart extends SlipLineChart {
             int moveToY = (int) (((value - minValue) / (maxValue - minValue)) * getDataQuadrantPaddingHeight());
             ITouchEventResponse touchEventResponse = getTouchEventResponse();
             if (touchEventResponse != null) {
-
                 boolean isBuyOrder = index < splitIndex;
                 String price = dataValueEntities.get(index).getTitle();
-                Object[] objs = new Object[]{isBuyOrder, price,
-                        formatDoubleToString(value)};
+                Object[] objs = new Object[]{isBuyOrder, price,formatDoubleToString(value)};
                 touchEventResponse.notifyTouchContentChange(objs);
-                touchEventResponse.notifyTouchPointMove((int) clickPostX,
-                        moveToY);
-
+                touchEventResponse.notifyTouchPointMove((int) clickPostX,moveToY);
             }
-
         }
-
     }
 
     @Override
     protected void drawPointOfLine(Canvas canvas, float clickPostX) {
         super.drawPointOfLine(canvas, clickPostX);
         for (LineEntity<DateValueEntity> lineDateEntity : linesData) {
-            List<DateValueEntity> dataValueEntities = lineDateEntity
-                    .getLineData();
+            List<DateValueEntity> dataValueEntities = lineDateEntity.getLineData();
             int index = (int) (dataValueEntities.size() * getTounchPrepcentage());
             if (index > dataValueEntities.size() - 1) {
                 index = dataValueEntities.size() - 1;
             }
             float value = dataValueEntities.get(index).getValue();
             // calculate Y
-            float valueY = (float) ((1f - (value - minValue)
-                    / (maxValue - minValue)) * getDataQuadrantPaddingHeight())
-                    + getDataQuadrantPaddingStartY();
+            float valueY = (float) ((1f - (value - minValue) / (maxValue - minValue)) * getDataQuadrantPaddingHeight()) + getDataQuadrantPaddingStartY();
             Paint paint = new Paint();
             paint.setColor(Color.GREEN);
             paint.setAlpha(70);
@@ -114,8 +101,7 @@ public class MarketDepthChart extends SlipLineChart {
 
         // draw lines
         for (int i = 0; i < linesData.size(); i++) {
-            LineEntity<DateValueEntity> line = (LineEntity<DateValueEntity>) linesData
-                    .get(i);
+            LineEntity<DateValueEntity> line = linesData.get(i);
             if (line == null) {
                 continue;
             }
@@ -143,9 +129,7 @@ public class MarketDepthChart extends SlipLineChart {
             for (int j = displayFrom; j < displayFrom + displayNumber; j++) {
                 float value = lineData.get(j).getValue();
                 // calculate Y
-                float valueY = (float) ((1f - (value - minValue)
-                        / (maxValue - minValue)) * getDataQuadrantPaddingHeight())
-                        + getDataQuadrantPaddingStartY();
+                float valueY = (float) ((1f - (value - minValue)  / (maxValue - minValue)) * getDataQuadrantPaddingHeight())  + getDataQuadrantPaddingStartY();
 
                 // if is not last point connect to previous point
                 if (j == displayFrom) {
@@ -209,18 +193,14 @@ public class MarketDepthChart extends SlipLineChart {
             for (int j = displayFrom; j < displayFrom + displayNumber; j++) {
                 float value = lineData.get(j).getValue();
                 // calculate Y
-                float valueY = (float) ((1f - (value - minValue)
-                        / (maxValue - minValue)) * getDataQuadrantPaddingHeight())
-                        + getDataQuadrantPaddingStartY();
+                float valueY = (float) ((1f - (value - minValue) / (maxValue - minValue)) * getDataQuadrantPaddingHeight()) + getDataQuadrantPaddingStartY();
 
                 // if is not last point connect to previous point
                 if (j > displayFrom) {
                     if (j > splitIndex) {
-                        canvas.drawLine(ptFirst.x, ptFirst.y, startX, valueY,
-                                sellOrderPaint);
+                        canvas.drawLine(ptFirst.x, ptFirst.y, startX, valueY,sellOrderPaint);
                     } else {
-                        canvas.drawLine(ptFirst.x, ptFirst.y, startX, valueY,
-                                buyOrderPaint);
+                        canvas.drawLine(ptFirst.x, ptFirst.y, startX, valueY,buyOrderPaint);
                     }
                 }
                 // reset

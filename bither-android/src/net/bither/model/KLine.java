@@ -24,14 +24,12 @@ import java.io.Serializable;
 import java.util.List;
 
 public class KLine implements Serializable {
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public KLine(MarketType marketType, KlineTimeType klineTimeType,
-			List<IStickEntity> stickEntities) {
+	public KLine(MarketType marketType, KlineTimeType klineTimeType,List<IStickEntity> stickEntities) {
 		this.stickEntities = stickEntities;
 		this.marketType = marketType;
 		this.klineTimeType = klineTimeType;

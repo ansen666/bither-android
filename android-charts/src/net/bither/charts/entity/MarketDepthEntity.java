@@ -6,8 +6,7 @@ public class MarketDepthEntity {
 	private List<LineEntity<DateValueEntity>> dateValueEntities;
 	private int splitIndex;
 
-	public MarketDepthEntity(List<LineEntity<DateValueEntity>> dataEntities,
-			int splitIndex) {
+	public MarketDepthEntity(List<LineEntity<DateValueEntity>> dataEntities,int splitIndex) {
 		this.dateValueEntities = dataEntities;
 		this.splitIndex = splitIndex;
 

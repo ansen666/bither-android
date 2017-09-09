@@ -30,16 +30,13 @@ public class TxTest {
     @Test
     public void testDb() {
         Tx tx = new Tx();
-        byte[] txHash = Utils.reverseBytes(
-                Utils.hexStringToByteArray("f8a8335594d4c883f367e003cb3832015640f24714b48bd21cf6fbe84a617dfe"));
-        tx.setTxHash(Utils.reverseBytes(
-                Utils.hexStringToByteArray("f8a8335594d4c883f367e003cb3832015640f24714b48bd21cf6fbe84a617dfe")));
+        byte[] txHash = Utils.reverseBytes(Utils.hexStringToByteArray("f8a8335594d4c883f367e003cb3832015640f24714b48bd21cf6fbe84a617dfe"));
+        tx.setTxHash(Utils.reverseBytes(Utils.hexStringToByteArray("f8a8335594d4c883f367e003cb3832015640f24714b48bd21cf6fbe84a617dfe")));
         tx.setBlockNo(304942);
         tx.setTxTime((int) new Date().getTime() / 1000);
         tx.setTxVer(1);
         In inPut = new In();
-        inPut.setPrevTxHash(Utils.reverseBytes(
-                Utils.hexStringToByteArray("d7f4efff7aeaffc1630dd3653e923a233fd463f9dc7dd4f97bb5cbf0cf99e56a")));
+        inPut.setPrevTxHash(Utils.reverseBytes(Utils.hexStringToByteArray("d7f4efff7aeaffc1630dd3653e923a233fd463f9dc7dd4f97bb5cbf0cf99e56a")));
         inPut.setInSn(0);
         inPut.setTxHash(txHash);
         inPut.setInSequence(1);

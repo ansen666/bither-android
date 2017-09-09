@@ -44,8 +44,7 @@ import android.util.AttributeSet;
  * MACandleStickChartはグラフの一種です、移動平均線など分析線がこのグラフで表示は可能です。
  * </p>
  * <p>
- * MACandleStickChart继承于CandleStickChart的，可以在CandleStickChart基础上
- * 显示移动平均等各种分析指标数据。
+ * MACandleStickChart继承于CandleStickChart的，可以在CandleStickChart基础上显示移动平均等各种分析指标数据。
  * </p>
  *
  * @author limc
@@ -181,36 +180,30 @@ public class MACandleStickChart extends CandleStickChart {
         if (index > stickData.size() - 1) {
             index = stickData.size() - 1;
         }
-        BitherOHLCEntity bitherOHLCEntity = (BitherOHLCEntity) stickData
-                .get(index);
+        BitherOHLCEntity bitherOHLCEntity = (BitherOHLCEntity) stickData.get(index);
         double close = bitherOHLCEntity.getClose();
         int moveToY = (int) (((close - minValue) / (maxValue - minValue)) * getDataQuadrantPaddingHeight());
-        String tenLine = "";
-        String thirtyLine = "";
+        String tenLine = "";//10均线
+        String thirtyLine = "";//30均线
         for (int i = 0; i < linesData.size(); i++) {
-            LineEntity<DateValueEntity> line = (LineEntity<DateValueEntity>) linesData
-                    .get(i);
+            LineEntity<DateValueEntity> line = linesData.get(i);
             DateValueEntity dateValueEntity = line.getLineData().get(index);
             if (i == 0) {
                 tenLine = formatDoubleToString(dateValueEntity.getValue());
             } else if (i == 1) {
                 thirtyLine = formatDoubleToString(dateValueEntity.getValue());
             }
-
         }
 
         if (getTouchEventResponse() != null) {
-
             Object[] objs = new Object[]{bitherOHLCEntity.getDate(),
                     formatDoubleToString(bitherOHLCEntity.getOpen()),
                     formatDoubleToString(bitherOHLCEntity.getHigh()),
                     formatDoubleToString(bitherOHLCEntity.getLow()),
-                    formatDoubleToString(bitherOHLCEntity.getClose()), tenLine,
-                    thirtyLine,
+                    formatDoubleToString(bitherOHLCEntity.getClose()), tenLine,thirtyLine,
                     formatDoubleToString(bitherOHLCEntity.getVolume())};
             getTouchEventResponse().notifyTouchContentChange(objs);
-            getTouchEventResponse().notifyTouchPointMove((int) clickPostX,
-                    moveToY);
+            getTouchEventResponse().notifyTouchPointMove((int) clickPostX,moveToY);
 
         }
 

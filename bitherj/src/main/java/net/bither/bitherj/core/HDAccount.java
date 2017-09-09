@@ -179,8 +179,8 @@ public class HDAccount extends Address {
 
         double itemProgress = (1.0 - GenerationPreStartProgress) / (LOOK_AHEAD_SIZE * 2);
 
-        List<HDAccountAddress> externalAddresses = new ArrayList<HDAccountAddress>();
-        List<HDAccountAddress> internalAddresses = new ArrayList<HDAccountAddress>();
+        List<HDAccountAddress> externalAddresses = new ArrayList<HDAccountAddress>();//外部地址
+        List<HDAccountAddress> internalAddresses = new ArrayList<HDAccountAddress>();//内部地址
         for (int i = 0;i < LOOK_AHEAD_SIZE;i++) {
             byte[] subExternalPub = externalKey.deriveSoftened(i).getPubKey();
             HDAccountAddress externalAddress = new HDAccountAddress(subExternalPub, AbstractHD.PathType.EXTERNAL_ROOT_PATH, i, isSyncedComplete,hdSeedId);
@@ -191,9 +191,7 @@ public class HDAccount extends Address {
             }
 
             byte[] subInternalPub = internalKey.deriveSoftened(i).getPubKey();
-            HDAccountAddress internalAddress = new HDAccountAddress
-                    (subInternalPub, AbstractHD.PathType.INTERNAL_ROOT_PATH, i, isSyncedComplete,
-                            hdSeedId);
+            HDAccountAddress internalAddress = new HDAccountAddress(subInternalPub, AbstractHD.PathType.INTERNAL_ROOT_PATH, i, isSyncedComplete,hdSeedId);
             internalAddresses.add(internalAddress);
             progress += itemProgress;
             if (generationDelegate != null) {
@@ -201,15 +199,12 @@ public class HDAccount extends Address {
             }
         }
         if (encryptedMnemonicSeed == null) {
-            hdSeedId = AbstractDb.hdAccountProvider.addMonitoredHDAccount(firstAddress,
-                    isFromXRandom, externalKey.getPubKeyExtended(), internalKey.getPubKeyExtended
-                            ());
+            hdSeedId = AbstractDb.hdAccountProvider.addMonitoredHDAccount(firstAddress,isFromXRandom, externalKey.getPubKeyExtended(), internalKey.getPubKeyExtended());
             hasSeed = false;
         } else {
             hdSeedId = AbstractDb.hdAccountProvider.addHDAccount(encryptedMnemonicSeed
                     .toEncryptedString(), encryptedHDSeed.toEncryptedString(), firstAddress,
-                    isFromXRandom, address, externalKey.getPubKeyExtended(), internalKey
-                            .getPubKeyExtended());
+                    isFromXRandom, address, externalKey.getPubKeyExtended(), internalKey.getPubKeyExtended());
             hasSeed = true;
         }
         for (HDAccountAddress addr : externalAddresses) {
@@ -718,8 +713,7 @@ public class HDAccount extends Address {
         return null;
     }
 
-    protected DeterministicKey getChainRootKey(DeterministicKey accountKey, AbstractHD.PathType
-            pathType) {
+    protected DeterministicKey getChainRootKey(DeterministicKey accountKey, AbstractHD.PathType pathType) {
         return accountKey.deriveSoftened(pathType.getValue());
     }
 
