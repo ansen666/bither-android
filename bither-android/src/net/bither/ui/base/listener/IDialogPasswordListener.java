@@ -20,5 +20,5 @@ package net.bither.ui.base.listener;
 import net.bither.bitherj.crypto.SecureCharSequence;
 
 public interface IDialogPasswordListener {
-    public void onPasswordEntered(SecureCharSequence password);
+    void onPasswordEntered(SecureCharSequence password);
 }

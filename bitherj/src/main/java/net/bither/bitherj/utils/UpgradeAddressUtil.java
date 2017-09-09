@@ -20,6 +20,7 @@ import net.bither.bitherj.AbstractApp;
 import net.bither.bitherj.BitherjSettings;
 import net.bither.bitherj.core.Address;
 import net.bither.bitherj.core.AddressManager;
+import net.bither.bitherj.core.HDAccount;
 import net.bither.bitherj.db.AbstractDb;
 import net.bither.bitherj.qrcode.QRCodeUtil;
 
@@ -143,6 +144,8 @@ public class UpgradeAddressUtil {
         for (Address address : addressList) {
             address.setSyncComplete(false);
             AddressManager.getInstance().addAddress(address);
+            HDAccount
+            LogUtil.i("ansen","KeyUtil addPrivateKeyByRandomWithPassphras address:"+address.toString());
         }
         if (AbstractApp.bitherjSetting.getAppMode() == BitherjSettings.AppMode.HOT) {
             if (addressList.size() > 0) {

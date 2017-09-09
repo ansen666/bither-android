@@ -79,8 +79,7 @@ public class HotActivity extends BaseFragmentActivity {
     private SyncProgressView pbSync;
     private DialogProgress dp;
 
-    private final TxAndBlockBroadcastReceiver txAndBlockBroadcastReceiver = new
-            TxAndBlockBroadcastReceiver();
+    private final TxAndBlockBroadcastReceiver txAndBlockBroadcastReceiver = new  TxAndBlockBroadcastReceiver();
     private final ProgressBroadcastReceiver broadcastReceiver = new ProgressBroadcastReceiver();
     private final AddressIsLoadedReceiver addressIsLoadedReceiver = new AddressIsLoadedReceiver();
 
@@ -115,14 +114,12 @@ public class HotActivity extends BaseFragmentActivity {
     }
 
     private void registerReceiver() {
-        registerReceiver(broadcastReceiver, new IntentFilter(NotificationAndroidImpl
-                .ACTION_SYNC_BLOCK_AND_WALLET_STATE));
+        registerReceiver(broadcastReceiver, new IntentFilter(NotificationAndroidImpl.ACTION_SYNC_BLOCK_AND_WALLET_STATE));
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(NotificationAndroidImpl.ACTION_SYNC_LAST_BLOCK_CHANGE);
         intentFilter.addAction(NotificationAndroidImpl.ACTION_ADDRESS_BALANCE);
         registerReceiver(txAndBlockBroadcastReceiver, intentFilter);
-        registerReceiver(addressIsLoadedReceiver,
-                new IntentFilter(NotificationAndroidImpl.ACTION_ADDRESS_LOAD_COMPLETE_STATE));
+        registerReceiver(addressIsLoadedReceiver,new IntentFilter(NotificationAndroidImpl.ACTION_ADDRESS_LOAD_COMPLETE_STATE));
     }
 
     @Override

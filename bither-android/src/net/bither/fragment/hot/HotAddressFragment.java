@@ -283,8 +283,7 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
             int position = 0;
             if (Utils.compareString(addressesToShowAdded.get(0), HDAccount.HDAccountPlaceHolder)) {
                 isHD = true;
-            } else if (Utils.compareString(addressesToShowAdded.get(0), HDAccount
-                    .HDAccountMonitoredPlaceHolder)) {
+            } else if (Utils.compareString(addressesToShowAdded.get(0), HDAccount.HDAccountMonitoredPlaceHolder)) {
                 isHDMonitored = true;
             } else if (addressesToShowAdded.get(0).startsWith("3")) {
                 isHDM = true;
@@ -314,11 +313,8 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
                 }
             } else {
                 if (privates != null && privates.size() > 0) {
-                    for (int i = 0;
-                         i < privates.size();
-                         i++) {
-                        if (Utils.compareString(privates.get(i).getAddress(),
-                                addressesToShowAdded.get(0))) {
+                    for (int i = 0;i < privates.size();i++) {
+                        if (Utils.compareString(privates.get(i).getAddress(),addressesToShowAdded.get(0))) {
                             isPrivate = true;
                             position = i;
                             break;
@@ -435,8 +431,7 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
         public void onScrollStateChanged(AbsListView view, int scrollState) {
         }
 
-        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-                             int totalItemCount) {
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,int totalItemCount) {
             PinnedHeaderAddressExpandableListView v = (PinnedHeaderAddressExpandableListView) view;
             final long flatPos = v.getExpandableListPosition(firstVisibleItem);
             int groupPosition = ExpandableListView.getPackedPositionGroup(flatPos);

@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.spongycastle.crypto.params.KeyParameter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -66,15 +67,11 @@ public class Address implements Comparable<Address> {
         super();
     }
 
-    public Address(String address, byte[] pubKey, String encryptString, boolean isSyncComplete
-            , boolean isFromXRandom) {
-        this(address, pubKey, AddressManager.getInstance().getSortTime(!Utils.isEmpty
-                (encryptString)), isSyncComplete, isFromXRandom, false, encryptString);
-
+    public Address(String address, byte[] pubKey, String encryptString, boolean isSyncComplete, boolean isFromXRandom) {
+        this(address, pubKey, AddressManager.getInstance().getSortTime(!Utils.isEmpty(encryptString)), isSyncComplete, isFromXRandom, false, encryptString);
     }
 
-    public Address(String address, byte[] pubKey, long sortTime, boolean isSyncComplete,
-                   boolean isFromXRandom, boolean isTrashed, String encryptPrivKey) {
+    public Address(String address, byte[] pubKey, long sortTime, boolean isSyncComplete,boolean isFromXRandom, boolean isTrashed, String encryptPrivKey) {
         this.encryptPrivKey = encryptPrivKey;
         this.address = address;
         this.pubKey = pubKey;
@@ -458,4 +455,19 @@ public class Address implements Comparable<Address> {
     }
 
 
+    @Override
+    public String toString() {
+        return "Address{" +
+                "encryptPrivKey='" + encryptPrivKey + '\'' +
+                ", pubKey=" + Arrays.toString(pubKey) +
+                ", address='" + address + '\'' +
+                ", syncComplete=" + syncComplete +
+                ", mSortTime=" + mSortTime +
+                ", balance=" + balance +
+                ", isFromXRandom=" + isFromXRandom +
+                ", isTrashed=" + isTrashed +
+                ", alias='" + alias + '\'' +
+                ", vanityLen=" + vanityLen +
+                '}';
+    }
 }

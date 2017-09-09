@@ -354,7 +354,6 @@ public class BlockchainService extends android.app.Service {
                         TransactionsUtil.getMyTxFromBither();
                     }
                     startPeerManager();
-
                 }
             }
         } catch (Exception e) {

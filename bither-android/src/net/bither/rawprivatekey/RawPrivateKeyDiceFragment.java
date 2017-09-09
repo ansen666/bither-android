@@ -47,6 +47,7 @@ import net.bither.ui.base.dialog.DialogPassword;
 import net.bither.ui.base.dialog.DialogProgress;
 import net.bither.ui.base.listener.IDialogPasswordListener;
 import net.bither.util.BackupUtil;
+import net.bither.util.LogUtil;
 import net.bither.util.ThreadUtil;
 import net.bither.util.UIUtil;
 import net.bither.util.WalletUtils;
@@ -228,9 +229,10 @@ public class RawPrivateKeyDiceFragment extends Fragment implements IDialogPasswo
                 key = PrivateKeyUtil.encrypt(key, password);
                 Utils.wipeBytes(data);
                 password.wipe();
-                Address address = new Address(key.toAddress(), key.getPubKey(),
-                        PrivateKeyUtil.getEncryptedString(key), false, false);
+                Address address = new Address(key.toAddress(), key.getPubKey(),PrivateKeyUtil.getEncryptedString(key), false, false);
                 key.clearPrivateKey();
+
+                LogUtil.i("ansen","RawPrivateKeyDiceFragment onPasswordEntered address:"+address.toString());
                 AddressManager.getInstance().addAddress(address);
 
                 if (AppSharedPreference.getInstance().getAppMode() == BitherjSettings.AppMode

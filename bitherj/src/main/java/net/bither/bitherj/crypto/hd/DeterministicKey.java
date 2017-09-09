@@ -63,11 +63,7 @@ public class DeterministicKey extends ECKey {
     /**
      * Constructs a key from its components. This is not normally something you should use.
      */
-    public DeterministicKey(ImmutableList<ChildNumber> childNumberPath,
-                            byte[] chainCode,
-                            ECPoint publicAsPoint,
-                            @Nullable BigInteger priv,
-                            @Nullable DeterministicKey parent) {
+    public DeterministicKey(ImmutableList<ChildNumber> childNumberPath,byte[] chainCode,ECPoint publicAsPoint,@Nullable BigInteger priv,@Nullable DeterministicKey parent) {
         super(priv, compressPoint(checkNotNull(publicAsPoint)).getEncoded(), true);
         checkArgument(chainCode.length == 32);
         this.parent = parent;
@@ -75,11 +71,7 @@ public class DeterministicKey extends ECKey {
         this.chainCode = Arrays.copyOf(chainCode, chainCode.length);
     }
 
-    public DeterministicKey(ImmutableList<ChildNumber> childNumberPath,
-                            byte[] chainCode,
-                            byte[] pub,
-                            @Nullable BigInteger priv,
-                            @Nullable DeterministicKey parent) {
+    public DeterministicKey(ImmutableList<ChildNumber> childNumberPath,byte[] chainCode,byte[] pub,@Nullable BigInteger priv,@Nullable DeterministicKey parent) {
         super(priv, pub, true);
         checkArgument(chainCode.length == 32);
         this.parent = parent;

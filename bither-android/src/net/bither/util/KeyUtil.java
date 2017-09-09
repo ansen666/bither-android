@@ -54,6 +54,7 @@ public class KeyUtil {
                     ecKey.getPubKey(), PrivateKeyUtil.getEncryptedString(ecKey), true, ecKey.isFromXRandom());
             ecKey.clearPrivateKey();
             addressList.add(address);
+            LogUtil.i("ansen","KeyUtil addPrivateKeyByRandomWithPassphras address:"+address.toString());
             AddressManager.getInstance().addAddress(address);
 
         }
@@ -81,10 +82,9 @@ public class KeyUtil {
             if (address.hasPrivKey() && !hasPrivateKey) {
                 hasPrivateKey = true;
             }
-            if (!addressManager.getPrivKeyAddresses().contains(address) &&
-                    !addressManager.getWatchOnlyAddresses().contains(address)) {
+            if (!addressManager.getPrivKeyAddresses().contains(address) && !addressManager.getWatchOnlyAddresses().contains(address)) {
+                LogUtil.i("ansen","KeyUtil addAddressListByDesc address:"+address.toString());
                 addressManager.addAddress(address);
-
             }
         }
         if (hasPrivateKey) {

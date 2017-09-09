@@ -165,11 +165,13 @@ public class HDAccount extends Address {
 
         DeterministicKey internalKey = getChainRootKey(accountKey, AbstractHD.PathType.INTERNAL_ROOT_PATH);
         DeterministicKey externalKey = getChainRootKey(accountKey, AbstractHD.PathType.EXTERNAL_ROOT_PATH);
+
         if (checkDuplicated(externalKey.getPubKeyExtended(), internalKey.getPubKeyExtended())) {
             throw new DuplicatedHDAccountException();
         }
         DeterministicKey key = externalKey.deriveSoftened(0);
         String firstAddress = key.toAddress();
+
         accountKey.wipe();
 
         progress += GenerationPreStartProgress;
@@ -198,12 +200,14 @@ public class HDAccount extends Address {
                 generationDelegate.onHDAccountGenerationProgress(progress);
             }
         }
+
+        log.debug("ansen encryptedMnemonicSeed:"+encryptedMnemonicSeed+" firstAddress:"+firstAddress);
+
         if (encryptedMnemonicSeed == null) {
             hdSeedId = AbstractDb.hdAccountProvider.addMonitoredHDAccount(firstAddress,isFromXRandom, externalKey.getPubKeyExtended(), internalKey.getPubKeyExtended());
             hasSeed = false;
         } else {
-            hdSeedId = AbstractDb.hdAccountProvider.addHDAccount(encryptedMnemonicSeed
-                    .toEncryptedString(), encryptedHDSeed.toEncryptedString(), firstAddress,
+            hdSeedId = AbstractDb.hdAccountProvider.addHDAccount(encryptedMnemonicSeed.toEncryptedString(), encryptedHDSeed.toEncryptedString(), firstAddress,
                     isFromXRandom, address, externalKey.getPubKeyExtended(), internalKey.getPubKeyExtended());
             hasSeed = true;
         }
@@ -726,8 +730,7 @@ public class HDAccount extends Address {
         return account;
     }
 
-    protected DeterministicKey masterKey(CharSequence password) throws MnemonicException
-            .MnemonicLengthException {
+    protected DeterministicKey masterKey(CharSequence password) throws MnemonicException.MnemonicLengthException {
         long begin = System.currentTimeMillis();
         decryptHDSeed(password);
         DeterministicKey master = HDKeyDerivation.createMasterPrivateKey(hdSeed);
@@ -796,8 +799,7 @@ public class HDAccount extends Address {
         try {
             DeterministicKey master = masterKey(password);
             DeterministicKey accountKey = getAccount(master);
-            DeterministicKey externalChainRoot = getChainRootKey(accountKey, AbstractHD.PathType
-                    .EXTERNAL_ROOT_PATH);
+            DeterministicKey externalChainRoot = getChainRootKey(accountKey, AbstractHD.PathType.EXTERNAL_ROOT_PATH);
             DeterministicKey key = externalChainRoot.deriveSoftened(index);
             master.wipe();
             accountKey.wipe();
@@ -814,8 +816,7 @@ public class HDAccount extends Address {
         try {
             DeterministicKey master = masterKey(password);
             DeterministicKey accountKey = getAccount(master);
-            DeterministicKey externalChainRoot = getChainRootKey(accountKey, AbstractHD.PathType
-                    .INTERNAL_ROOT_PATH);
+            DeterministicKey externalChainRoot = getChainRootKey(accountKey, AbstractHD.PathType.INTERNAL_ROOT_PATH);
             DeterministicKey key = externalChainRoot.deriveSoftened(index);
             master.wipe();
             accountKey.wipe();
@@ -1008,9 +1009,7 @@ public class HDAccount extends Address {
             DeterministicKey pathTypeKey = getChainRootKey(accountKey, pathType);
             for (int i = (page -1) * 10;i < page * 10; i ++) {
                 DeterministicKey key = pathTypeKey.deriveSoftened(i);
-                HDAccountAddress hdAccountAddress = new HDAccountAddress
-                        (key.toAddress(),key.getPubKeyExtended(),pathType,i,false,true,hdSeedId);
-
+                HDAccountAddress hdAccountAddress = new HDAccountAddress(key.toAddress(),key.getPubKeyExtended(),pathType,i,false,true,hdSeedId);
                 addresses.add(hdAccountAddress);
             }
             master.wipe();

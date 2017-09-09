@@ -69,8 +69,7 @@ public class RawDataBinaryView extends FrameLayout {
             return;
         }
         removeAllViews();
-        setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable
-                .border_bottom_right));
+        setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.border_bottom_right));
         configureSize();
         double width = (double) (getLayoutParams().width - getPaddingRight() - getPaddingLeft())
                 / (double) column;
@@ -78,12 +77,8 @@ public class RawDataBinaryView extends FrameLayout {
         ) / (double) row;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         LayoutParams lp;
-        for (int y = 0;
-             y < row;
-             y++) {
-            for (int x = 0;
-                 x < column;
-                 x++) {
+        for (int y = 0;y < row;y++) {
+            for (int x = 0;x < column;x++) {
                 lp = new LayoutParams((int) width, (int) height, Gravity.LEFT | Gravity.TOP);
                 lp.topMargin = (int) ((double) y * height);
                 lp.leftMargin = (int) ((double) x * width);
@@ -129,9 +124,7 @@ public class RawDataBinaryView extends FrameLayout {
         }
         int byteCount = dataLength() / 8;
         byte[] bytes = new byte[byteCount];
-        for (int i = 0;
-             i < byteCount;
-             i++) {
+        for (int i = 0;i < byteCount;i++) {
             bytes[i] = getByteFromData(i * 8, false, false);
         }
         return bytes;
@@ -170,8 +163,7 @@ public class RawDataBinaryView extends FrameLayout {
         data.remove(size - 1);
         final ImageView iv = (ImageView) ((FrameLayout) getChildAt(size - 1)).getChildAt(0);
         if(iv.getVisibility() == View.VISIBLE){
-            ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF,
-                    0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            ScaleAnimation anim = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
             anim.setDuration(300);
             anim.setFillAfter(true);
             iv.startAnimation(anim);
@@ -208,12 +200,9 @@ public class RawDataBinaryView extends FrameLayout {
 
     private byte getByteFromData(int start, boolean fill, boolean lastValue) {
         StringBuilder builder = new StringBuilder();
-        for (int i = start;
-             i < start + 8;
-             i++) {
+        for (int i = start;i < start + 8;i++) {
             Boolean value = fill;
-            if (i < data.size()) {
-                value = data.get(i);
+            if (i < data.size()) {value = data.get(i);
             } else if (i == data.size()) {
                 value = lastValue;
             }

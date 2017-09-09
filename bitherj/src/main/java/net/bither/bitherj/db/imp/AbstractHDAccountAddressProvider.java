@@ -880,8 +880,7 @@ public abstract class AbstractHDAccountAddressProvider extends AbstractProvider 
         if (idColumn != -1) {
             hdAccountId = c.getInt(idColumn);
         }
-        hdAccountAddress = new HDAccount.HDAccountAddress(address, pubs,
-                ternalRootType, index, isIssued, isSynced, hdAccountId);
+        hdAccountAddress = new HDAccount.HDAccountAddress(address, pubs,ternalRootType, index, isIssued, isSynced, hdAccountId);
         return hdAccountAddress;
     }
 

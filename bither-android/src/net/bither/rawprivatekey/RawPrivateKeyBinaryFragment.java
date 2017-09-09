@@ -47,6 +47,7 @@ import net.bither.ui.base.dialog.DialogPassword;
 import net.bither.ui.base.dialog.DialogProgress;
 import net.bither.ui.base.listener.IDialogPasswordListener;
 import net.bither.util.BackupUtil;
+import net.bither.util.LogUtil;
 import net.bither.util.ThreadUtil;
 import net.bither.util.UIUtil;
 import net.bither.util.WalletUtils;
@@ -67,8 +68,7 @@ public class RawPrivateKeyBinaryFragment extends Fragment implements IDialogPass
     private LinearLayout llInput;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_raw_private_key_binary, null);
         vData = (RawDataBinaryView) v.findViewById(R.id.v_data);
         btnZero = (Button) v.findViewById(R.id.btn_zero);
@@ -83,8 +83,7 @@ public class RawPrivateKeyBinaryFragment extends Fragment implements IDialogPass
         tvAddress = (TextView) v.findViewById(R.id.tv_address);
         btnAdd = (Button) v.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(addKeyClick);
-        vData.setRestrictedSize(getResources().getDisplayMetrics().widthPixels - UIUtil.dip2pix
-                (16), (int) (getResources().getDisplayMetrics().heightPixels * 0.47f));
+        vData.setRestrictedSize(getResources().getDisplayMetrics().widthPixels - UIUtil.dip2pix(16), (int) (getResources().getDisplayMetrics().heightPixels * 0.47f));
         vData.setDataSize(16, 16);
         llShow.setVisibility(View.GONE);
         llInput.setVisibility(View.VISIBLE);
@@ -209,11 +208,10 @@ public class RawPrivateKeyBinaryFragment extends Fragment implements IDialogPass
                 key = PrivateKeyUtil.encrypt(key, password);
                 Utils.wipeBytes(data);
                 password.wipe();
-                Address address = new Address(key.toAddress(), key.getPubKey(),
-                        PrivateKeyUtil.getEncryptedString(key), false, false);
+                Address address = new Address(key.toAddress(), key.getPubKey(),PrivateKeyUtil.getEncryptedString(key), false, false);
+                LogUtil.i("ansen","RawPrivateKeyBinaryFragment onPasswordEntered address:"+address.toString());
                 key.clearPrivateKey();
                 AddressManager.getInstance().addAddress(address);
-
                 if (AppSharedPreference.getInstance().getAppMode() == BitherjSettings.AppMode
                         .COLD) {
                     BackupUtil.backupColdKey(false);
@@ -227,8 +225,7 @@ public class RawPrivateKeyBinaryFragment extends Fragment implements IDialogPass
                     @Override
                     public void run() {
                         getActivity().finish();
-                        if (AppSharedPreference.getInstance().getAppMode() == BitherjSettings
-                                .AppMode.HOT) {
+                        if (AppSharedPreference.getInstance().getAppMode() == BitherjSettings.AppMode.HOT) {
                             Fragment f = BitherApplication.hotActivity.getFragmentAtIndex(1);
                             if (f instanceof HotAddressFragment) {
                                 HotAddressFragment hotAddressFragment = (HotAddressFragment) f;

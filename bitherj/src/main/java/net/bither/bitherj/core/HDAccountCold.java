@@ -228,8 +228,7 @@ public class HDAccountCold extends AbstractHD {
     }
 
     public HDAccount.HDAccountAddress addressForPath(PathType type, int index) {
-        DeterministicKey root = HDKeyDerivation.createMasterPubKeyFromExtendedBytes
-                (type == PathType.EXTERNAL_ROOT_PATH ? getExternalPub() : getInternalPub());
+        DeterministicKey root = HDKeyDerivation.createMasterPubKeyFromExtendedBytes(type == PathType.EXTERNAL_ROOT_PATH ? getExternalPub() : getInternalPub());
       return new HDAccount.HDAccountAddress(root.deriveSoftened(index).getPubKey(), type, index, true, hdSeedId);
     }
 
@@ -237,8 +236,7 @@ public class HDAccountCold extends AbstractHD {
         try {
             DeterministicKey master = masterKey(password);
             DeterministicKey accountKey = getAccount(master);
-            DeterministicKey externalChainRoot = getChainRootKey(accountKey, PathType
-                    .EXTERNAL_ROOT_PATH);
+            DeterministicKey externalChainRoot = getChainRootKey(accountKey, PathType.EXTERNAL_ROOT_PATH);
             DeterministicKey key = externalChainRoot.deriveSoftened(index);
             master.wipe();
             accountKey.wipe();
@@ -255,8 +253,7 @@ public class HDAccountCold extends AbstractHD {
         try {
             DeterministicKey master = masterKey(password);
             DeterministicKey accountKey = getAccount(master);
-            DeterministicKey externalChainRoot = getChainRootKey(accountKey, PathType
-                    .INTERNAL_ROOT_PATH);
+            DeterministicKey externalChainRoot = getChainRootKey(accountKey, PathType.INTERNAL_ROOT_PATH);
             DeterministicKey key = externalChainRoot.deriveSoftened(index);
             master.wipe();
             accountKey.wipe();
@@ -269,8 +266,7 @@ public class HDAccountCold extends AbstractHD {
         }
     }
 
-    public String xPubB58(CharSequence password) throws MnemonicException
-            .MnemonicLengthException {
+    public String xPubB58(CharSequence password) throws MnemonicException.MnemonicLengthException {
         DeterministicKey master = masterKey(password);
         DeterministicKey purpose = master.deriveHardened(44);
         DeterministicKey coinType = purpose.deriveHardened(0);
@@ -291,9 +287,7 @@ public class HDAccountCold extends AbstractHD {
             DeterministicKey pathTypeKey = getChainRootKey(accountKey, pathType);
             for (int i = (page -1) * 10;i < page * 10; i ++) {
                 DeterministicKey key = pathTypeKey.deriveSoftened(i);
-                HDAccount.HDAccountAddress hdAccountAddress = new HDAccount.HDAccountAddress
-                        (key.toAddress(),key.getPubKeyExtended(),pathType,i,false,true,hdSeedId);
-
+                HDAccount.HDAccountAddress hdAccountAddress = new HDAccount.HDAccountAddress(key.toAddress(),key.getPubKeyExtended(),pathType,i,false,true,hdSeedId);
                 addresses.add(hdAccountAddress);
             }
             master.wipe();

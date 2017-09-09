@@ -133,8 +133,7 @@ public class BitherApplication extends Application {
         filePattern.setPattern("%d{HH:mm:ss.SSS} [%thread] %logger{0} - %msg%n");
         filePattern.start();
 
-        final RollingFileAppender<ILoggingEvent> fileAppender = new
-                RollingFileAppender<ILoggingEvent>();
+        final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<ILoggingEvent>();
         fileAppender.setContext(context);
         fileAppender.setFile(logFile.getAbsolutePath());
 
@@ -168,7 +167,7 @@ public class BitherApplication extends Application {
         final ch.qos.logback.classic.Logger log = context.getLogger(Logger.ROOT_LOGGER_NAME);
         log.addAppender(fileAppender);
         log.addAppender(logcatAppender);
-        log.setLevel(Level.INFO);
+        log.setLevel(Level.DEBUG);
     }
 
     private void initApp() {
