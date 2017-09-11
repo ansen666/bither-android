@@ -35,14 +35,15 @@ public class TxTest {
         tx.setBlockNo(304942);
         tx.setTxTime((int) new Date().getTime() / 1000);
         tx.setTxVer(1);
+
         In inPut = new In();
         inPut.setPrevTxHash(Utils.reverseBytes(Utils.hexStringToByteArray("d7f4efff7aeaffc1630dd3653e923a233fd463f9dc7dd4f97bb5cbf0cf99e56a")));
         inPut.setInSn(0);
         inPut.setTxHash(txHash);
         inPut.setInSequence(1);
         inPut.setInSignature(txHash);
-
         tx.addInput(inPut);
+
         Out out = new Out();
         out.setTxHash(txHash);
         out.setOutSn(0);

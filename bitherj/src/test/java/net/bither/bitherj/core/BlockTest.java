@@ -45,8 +45,7 @@ public class BlockTest {
 
     @Test
     public void testBlockConstructor() {
-        Block block = new Block(1, "0000000000000000000000000000000000000000000000000000000000000000"
-                , "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b", 1231006505
+        Block block = new Block(1, "0000000000000000000000000000000000000000000000000000000000000000", "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b", 1231006505
                 , 486604799, 2083236893, 0);
         byte[] expectBlockHash = Utils.reverseBytes(Utils.hexStringToByteArray("000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
         assertTrue(Arrays.equals(block.getBlockHash(), expectBlockHash));

@@ -136,13 +136,10 @@ public abstract class PeerSocketHandler extends AbstractTimeoutHandler implement
 
     @Override
     public int receiveBytes(ByteBuffer buff) {
-        checkArgument(buff.position() == 0 && buff.capacity() >= BitcoinSerializer
-                .BitcoinPacketHeader.HEADER_LENGTH + 4);
+        checkArgument(buff.position() == 0 && buff.capacity() >= BitcoinSerializer.BitcoinPacketHeader.HEADER_LENGTH + 4);
         try {
             // Repeatedly try to deserialize messages until we hit a BufferUnderflowException
-            for (int i = 0;
-                 true;
-                 i++) {
+            for (int i = 0;true;i++) {
                 // If we are in the middle of reading a message, try to fill that one first,
                 // before we expect another
                 if (largeReadBuffer != null) {
@@ -192,8 +189,7 @@ public abstract class PeerSocketHandler extends AbstractTimeoutHandler implement
                             // that we use to deserialize the magic+header,
                             // but that is rather complicated when the buff
                             // should probably be at least that big anyway (for efficiency)
-                            throw new ProtocolException("No magic bytes+header after reading " +
-                                    buff.capacity() + " bytes");
+                            throw new ProtocolException("No magic bytes+header after reading " + buff.capacity() + " bytes");
                         }
                     } else {
                         // Reposition the buffer to its original position,

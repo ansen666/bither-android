@@ -117,8 +117,7 @@ public class HDAccount extends Address {
     }
 
     //use in import
-    public HDAccount(MnemonicCode mnemonicCode, EncryptedData encryptedMnemonicSeed, CharSequence password, boolean isSyncedComplete)
-            throws MnemonicException.MnemonicLengthException {
+    public HDAccount(MnemonicCode mnemonicCode, EncryptedData encryptedMnemonicSeed, CharSequence password, boolean isSyncedComplete)throws MnemonicException.MnemonicLengthException {
         this.mnemonicCode = mnemonicCode;
         mnemonicSeed = encryptedMnemonicSeed.decrypt(password);
         hdSeed = seedFromMnemonic(mnemonicCode, mnemonicSeed);
@@ -475,13 +474,11 @@ public class HDAccount extends Address {
         return AbstractDb.hdAccountAddressProvider.getBelongAccountAddresses(this.hdSeedId, addressList);
     }
 
-    public Tx newTx(String toAddress, Long amount, CharSequence password) throws
-            TxBuilderException, MnemonicException.MnemonicLengthException {
+    public Tx newTx(String toAddress, Long amount, CharSequence password) throws TxBuilderException, MnemonicException.MnemonicLengthException {
         return newTx(new String[]{toAddress}, new Long[]{amount}, password);
     }
 
-    public Tx newTx(String[] toAddresses, Long[] amounts, CharSequence password) throws
-            TxBuilderException, MnemonicException.MnemonicLengthException {
+    public Tx newTx(String[] toAddresses, Long[] amounts, CharSequence password) throws TxBuilderException, MnemonicException.MnemonicLengthException {
         if (password != null && !hasPrivKey()) {
             throw new RuntimeException("Can not sign without private key");
         }
@@ -609,8 +606,7 @@ public class HDAccount extends Address {
     }
 
 
-    public Tx newTx(String[] toAddresses, Long[] amounts) throws TxBuilderException,
-            MnemonicException.MnemonicLengthException {
+    public Tx newTx(String[] toAddresses, Long[] amounts) throws TxBuilderException,MnemonicException.MnemonicLengthException {
         List<Out> outs = AbstractDb.hdAccountAddressProvider.getUnspendOutByHDAccount(hdSeedId);
         Tx tx = TxBuilder.getInstance().buildTxFromAllAddress(outs, getNewChangeAddress(), Arrays
                 .asList(amounts), Arrays.asList(toAddresses));

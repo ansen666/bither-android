@@ -364,8 +364,7 @@ public class HotAdvanceActivity extends SwipeRightFragmentActivity {
         public void onClick(View view) {
            long lastBlockHeight = PeerManager.instance().getLastBlockHeight();
             if (lastBlockHeight < BitherSetting.BTCFORKBLOCKNO) {
-                DropdownMessage.showDropdownMessage(HotAdvanceActivity.this,String.format(getString
-                        (R.string.please_firstly_sync_to_block_no),BitherSetting.BTCFORKBLOCKNO));
+                DropdownMessage.showDropdownMessage(HotAdvanceActivity.this,String.format(getString(R.string.please_firstly_sync_to_block_no),BitherSetting.BTCFORKBLOCKNO));
             } else {
                 AddressManager addressManager = AddressManager.getInstance();
                 if (!addressManager.hasHDAccountHot() && !addressManager.hasHDAccountMonitored() &&

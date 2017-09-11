@@ -153,8 +153,7 @@ public class In extends Message {
         this.inSequence = NO_SEQUENCE;
     }
 
-    public In(@Nullable Tx parentTransaction, byte[] scriptBytes,
-              Out outpoint) {
+    public In(@Nullable Tx parentTransaction, byte[] scriptBytes,Out outpoint) {
         super();
         this.inSignature = scriptBytes;
         this.prevTxHash = outpoint.getTxHash();

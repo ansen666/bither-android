@@ -103,8 +103,7 @@ public class Out extends Message {
         // value when calculating
         // SIGHASH_SINGLE signatures, so unfortunately we have to allow that here.
         checkArgument(value >= 0 || value == -1, "Negative values not allowed");
-        checkArgument(value < BitherjSettings.MAX_MONEY, "Values larger than MAX_MONEY not " +
-                "allowed");
+        checkArgument(value < BitherjSettings.MAX_MONEY, "Values larger than MAX_MONEY not " +"allowed");
         this.outValue = value;
         this.outScript = scriptBytes;
         this.tx = parent;

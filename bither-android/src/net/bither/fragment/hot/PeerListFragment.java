@@ -116,34 +116,24 @@ public final class PeerListFragment extends ListFragment {
                 rowIp.setText(hostname != null ? hostname : address
                         .getHostAddress());
 
-                final TextView rowHeight = (TextView) row
-                        .findViewById(R.id.peer_list_row_height);
+                final TextView rowHeight = (TextView) row.findViewById(R.id.peer_list_row_height);
                 final long bestHeight = peer.getDisplayLastBlockHeight();
-                rowHeight.setText(bestHeight > 0 ? bestHeight + " blocks"
-                        : null);
-                rowHeight.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD
-                        : Typeface.DEFAULT);
+                rowHeight.setText(bestHeight > 0 ? bestHeight + " blocks" : null);
+                rowHeight.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
 
-                final TextView rowVersion = (TextView) row
-                        .findViewById(R.id.peer_list_row_version);
+                final TextView rowVersion = (TextView) row.findViewById(R.id.peer_list_row_version);
                 rowVersion.setText(peer.getSubVersion());
-                rowVersion.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD
-                        : Typeface.DEFAULT);
+                rowVersion.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
 
-                final TextView rowProtocol = (TextView) row
-                        .findViewById(R.id.peer_list_row_protocol);
-                rowProtocol
-                        .setText("protocol: " + peer.getClientVersion());
-                rowProtocol.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD
-                        : Typeface.DEFAULT);
+                final TextView rowProtocol = (TextView) row.findViewById(R.id.peer_list_row_protocol);
+                rowProtocol.setText("protocol: " + peer.getClientVersion());
+                rowProtocol.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
 
-                final TextView rowPing = (TextView) row
-                        .findViewById(R.id.peer_list_row_ping);
+                final TextView rowPing = (TextView) row.findViewById(R.id.peer_list_row_ping);
                 final long pingTime = peer.pingTime;
                 rowPing.setText(pingTime < Long.MAX_VALUE ? getString(
                         R.string.peer_list_row_ping_time, pingTime) : null);
-                rowPing.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD
-                        : Typeface.DEFAULT);
+                rowPing.setTypeface(isDownloading ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
 
                 return row;
             }
@@ -262,8 +252,7 @@ public final class PeerListFragment extends ListFragment {
         }
 
         @Override
-        public void onLoadFinished(final Loader<List<Peer>> loader,
-                                   final List<Peer> peers) {
+        public void onLoadFinished(final Loader<List<Peer>> loader,final List<Peer> peers) {
             adapter.clear();
             peerCacheList = peers;
             refreshPeer();

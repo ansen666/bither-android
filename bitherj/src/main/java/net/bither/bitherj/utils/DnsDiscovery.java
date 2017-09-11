@@ -56,7 +56,6 @@ public class DnsDiscovery {
     }
 
     public Peer[] getPeers(long timeoutValue, TimeUnit timeoutUnit) {
-
         // Java doesn't have an async DNS API so we have to do all lookups in a thread pool,
         // as sometimes seeds go
         // hard down and it takes ages to give up and move on.
@@ -70,11 +69,8 @@ public class DnsDiscovery {
                         return InetAddress.getAllByName(seed);
                     }
                 });
-            final List<Future<InetAddress[]>> futures = threadPool.invokeAll(tasks, timeoutValue,
-                    timeoutUnit);
-            for (int i = 0;
-                 i < futures.size();
-                 i++) {
+            final List<Future<InetAddress[]>> futures = threadPool.invokeAll(tasks, timeoutValue,timeoutUnit);
+            for (int i = 0;i < futures.size();i++) {
                 Future<InetAddress[]> future = futures.get(i);
                 if (future.isCancelled()) {
                     log.warn("{} timed out", hostNames[i]);
@@ -84,8 +80,7 @@ public class DnsDiscovery {
                 try {
                     inetAddresses = future.get();
                 } catch (ExecutionException e) {
-                    log.error("Failed to look up DNS seeds from {}: {}", hostNames[i],
-                            e.getMessage());
+                    log.error("Failed to look up DNS seeds from {}: {}", hostNames[i],e.getMessage());
                     continue;
                 }
                 for (InetAddress addr : inetAddresses) {

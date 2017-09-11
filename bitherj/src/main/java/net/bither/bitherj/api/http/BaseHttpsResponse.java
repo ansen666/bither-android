@@ -28,7 +28,7 @@ public abstract class BaseHttpsResponse<T> {
 
     }
 
-    protected String getUrl() {
+    public String getUrl() {
         return mUrl;
     }
 

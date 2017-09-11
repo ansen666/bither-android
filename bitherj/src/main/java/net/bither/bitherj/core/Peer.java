@@ -142,8 +142,7 @@ public class Peer extends PeerSocketHandler {
         incrementalBlockHeight = 0;
         unrelatedTxRelayCount = 0;
         nonce = new Random().nextLong();
-        peerTimestamp = (int) (new Date().getTime() / 1000 - 24 * 60 * 60 * (3 + new Random()
-                .nextFloat() * 4));
+        peerTimestamp = (int) (new Date().getTime() / 1000 - 24 * 60 * 60 * (3 + new Random().nextFloat() * 4));
         synchronising = false;
         syncBlocks = new ArrayList<Block>();
         syncBlockHashes = new ArrayList<Sha256Hash>();
@@ -151,8 +150,7 @@ public class Peer extends PeerSocketHandler {
 
     public void connect() {
         if (state != State.Disconnected) {
-            log.info("peer[{}:{}] call connect, but its state is not disconnected",
-                    this.peerAddress.getHostAddress(), this.peerPort);
+            log.info("peer[{}:{}] call connect, but its state is not disconnected",this.peerAddress.getHostAddress(), this.peerPort);
             return;
         } else {
             log.info("peer[{}:{}] call connect", this.peerAddress.getHostAddress(), this.peerPort);

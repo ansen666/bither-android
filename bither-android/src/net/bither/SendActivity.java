@@ -213,8 +213,7 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
                         run.setHandler(rcheckHandler);
                         new Thread(run).start();
                     } else {
-                        DropdownMessage.showDropdownMessage(SendActivity.this,
-                                R.string.password_wrong);
+                        DropdownMessage.showDropdownMessage(SendActivity.this,R.string.password_wrong);
                     }
                     break;
                 case HandlerMessage.MSG_PASSWORD_WRONG:
@@ -314,8 +313,7 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
                     return;
                 }
                 try {
-                    CompleteTransactionRunnable completeRunnable = new
-                            CompleteTransactionRunnable(addressPosition,
+                    CompleteTransactionRunnable completeRunnable = new CompleteTransactionRunnable(addressPosition,
                             amountCalculatorLink.getAmount(), address
                             , dialogSelectChangeAddress.getChangeAddress().getAddress
                             (), new SecureCharSequence(etPassword.getText()));

@@ -1197,8 +1197,7 @@ public abstract class AbstractTxProvider extends AbstractProvider implements ITx
                 }
             }
             if (!Utils.isEmpty(outItem.getOutAddress())) {
-                addressTxes.add(new AddressTx(outItem.getOutAddress(), Base58.encode(txItem
-                        .getTxHash())));
+                addressTxes.add(new AddressTx(outItem.getOutAddress(), Base58.encode(txItem.getTxHash())));
             }
             final boolean[] isSpentByExistTx = {false};
             this.execQueryOneRecord(db, queryPrevTxHashSql, new String[]{Base58.encode(txItem.getTxHash())

@@ -165,16 +165,13 @@ public class BitcoinSerializer {
         // Verify the checksum.
         byte[] hash;
         hash = doubleDigest(payloadBytes);
-        if (header.checksum[0] != hash[0] || header.checksum[1] != hash[1] ||
-                header.checksum[2] != hash[2] || header.checksum[3] != hash[3]) {
+        if (header.checksum[0] != hash[0] || header.checksum[1] != hash[1] ||header.checksum[2] != hash[2] || header.checksum[3] != hash[3]) {
             throw new ProtocolException("Checksum failed to verify, actual " +
-                    bytesToHexString(hash) +
-                    " vs " + bytesToHexString(header.checksum));
+                    bytesToHexString(hash) + " vs " + bytesToHexString(header.checksum));
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Received {} byte '{}' message: {}", header.size, header.command,
-                    Utils.bytesToHexString(payloadBytes));
+            log.debug("Received {} byte '{}' message: {}", header.size, header.command,Utils.bytesToHexString(payloadBytes));
         }
 
         try {

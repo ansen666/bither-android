@@ -50,8 +50,7 @@ public class DialogHdSendConfirm extends CenterDialog implements DialogInterface
 
     }
 
-    public DialogHdSendConfirm(Context context, String toAddress, Tx tx, boolean isBtc,
-                               SendConfirmListener listener) {
+    public DialogHdSendConfirm(Context context, String toAddress, Tx tx, boolean isBtc,SendConfirmListener listener) {
         super(context);
         this.listener = listener;
         setOnDismissListener(this);

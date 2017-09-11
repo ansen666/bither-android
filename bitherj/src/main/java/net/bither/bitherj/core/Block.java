@@ -111,13 +111,11 @@ public class Block extends Message {
      *               as the length will be provided as part of the header.  If unknown then set to Message.UNKNOWN_LENGTH
      * @throws ProtocolException
      */
-    public Block(byte[] payloadBytes, int length)
-            throws ProtocolException {
+    public Block(byte[] payloadBytes, int length)throws ProtocolException {
         super(payloadBytes, 0, length);
     }
 
-    public Block(long version, String prevBlock, String merkleRoot, int timestamp
-            , long target, long nonce, int height) {
+    public Block(long version, String prevBlock, String merkleRoot, int timestamp,long target, long nonce, int height) {
         this.blockVer = version;
         this.blockPrev = Utils.reverseBytes(Utils.hexStringToByteArray(prevBlock));
         this.blockRoot = Utils.reverseBytes(Utils.hexStringToByteArray(merkleRoot));

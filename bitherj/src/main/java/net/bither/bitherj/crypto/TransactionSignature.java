@@ -33,7 +33,7 @@ public class TransactionSignature extends ECKey.ECDSASignature {
         SINGLE(2),     // 3
         BCCFORK(1|0x40|0);  // 65
         public int value;
-        private SigHash (int value) {
+        SigHash (int value) {
             this.value = value;
         }
     }

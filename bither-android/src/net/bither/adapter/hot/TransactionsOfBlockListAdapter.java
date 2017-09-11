@@ -76,9 +76,7 @@ public class TransactionsOfBlockListAdapter extends BaseAdapter {
     private static final int VIEW_TYPE_TRANSACTION = 0;
     private static final int VIEW_TYPE_WARNING = 1;
 
-    public TransactionsOfBlockListAdapter(final Context context,
-                                          @Nonnull final Address address, final int maxConnectedPeers,
-                                          final boolean showBackupWarning) {
+    public TransactionsOfBlockListAdapter(final Context context,@Nonnull final Address address, final int maxConnectedPeers,final boolean showBackupWarning) {
         this.context = context;
         inflater = LayoutInflater.from(context);
 

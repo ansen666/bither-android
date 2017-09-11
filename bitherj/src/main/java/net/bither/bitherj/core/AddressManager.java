@@ -929,8 +929,7 @@ public class AddressManager implements HDMKeychain.HDMAddressChangeDelegate,
 //    }
 
     public Tx compressTx(Tx tx, List<String> inAddresses) {
-        if (tx.getOuts().size() > BitherjSettings.COMPRESS_OUT_NUM
-                && !isSendFromMe(tx, inAddresses)) {
+        if (tx.getOuts().size() > BitherjSettings.COMPRESS_OUT_NUM&& !isSendFromMe(tx, inAddresses)) {
             List<Out> outList = new ArrayList<Out>();
             for (Out out : tx.getOuts()) {
                 String outAddress = out.getOutAddress();

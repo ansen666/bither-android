@@ -146,8 +146,7 @@ public class HotActivity extends BaseFragmentActivity {
     }
 
     private void deleteNotification() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context
-                .NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(BitherSetting.NOTIFICATION_ID_COINS_RECEIVED);
     }
 

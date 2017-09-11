@@ -132,8 +132,7 @@ public final class CurrencyCalculatorLink {
             return btcAmountView.getAmount();
         } else if (exchangeRate > 0) {
             final long localAmount = localAmountView.getAmount();
-            return localAmount > 0 ? BigInteger.valueOf((long) (localAmount / exchangeRate))
-                    .longValue() : 0;
+            return localAmount > 0 ? BigInteger.valueOf((long) (localAmount / exchangeRate)).longValue() : 0;
         } else {
             return 0;
         }

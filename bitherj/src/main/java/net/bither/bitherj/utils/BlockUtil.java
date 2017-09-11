@@ -43,8 +43,7 @@ public class BlockUtil {
     private static final String BLOCK_NO = "block_no";
     private static final String HEIGHT = "height";
 
-    public  static Block getLatestBlockHeight(JSONObject jsonObject)
-            throws Exception {
+    public  static Block getLatestBlockHeight(JSONObject jsonObject)throws Exception {
         int latestHeight = jsonObject.getInt("height");
         int height = 0;
         if (latestHeight % 2016 !=0){
@@ -56,6 +55,7 @@ public class BlockUtil {
         blockChainDownloadSpvApi.handleHttpGet();
         Block block = null;
         block = blockChainDownloadSpvApi.getResult();
+        log.info("获取根区块信息 url:"+blockChainDownloadSpvApi.getUrl()+" mrkl_root:"+block.getBlockRoot());
         return block;
     }
     public static Block formatStoreBlockFromBlockChainInfo(JSONObject jsonObject)
@@ -68,9 +68,7 @@ public class BlockUtil {
         long difficultyTarget = jsonObject.getLong(BITS);
         long nonce = jsonObject.getLong(NONCE);
 
-        return BlockUtil.getStoredBlock(ver, prevBlock, mrklRoot, time,
-                difficultyTarget, nonce, height);
-
+        return BlockUtil.getStoredBlock(ver, prevBlock, mrklRoot, time,difficultyTarget, nonce, height);
     }
 
     public static Block formatStoredBlock(JSONObject jsonObject)
@@ -101,12 +99,8 @@ public class BlockUtil {
 
     }
 
-    public static Block getStoredBlock(long ver, String prevBlock,
-                                       String mrklRoot, int time, long difficultyTarget, long nonce,
-                                       int hegiht) {
-        Block b = new Block(ver,
-                prevBlock, mrklRoot, time,
-                difficultyTarget, nonce, hegiht);
+    public static Block getStoredBlock(long ver, String prevBlock,String mrklRoot, int time, long difficultyTarget, long nonce,int hegiht) {
+        Block b = new Block(ver,prevBlock, mrklRoot, time,difficultyTarget, nonce, hegiht);
         return b;
     }
 
@@ -124,8 +118,7 @@ public class BlockUtil {
         }
         try {
             if (block == null) {
-                BlockChainGetLatestBlockApi blockChainGetLatestBlockApi = new
-                        BlockChainGetLatestBlockApi();
+                BlockChainGetLatestBlockApi blockChainGetLatestBlockApi = new BlockChainGetLatestBlockApi();
                 blockChainGetLatestBlockApi.handleHttpGet();
                 block = blockChainGetLatestBlockApi.getResult();
             }

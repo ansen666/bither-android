@@ -93,15 +93,13 @@ public class NotificationAndroidImpl implements NotificationService {
     @Override
     public void sendBroadcastPeerState(final int numPeers) {
         final Intent broadcast = new Intent(ACTION_PEER_STATE);
-
         broadcast.putExtra(ACTION_PEER_STATE_NUM_PEERS, numPeers);
         BitherApplication.mContext.sendStickyBroadcast(broadcast);
     }
 
     @Override
     public void removeBroadcastPeerState() {
-        BitherApplication.mContext.removeStickyBroadcast(new Intent(
-                ACTION_PEER_STATE));
+        BitherApplication.mContext.removeStickyBroadcast(new Intent(ACTION_PEER_STATE));
     }
 
     @Override

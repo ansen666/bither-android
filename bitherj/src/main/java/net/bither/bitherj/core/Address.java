@@ -337,8 +337,7 @@ public class Address implements Comparable<Address> {
         return resultStrs;
     }
 
-    public List<byte[]> signHashes(List<byte[]> unsignedInHashes, CharSequence passphrase, TransactionSignature.SigHash sigHash) throws
-            PasswordException {
+    public List<byte[]> signHashes(List<byte[]> unsignedInHashes, CharSequence passphrase, TransactionSignature.SigHash sigHash) throws PasswordException {
         ECKey key = PrivateKeyUtil.getECKeyFromSingleString(this.getFullEncryptPrivKey(), passphrase);
         if (key == null) {
             throw new PasswordException("do not decrypt eckey");
@@ -346,8 +345,7 @@ public class Address implements Comparable<Address> {
         KeyParameter assKey = key.getKeyCrypter().deriveKey(passphrase);
         List<byte[]> result = new ArrayList<byte[]>();
         for (byte[] unsignedInHash : unsignedInHashes) {
-            TransactionSignature signature = new TransactionSignature(key.sign(unsignedInHash,
-                    assKey), sigHash, false);
+            TransactionSignature signature = new TransactionSignature(key.sign(unsignedInHash,assKey), sigHash, false);
             result.add(ScriptBuilder.createInputScript(signature, key).getProgram());
         }
         key.clearPrivateKey();

@@ -78,8 +78,7 @@ public abstract class AbstractPeerProvider extends AbstractProvider implements I
             IDb writeDb = this.getWriteDb();
             writeDb.beginTransaction();
             for (Peer item : addItems) {
-                this.execUpdate(writeDb, sql, new String[]{
-                        Long.toString(Utils.parseLongFromAddress(item.getPeerAddress()))
+                this.execUpdate(writeDb, sql, new String[]{Long.toString(Utils.parseLongFromAddress(item.getPeerAddress()))
                         , Integer.toString(item.getPeerPort())
                         , Long.toString(item.getPeerServices())
                         , Integer.toString(item.getPeerTimestamp())

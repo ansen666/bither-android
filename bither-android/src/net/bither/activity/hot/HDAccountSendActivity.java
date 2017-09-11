@@ -41,8 +41,7 @@ import net.bither.ui.base.dialog.DialogHdSendConfirm;
 /**
  * Created by songchenwen on 15/4/17.
  */
-public class HDAccountSendActivity extends SendActivity implements DialogHdSendConfirm
-        .SendConfirmListener {
+public class HDAccountSendActivity extends SendActivity implements DialogHdSendConfirm.SendConfirmListener {
     private long btcAmount;
     private String toAddress;
     private Tx tx;
@@ -99,8 +98,7 @@ public class HDAccountSendActivity extends SendActivity implements DialogHdSendC
             btcAmount = 0;
             tx = null;
             String msg = getString(R.string.send_failed);
-            if (e instanceof KeyCrypterException || e instanceof MnemonicException
-                    .MnemonicLengthException) {
+            if (e instanceof KeyCrypterException || e instanceof MnemonicException.MnemonicLengthException) {
                 msg = getString(R.string.password_wrong);
             } else if (e instanceof TxBuilderException) {
                 msg = e.getMessage();
@@ -166,8 +164,7 @@ public class HDAccountSendActivity extends SendActivity implements DialogHdSendC
                             }
                             Intent intent = getIntent();
                             if (tx != null) {
-                                intent.putExtra(SelectAddressToSendActivity
-                                        .INTENT_EXTRA_TRANSACTION, tx.getHashAsString());
+                                intent.putExtra(SelectAddressToSendActivity.INTENT_EXTRA_TRANSACTION, tx.getHashAsString());
                             }
                             setResult(RESULT_OK, intent);
                             finish();

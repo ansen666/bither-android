@@ -170,9 +170,7 @@ public class BlockchainService extends android.app.Service {
         }
         super.onDestroy();
 
-        log.info("service was up for "
-                + ((System.currentTimeMillis() - serviceCreatedAt) / 1000 / 60)
-                + " minutes");
+        log.info("service was up for " + ((System.currentTimeMillis() - serviceCreatedAt) / 1000 / 60) + " minutes");
     }
 
     @Override
@@ -234,8 +232,7 @@ public class BlockchainService extends android.app.Service {
         private void onReceive(final Intent intent) throws BlockStoreException {
             final String action = intent.getAction();
             if (ConnectivityManager.CONNECTIVITY_ACTION.equals(action)) {
-                hasConnectivity = !intent.getBooleanExtra(
-                        ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+                hasConnectivity = !intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
                 log.info("network is " + (hasConnectivity ? "up" : "down"));
                 check();
             } else if (Intent.ACTION_DEVICE_STORAGE_LOW.equals(action)) {

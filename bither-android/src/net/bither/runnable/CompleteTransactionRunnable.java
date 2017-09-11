@@ -97,8 +97,7 @@ public class CompleteTransactionRunnable extends BaseRunnable {
         sigFetcher2 = otherSigFetcher2;
         this.isBtc = isBtc;
         if (isHDM) {
-            Address a = AddressManager.getInstance().getHdmKeychain().getAddresses().get
-                    (addressPosition);
+            Address a = AddressManager.getInstance().getHdmKeychain().getAddresses().get(addressPosition);
             wallet = a;
             toSign = true;
         } else if (password == null || password.length() == 0) {
@@ -136,8 +135,7 @@ public class CompleteTransactionRunnable extends BaseRunnable {
                     if (sigFetcher1 != null && sigFetcher2 != null) {
                         ((HDMAddress) wallet).signTx(tx, password, sigFetcher1, sigFetcher2);
                     } else if (sigFetcher1 != null || sigFetcher2 != null) {
-                        ((HDMAddress) wallet).signTx(tx, password,
-                                sigFetcher1 != null ? sigFetcher1 : sigFetcher2);
+                        ((HDMAddress) wallet).signTx(tx, password,sigFetcher1 != null ? sigFetcher1 : sigFetcher2);
                     } else {
                         throw new RuntimeException("need sig fetcher to sign hdm tx");
                     }
