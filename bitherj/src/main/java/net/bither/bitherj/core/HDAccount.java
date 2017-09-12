@@ -186,6 +186,8 @@ public class HDAccount extends Address {
             byte[] subExternalPub = externalKey.deriveSoftened(i).getPubKey();
             HDAccountAddress externalAddress = new HDAccountAddress(subExternalPub, AbstractHD.PathType.EXTERNAL_ROOT_PATH, i, isSyncedComplete,hdSeedId);
             externalAddresses.add(externalAddress);
+
+            log.info("当前位置"+i+" 外部地址:"+externalAddress.getAddress());
             progress += itemProgress;
             if (generationDelegate != null) {
                 generationDelegate.onHDAccountGenerationProgress(progress);
@@ -193,6 +195,7 @@ public class HDAccount extends Address {
 
             byte[] subInternalPub = internalKey.deriveSoftened(i).getPubKey();
             HDAccountAddress internalAddress = new HDAccountAddress(subInternalPub, AbstractHD.PathType.INTERNAL_ROOT_PATH, i, isSyncedComplete,hdSeedId);
+            log.info("当前位置"+i+" 内部地址:"+internalAddress.getAddress());
             internalAddresses.add(internalAddress);
             progress += itemProgress;
             if (generationDelegate != null) {
@@ -259,27 +262,26 @@ public class HDAccount extends Address {
     public void supplyEnoughKeys(boolean isSyncedComplete) {
         int lackOfExternal = issuedExternalIndex() + 1 + LOOK_AHEAD_SIZE - allGeneratedExternalAddressCount();
         if (lackOfExternal > 0) {
-            log.info("ansen supplyEnoughKeys lackOfExternal {}", lackOfExternal);
+            log.info("ansen supplyEnoughKeys lackOfExternal:"+lackOfExternal);
             supplyNewExternalKey(lackOfExternal, isSyncedComplete);
         }
 
         int lackOfInternal = issuedInternalIndex() + 1 + LOOK_AHEAD_SIZE - allGeneratedInternalAddressCount();
         if (lackOfInternal > 0) {
-            log.info("ansen supplyEnoughKeys lackOfInternal {}", lackOfInternal);
+            log.info("ansen supplyEnoughKeys lackOfInternal:"+lackOfInternal);
             supplyNewInternalKey(lackOfInternal, isSyncedComplete);
         }
     }
 
     private void supplyNewInternalKey(int count, boolean isSyncedComplete) {
-        DeterministicKey root = HDKeyDerivation.createMasterPubKeyFromExtendedBytes
-                (getInternalPub());
+        DeterministicKey root = HDKeyDerivation.createMasterPubKeyFromExtendedBytes(getInternalPub());
         int firstIndex = allGeneratedInternalAddressCount();
         ArrayList<HDAccountAddress> as = new ArrayList<HDAccountAddress>();
         for (int i = firstIndex;i < firstIndex + count;i++) {
             as.add(new HDAccountAddress(root.deriveSoftened(i).getPubKey(), AbstractHD.PathType.INTERNAL_ROOT_PATH, i, isSyncedComplete, hdSeedId));
         }
         AbstractDb.hdAccountAddressProvider.addAddress(as);
-        log.info("ansen supplied {} internal addresses supplyNewInternalKey", as.size());
+        log.info("ansen supplied internal addresses supplyNewInternalKey :"+as.size());
     }
 
     private void supplyNewExternalKey(int count, boolean isSyncedComplete) {
@@ -290,7 +292,7 @@ public class HDAccount extends Address {
             as.add(new HDAccountAddress(root.deriveSoftened(i).getPubKey(), AbstractHD.PathType.EXTERNAL_ROOT_PATH, i, isSyncedComplete, hdSeedId));
         }
         AbstractDb.hdAccountAddressProvider.addAddress(as);
-        log.info("HD supplied {} external addresses supplyNewExternalKey", as.size());
+        log.info("HD supplied external addresses supplyNewExternalKey:"+as.size());
     }
 
     protected String getEncryptedMnemonicSeed() {
@@ -316,13 +318,11 @@ public class HDAccount extends Address {
     }
 
     public int issuedInternalIndex() {
-        return AbstractDb.hdAccountAddressProvider.issuedIndex(this.hdSeedId, AbstractHD.PathType
-                .INTERNAL_ROOT_PATH);
+        return AbstractDb.hdAccountAddressProvider.issuedIndex(this.hdSeedId, AbstractHD.PathType.INTERNAL_ROOT_PATH);
     }
 
     public int issuedExternalIndex() {
-        return AbstractDb.hdAccountAddressProvider.issuedIndex(this.hdSeedId, AbstractHD.PathType
-                .EXTERNAL_ROOT_PATH);
+        return AbstractDb.hdAccountAddressProvider.issuedIndex(this.hdSeedId, AbstractHD.PathType.EXTERNAL_ROOT_PATH);
     }
 
     private int allGeneratedInternalAddressCount() {
@@ -351,8 +351,7 @@ public class HDAccount extends Address {
     public void onNewTx(Tx tx, Tx.TxNotificationType txNotificationType) {
         supplyEnoughKeys(true);
         long deltaBalance = getDeltaBalance();
-        AbstractApp.notificationService.notificatTx(hasPrivKey() ? HDAccountPlaceHolder :
-                        HDAccountMonitoredPlaceHolder, tx, txNotificationType,
+        AbstractApp.notificationService.notificatTx(hasPrivKey() ? HDAccountPlaceHolder : HDAccountMonitoredPlaceHolder, tx, txNotificationType,
                 deltaBalance);
     }
 
@@ -368,8 +367,7 @@ public class HDAccount extends Address {
 
     public void notificatTx(Tx tx, Tx.TxNotificationType txNotificationType) {
         long deltaBalance = getDeltaBalance();
-        AbstractApp.notificationService.notificatTx(hasPrivKey() ? HDAccountPlaceHolder :
-                HDAccountMonitoredPlaceHolder, tx, txNotificationType, deltaBalance);
+        AbstractApp.notificationService.notificatTx(hasPrivKey() ? HDAccountPlaceHolder : HDAccountMonitoredPlaceHolder, tx, txNotificationType, deltaBalance);
     }
 
     private long getDeltaBalance() {
@@ -884,7 +882,7 @@ public class HDAccount extends Address {
         public HDAccountAddress(String address, byte[] pub, AbstractHD.PathType pathType, int index, boolean isIssued, boolean isSyncedComplete, int hdAccountId) {
             this.pub = pub;
             this.address = address;
-            log.info("ansen HDAccountAddress address:{}", address);
+//            log.info("ansen HDAccountAddress address:{}", address);
             this.pathType = pathType;
             this.index = index;
             this.isIssued = isIssued;

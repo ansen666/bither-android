@@ -384,8 +384,7 @@ public class HotActivity extends BaseFragmentActivity {
                     totalWatchOnly += address.getBalance();
                 }
                 if (AddressManager.getInstance().hasHDMKeychain()) {
-                    for (HDMAddress address : AddressManager.getInstance().getHdmKeychain()
-                            .getAddresses()) {
+                    for (HDMAddress address : AddressManager.getInstance().getHdmKeychain().getAddresses()) {
                         totalHdm += address.getBalance();
                     }
                 }
@@ -399,10 +398,8 @@ public class HotActivity extends BaseFragmentActivity {
                 final long btcWatchOnly = totalWatchOnly;
                 final long btcHdm = totalHdm;
                 final long btcEnterpriseHdm = totalEnterpriseHdm;
-                final long btcHD = AddressManager.getInstance().hasHDAccountHot() ? AddressManager
-                        .getInstance().getHDAccountHot().getBalance() : 0;
-                final long btcHdMonitored = AddressManager.getInstance().hasHDAccountMonitored()
-                        ? AddressManager.getInstance().getHDAccountMonitored().getBalance() : 0;
+                final long btcHD = AddressManager.getInstance().hasHDAccountHot() ? AddressManager.getInstance().getHDAccountHot().getBalance() : 0;
+                final long btcHdMonitored = AddressManager.getInstance().hasHDAccountMonitored() ? AddressManager.getInstance().getHDAccountMonitored().getBalance() : 0;
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -452,13 +449,10 @@ public class HotActivity extends BaseFragmentActivity {
     }
 
     private final class TxAndBlockBroadcastReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            if (intent == null ||
-                    (!Utils.compareString(NotificationAndroidImpl.ACTION_ADDRESS_BALANCE, intent.getAction())
-                            && !Utils.compareString(NotificationAndroidImpl.ACTION_SYNC_LAST_BLOCK_CHANGE, intent.getAction()))) {
+            if (intent == null ||(!Utils.compareString(NotificationAndroidImpl.ACTION_ADDRESS_BALANCE, intent.getAction())
+                    && !Utils.compareString(NotificationAndroidImpl.ACTION_SYNC_LAST_BLOCK_CHANGE, intent.getAction()))) {
                 return;
             }
             if (Utils.compareString(NotificationAndroidImpl.ACTION_ADDRESS_BALANCE, intent.getAction())) {
@@ -466,6 +460,7 @@ public class HotActivity extends BaseFragmentActivity {
             }
             Fragment fragment = getFragmentAtIndex(1);
             if (fragment != null && fragment instanceof HotAddressFragment) {
+                LogUtil.i("ansen","HotActivity TxAndBlockBroadcastReceiver call refresh");
                 ((HotAddressFragment) fragment).refresh();
             }
         }
@@ -479,7 +474,8 @@ public class HotActivity extends BaseFragmentActivity {
             }
             refreshTotalBalance();
             Fragment fragment = getFragmentAtIndex(1);
-            if (fragment != null && fragment instanceof HotAddressFragment) {
+            if (fragment != null && fragment instanceof HotAddressFragment){
+                LogUtil.i("ansen","HotActivity AddressIsLoadedReceiver call refresh");
                 ((HotAddressFragment) fragment).refresh();
             }
         }

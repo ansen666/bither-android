@@ -541,6 +541,7 @@ public abstract class AbstractAddressProvider extends AbstractProvider implement
     }
 
 
+    //准备
     @Override
     public void prepareHDMAddresses(int hdSeedId, List<HDMAddress.Pubs> pubsList) {
         String sql = "select count(0) from hdm_addresses where hd_seed_id=? and hd_seed_index=?";
@@ -569,8 +570,7 @@ public abstract class AbstractAddressProvider extends AbstractProvider implement
         }
     }
 
-    protected abstract void insertHDMAddressToDb(IDb db, String address, int hdSeedId, int index, byte[] pubKeysHot,
-                                 byte[] pubKeysCold, byte[] pubKeysRemote, boolean isSynced);
+    protected abstract void insertHDMAddressToDb(IDb db, String address, int hdSeedId, int index, byte[] pubKeysHot,byte[] pubKeysCold, byte[] pubKeysRemote, boolean isSynced);
 
     @Override
     public List<HDMAddress.Pubs> getUncompletedHDMAddressPubs(int hdSeedId, int count) {
@@ -676,14 +676,14 @@ public abstract class AbstractAddressProvider extends AbstractProvider implement
         }
     }
 
+    //恢复
     @Override
     public void recoverHDMAddresses(int hdSeedId, List<HDMAddress> addresses) {
         IDb writeDb = this.getWriteDb();
         writeDb.beginTransaction();
         for (int i = 0; i < addresses.size(); i++) {
             HDMAddress address = addresses.get(i);
-            this.insertHDMAddressToDb(writeDb, address.getAddress(), hdSeedId, address.getIndex()
-                    , address.getPubHot(), address.getPubCold(), address.getPubRemote(), false);
+            this.insertHDMAddressToDb(writeDb, address.getAddress(), hdSeedId, address.getIndex() , address.getPubHot(), address.getPubCold(), address.getPubRemote(), false);
         }
         writeDb.endTransaction();
     }

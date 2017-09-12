@@ -416,6 +416,9 @@ public class AddressManager implements HDMKeychain.HDMAddressChangeDelegate,
     }
 
     public boolean addAddress(Address address) {
+        Logger logger=LoggerFactory.getLogger(AddressManager.class);
+
+        logger.info("AddressManager addAddress");
         synchronized (lock) {
             if (getAllAddresses().contains(address)) {
                 return false;
@@ -424,6 +427,7 @@ public class AddressManager implements HDMKeychain.HDMAddressChangeDelegate,
                 long sortTime = getPrivKeySortTime();
                 address.setSortTime(sortTime);
                 if (!this.getTrashAddresses().contains(address)) {
+                    logger.info("addAddress 添加地址:"+address.toString());
                     AbstractDb.addressProvider.addAddress(address);
                     privKeyAddresses.add(0, address);
                     addressHashSet.add(address.address);
@@ -437,6 +441,7 @@ public class AddressManager implements HDMKeychain.HDMAddressChangeDelegate,
             } else {
                 long sortTime = getWatchOnlySortTime();
                 address.setSortTime(sortTime);
+                logger.info("addAddress 添加地址:"+address.toString());
                 AbstractDb.addressProvider.addAddress(address);
                 watchOnlyAddresses.add(0, address);
                 addressHashSet.add(address.address);

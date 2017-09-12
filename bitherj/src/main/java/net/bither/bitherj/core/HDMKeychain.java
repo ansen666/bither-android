@@ -33,31 +33,28 @@ import javax.annotation.Nullable;
 
 public class HDMKeychain extends AbstractHD {
 
-    public static interface HDMFetchRemotePublicKeys {
+    public interface HDMFetchRemotePublicKeys {
         void completeRemotePublicKeys(CharSequence password, List<HDMAddress.Pubs> partialPubs)
                 throws Exception;
     }
 
-    public static interface HDMFetchRemoteAddresses {
+    public interface HDMFetchRemoteAddresses {
         List<HDMAddress.Pubs> getRemoteExistsPublicKeys(CharSequence password);
     }
 
-    public static interface HDMAddressChangeDelegate {
-        public void hdmAddressAdded(HDMAddress address);
+    public interface HDMAddressChangeDelegate {
+        void hdmAddressAdded(HDMAddress address);
     }
 
     private static final Logger log = LoggerFactory.getLogger(HDMKeychain.class);
-
 
     protected ArrayList<HDMAddress> allCompletedAddresses;
     private Collection<HDMAddress> addressesInUse;
     private Collection<HDMAddress> addressesTrashed;
 
-
     private HDMAddressChangeDelegate addressChangeDelegate;
 
-    public HDMKeychain(byte[] mnemonicSeed, CharSequence password) throws MnemonicException
-            .MnemonicLengthException {
+    public HDMKeychain(byte[] mnemonicSeed, CharSequence password) throws MnemonicException.MnemonicLengthException {
         this.mnemonicSeed = mnemonicSeed;
         String firstAddress = null;
         EncryptedData encryptedMnemonicSeed = null;
@@ -72,8 +69,7 @@ public class HDMKeychain extends AbstractHD {
         firstAddress = getFirstAddressFromSeed(password);
         wipeHDSeed();
         wipeMnemonicSeed();
-        hdSeedId = AbstractDb.addressProvider.addHDKey(encryptedMnemonicSeed.toEncryptedString(),
-                encryptedHDSeed.toEncryptedString(), firstAddress, isFromXRandom, address);
+        hdSeedId = AbstractDb.addressProvider.addHDKey(encryptedMnemonicSeed.toEncryptedString(),encryptedHDSeed.toEncryptedString(), firstAddress, isFromXRandom, address);
         allCompletedAddresses = new ArrayList<HDMAddress>();
 
     }
@@ -101,8 +97,7 @@ public class HDMKeychain extends AbstractHD {
         k.clearPrivateKey();
         wipeHDSeed();
         wipeMnemonicSeed();
-        hdSeedId = AbstractDb.addressProvider.addHDKey(encryptedMnemonicSeed.toEncryptedString(),
-                encryptedHDSeed.toEncryptedString(), firstAddress, isFromXRandom, address);
+        hdSeedId = AbstractDb.addressProvider.addHDKey(encryptedMnemonicSeed.toEncryptedString(),encryptedHDSeed.toEncryptedString(), firstAddress, isFromXRandom, address);
         allCompletedAddresses = new ArrayList<HDMAddress>();
     }
 
@@ -114,9 +109,7 @@ public class HDMKeychain extends AbstractHD {
     }
 
     // Import
-    public HDMKeychain(EncryptedData encryptedMnemonicSeed, CharSequence password,
-                       HDMFetchRemoteAddresses fetchDelegate) throws
-            HDMBitherIdNotMatchException, MnemonicException.MnemonicLengthException {
+    public HDMKeychain(EncryptedData encryptedMnemonicSeed, CharSequence password,HDMFetchRemoteAddresses fetchDelegate) throws HDMBitherIdNotMatchException, MnemonicException.MnemonicLengthException {
         mnemonicSeed = encryptedMnemonicSeed.decrypt(password);
         hdSeed = seedFromMnemonic(mnemonicSeed);
         isFromXRandom = encryptedMnemonicSeed.isXRandom();
@@ -158,9 +151,7 @@ public class HDMKeychain extends AbstractHD {
         wipeMnemonicSeed();
         wipeHDSeed();
 
-        this.hdSeedId = AbstractDb.addressProvider.addHDKey(encryptedMnemonicSeed
-                        .toEncryptedString(), encryptedHDSeed.toEncryptedString(), firstAddress,
-                isFromXRandom, address);
+        this.hdSeedId = AbstractDb.addressProvider.addHDKey(encryptedMnemonicSeed.toEncryptedString(), encryptedHDSeed.toEncryptedString(), firstAddress,isFromXRandom, address);
         if (as.size() > 0) {
             AbstractDb.addressProvider.completeHDMAddresses(getHdSeedId(), as);
             allCompletedAddresses.addAll(as);

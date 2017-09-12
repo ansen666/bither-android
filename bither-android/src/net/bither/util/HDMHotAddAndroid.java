@@ -57,9 +57,7 @@ public class HDMHotAddAndroid extends HDMHotAdd {
         dp = new DialogProgress(activity, R.string.please_wait);
         dp.setCancelable(false);
         hdmKeychainLimit = AddressManager.isHDMKeychainLimit();
-
     }
-
 
     @Override
     public void hotClick() {
@@ -99,9 +97,7 @@ public class HDMHotAddAndroid extends HDMHotAdd {
                             singular.generateEntropy();
                         } else {
                             singular.runningWithoutSingularMode();
-                            HDMKeychain keychain = new HDMKeychain(new SecureRandom(),
-                                    password);
-
+                            HDMKeychain keychain = new HDMKeychain(new SecureRandom(),password);
                             KeyUtil.setHDKeyChain(keychain);
                             ThreadUtil.runOnMainThread(new Runnable() {
                                 @Override

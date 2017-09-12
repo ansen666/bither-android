@@ -261,8 +261,7 @@ public class TrashCanActivity extends SwipeRightFragmentActivity {
                 if (dp == null) {
                     dp = new DialogProgress(TrashCanActivity.this, R.string.please_wait);
                 }
-                new DialogConfirmTask(TrashCanActivity.this,
-                        getString(R.string.trash_address_restore), new Runnable() {
+                new DialogConfirmTask(TrashCanActivity.this,getString(R.string.trash_address_restore), new Runnable() {
                     @Override
                     public void run() {
                         new ThreadNeedService(dp, TrashCanActivity.this) {
@@ -285,19 +284,15 @@ public class TrashCanActivity extends SwipeRightFragmentActivity {
                                         notifyDataSetChanged();
                                         if (AppSharedPreference.getInstance().getAppMode() ==
                                                 BitherjSettings.AppMode.HOT) {
-                                            Fragment f = BitherApplication.hotActivity
-                                                    .getFragmentAtIndex(1);
+                                            Fragment f = BitherApplication.hotActivity.getFragmentAtIndex(1);
                                             if (f instanceof HotAddressFragment) {
-                                                HotAddressFragment hotAddressFragment =
-                                                        (HotAddressFragment) f;
+                                                HotAddressFragment hotAddressFragment = (HotAddressFragment) f;
                                                 hotAddressFragment.refresh();
                                             }
                                         } else {
-                                            Fragment f = BitherApplication.coldActivity
-                                                    .getFragmentAtIndex(1);
+                                            Fragment f = BitherApplication.coldActivity.getFragmentAtIndex(1);
                                             if (f instanceof ColdAddressFragment) {
-                                                ColdAddressFragment coldAddressFragment =
-                                                        (ColdAddressFragment) f;
+                                                ColdAddressFragment coldAddressFragment = (ColdAddressFragment) f;
                                                 coldAddressFragment.refresh();
                                             }
                                         }

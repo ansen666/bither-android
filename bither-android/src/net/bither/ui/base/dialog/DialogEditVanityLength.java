@@ -39,8 +39,7 @@ import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 /**
  * Created by songchenwen on 15/5/6.
  */
-public class DialogEditVanityLength extends CenterDialog implements DialogInterface
-        .OnDismissListener, View.OnClickListener, OnWheelChangedListener {
+public class DialogEditVanityLength extends CenterDialog implements DialogInterface.OnDismissListener, View.OnClickListener, OnWheelChangedListener {
     private int clickedId;
     private Address address;
     private TextView tvAddress;
@@ -56,8 +55,7 @@ public class DialogEditVanityLength extends CenterDialog implements DialogInterf
         tvAddress = (TextView) findViewById(R.id.tv_address);
         wvLength = (WheelView) findViewById(R.id.wv_length);
         wvLength.setViewAdapter(lengthAdapter);
-        wvLength.setCurrentItem(address.exsitsVanityLen() ? Math.max(address.getVanityLen() - 1,
-                0) : 0);
+        wvLength.setCurrentItem(address.exsitsVanityLen() ? Math.max(address.getVanityLen() - 1, 0) : 0);
         wvLength.addChangingListener(this);
         showVanityLength(address.getVanityLen());
     }

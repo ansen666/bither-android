@@ -41,6 +41,7 @@ import net.bither.BitherSetting;
 import net.bither.R;
 import net.bither.activity.hot.AddHotAddressActivity;
 import net.bither.bitherj.core.AddressManager;
+import net.bither.bitherj.core.HDAccount;
 import net.bither.bitherj.core.HDMAddress;
 import net.bither.bitherj.delegate.HDMSingular;
 import net.bither.qrcode.ScanActivity;
@@ -86,8 +87,7 @@ public class AddAddressHotHDMFragment extends Fragment implements AddHotAddressA
     private HDMHotAddAndroid hdmHotAddWithAndroid;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_address_hot_hdm, container, false);
         initView(v);
         v.postDelayed(new Runnable() {

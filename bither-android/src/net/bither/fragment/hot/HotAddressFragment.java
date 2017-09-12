@@ -74,9 +74,9 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
     public void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
         broadcastIntentFilter.addAction(BroadcastUtil.ACTION_MARKET);
-        watchOnlys = new ArrayList<Address>();
-        privates = new ArrayList<Address>();
-        hdms = new ArrayList<HDMAddress>();
+        watchOnlys = new ArrayList<>();
+        privates = new ArrayList<>();
+        hdms = new ArrayList<>();
     }
 
     public void refresh() {
@@ -121,9 +121,7 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
                 ivNoAddress.setVisibility(View.GONE);
                 lv.setVisibility(View.VISIBLE);
             }
-            for (int i = 0;
-                 i < mAdapter.getGroupCount();
-                 i++) {
+            for (int i = 0;i < mAdapter.getGroupCount();i++) {
                 lv.expandGroup(i);
             }
             if (notifyAddress != null) {

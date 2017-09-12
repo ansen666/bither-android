@@ -104,6 +104,7 @@ public class HDMBId {
 
         RecoveryHDMApi recoveryHDMApi = new RecoveryHDMApi(address, Utils.hexStringToByteArray(signString), decryptedPassword);
         recoveryHDMApi.handleHttpPost();
+        log.info("恢复hdm请求服务器:"+recoveryHDMApi.getUrl());
         List<HDMAddress.Pubs> result = recoveryHDMApi.getResult();
         ECKey k = new ECKey(decryptedPassword, null);
         String address = k.toAddress();

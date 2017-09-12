@@ -22,8 +22,6 @@ public class RecoveryHDMApi extends HttpsPostResponse<List<HDMAddress.Pubs>> {
         setUrl(url);
         this.signature = signature;
         this.password = password;
-
-
     }
 
     @Override

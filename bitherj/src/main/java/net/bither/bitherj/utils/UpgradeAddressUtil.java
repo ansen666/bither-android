@@ -24,14 +24,15 @@ import net.bither.bitherj.core.HDAccount;
 import net.bither.bitherj.db.AbstractDb;
 import net.bither.bitherj.qrcode.QRCodeUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class UpgradeAddressUtil {
-
-
     private static List<Address> initPrivateKeyListByDesc() {
         List<Address> privKeyAddresses = new ArrayList<Address>();
 
@@ -144,8 +145,9 @@ public class UpgradeAddressUtil {
         for (Address address : addressList) {
             address.setSyncComplete(false);
             AddressManager.getInstance().addAddress(address);
-            HDAccount
-            LogUtil.i("ansen","KeyUtil addPrivateKeyByRandomWithPassphras address:"+address.toString());
+
+            Logger log=LoggerFactory.getLogger(UpgradeAddressUtil.class);
+            log.info("ansen KeyUtil addPrivateKeyByRandomWithPassphras address:"+address.toString());
         }
         if (AbstractApp.bitherjSetting.getAppMode() == BitherjSettings.AppMode.HOT) {
             if (addressList.size() > 0) {
