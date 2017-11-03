@@ -74,7 +74,6 @@ public class KeyCrypterScrypt implements KeyCrypter, Serializable {
     public KeyCrypterScrypt() {
         mSalt = new byte[SALT_LENGTH];
         secureRandom.nextBytes(mSalt);
-
     }
 
 

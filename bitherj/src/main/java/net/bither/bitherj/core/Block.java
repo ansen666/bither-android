@@ -247,7 +247,9 @@ public class Block extends Message {
 
     public void verifyDifficultyFromPreviousBlock(Block prev) {
         // checkState(lock.isHeldByCurrentThread());
-
+        if(BitherjSettings.BITCOIN_TESTNET){
+            return;
+        }
         // Is this supposed to be a difficulty transition point?
         if ((prev.getBlockNo() + 1) % BitherjSettings.BLOCK_DIFFICULTY_INTERVAL != 0) {
 
@@ -315,7 +317,9 @@ public class Block extends Message {
 
     public void verifyDifficultyFromPreviousBlock(Block prev, int transitionTime) {
         // checkState(lock.isHeldByCurrentThread());
-
+        if(BitherjSettings.BITCOIN_TESTNET){
+            return;
+        }
         // Is this supposed to be a difficulty transition point?
         if ((prev.getBlockNo() + 1) % BitherjSettings.BLOCK_DIFFICULTY_INTERVAL != 0) {
 

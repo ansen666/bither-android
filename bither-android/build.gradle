@@ -2,9 +2,19 @@ repositories {
     mavenLocal()
     mavenCentral()
 }
+
+//解决“Cannot merge new index xxx into a non-jumbo instruction”的问题
+//参考链接:http://www.flysnow.org/2016/09/18/android-dex-jumbo-mode.html
+android{
+    dexOptions {
+        jumboMode true
+    }
+}
+
 dependencies {
     compile 'com.google.protobuf:protobuf-java:2.5.0'
     compile 'com.android.support:appcompat-v7:19.+'
+
     compile 'com.nineoldandroids:library:2.4.+'
     compile 'com.google.zxing:core:3.1.0@jar'
     compile('com.github.tony19:logback-android-classic:1.0.10-2@jar') {
@@ -15,4 +25,8 @@ dependencies {
     compile project(':wheel')
     compile project(':android-charts')
     compile project(':bitherj')
+
+    //调试用的
+    compile 'com.facebook.stetho:stetho:1.5.0'
+//    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }

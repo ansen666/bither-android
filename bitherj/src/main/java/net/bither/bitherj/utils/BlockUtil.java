@@ -21,6 +21,7 @@ import net.bither.bitherj.AbstractApp;
 import net.bither.bitherj.BitherjSettings;
 import net.bither.bitherj.api.BlockChainDownloadSpvApi;
 import net.bither.bitherj.api.BlockChainGetLatestBlockApi;
+import net.bither.bitherj.api.BlockExplorerApi;
 import net.bither.bitherj.api.DownloadSpvApi;
 import net.bither.bitherj.core.Block;
 import net.bither.bitherj.core.BlockChain;
@@ -85,6 +86,21 @@ public class BlockUtil {
                 difficultyTarget, nonce, height);
     }
 
+    public static Block formatStoredBlockForBlockExplorer(JSONObject jsonObject)
+            throws JSONException {
+        long ver = jsonObject.getLong("version");
+        int height = jsonObject.getInt("height");
+        String prevBlock = jsonObject.getString("previousblockhash");
+        String mrklRoot = jsonObject.getString("merkleroot");
+        int time = jsonObject.getInt(TIME);
+        String diffStr = jsonObject.getString(BITS);
+        long difficultyTarget = Long.parseLong(diffStr,16);
+        long nonce = jsonObject.getLong(NONCE);
+
+        return BlockUtil.getStoredBlock(ver, prevBlock, mrklRoot, time,
+                difficultyTarget, nonce, height);
+    }
+
     public static Block formatStoredBlock(JSONObject jsonObject, int hegih)
             throws JSONException {
         long ver = jsonObject.getLong(VER);
@@ -105,10 +121,16 @@ public class BlockUtil {
     }
 
     public synchronized static Block dowloadSpvBlock() throws Exception {
+
+        if(BitherjSettings.BITCOIN_TESTNET){
+            return dowloadSpvBlockFromBlockExplorer();
+        }
+
         if (AbstractApp.bitherjSetting.getDownloadSpvFinish()) {
             return null;
         }
         Block block = null;
+
         try {
             DownloadSpvApi downloadSpvApi = new DownloadSpvApi();
             downloadSpvApi.handleHttpGet();
@@ -140,4 +162,44 @@ public class BlockUtil {
     }
 
 
+    public synchronized static Block dowloadSpvBlockFromBlockExplorer() throws Exception {
+        if (AbstractApp.bitherjSetting.getDownloadSpvFinish()) {
+            return null;
+        }
+        Block block = null;
+
+        try {
+            BlockExplorerApi lastHeightApi = BlockExplorerApi.BlockCount();
+            lastHeightApi.handleHttpGet();
+            String strResult = lastHeightApi.getResult();
+            JSONObject jsonObject = new JSONObject(strResult);
+            int blockCount=jsonObject.getInt("blockcount");
+
+            BlockExplorerApi blockHashApi = BlockExplorerApi.SPVBlock(blockCount);
+            blockHashApi.handleHttpGet();
+            strResult = blockHashApi.getResult();
+            jsonObject = new JSONObject(strResult);
+            String blockHash=jsonObject.getString("blockHash");
+
+            BlockExplorerApi blockApi = BlockExplorerApi.Block(blockHash);
+            blockApi.handleHttpGet();
+            strResult = blockApi.getResult();
+            jsonObject = new JSONObject(strResult);
+            block=formatStoredBlockForBlockExplorer(jsonObject);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (block.getBlockNo() % BitherjSettings.INTERVAL == 0) {
+            BlockChain.getInstance().addSPVBlock(block);
+            AbstractApp.bitherjSetting.setDownloadSpvFinish(true);
+            AbstractApp.notificationService.sendBroadcastGetSpvBlockComplete(true);
+        } else {
+            log.debug("spv", "service is not vaild");
+            AbstractApp.notificationService.sendBroadcastGetSpvBlockComplete(false);
+            return null;
+        }
+        return block;
+    }
 }

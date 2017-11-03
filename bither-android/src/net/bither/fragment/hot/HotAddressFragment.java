@@ -177,9 +177,7 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
     @Override
     public void onPause() {
         int listItemCount = lv.getChildCount();
-        for (int i = 0;
-             i < listItemCount;
-             i++) {
+        for (int i = 0;i < listItemCount;i++) {
             View v = lv.getChildAt(i);
             if (v instanceof AddressFragmentListItemView) {
                 AddressFragmentListItemView av = (AddressFragmentListItemView) v;
@@ -253,9 +251,7 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
         @Override
         public void run() {
             super.run();
-            for (int i = 0;
-                 i < 20;
-                 i++) {
+            for (int i = 0;i < 20;i++) {
                 if (lv != null) {
                     lvRefreshing();
                     return;
@@ -325,11 +321,8 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
                         return;
                     }
                     boolean foundWatchonly = false;
-                    for (int i = 0;
-                         i < watchOnlys.size();
-                         i++) {
-                        if (Utils.compareString(watchOnlys.get(i).getAddress(),
-                                addressesToShowAdded.get(0))) {
+                    for (int i = 0;i < watchOnlys.size();i++) {
+                        if (Utils.compareString(watchOnlys.get(i).getAddress(),addressesToShowAdded.get(0))) {
                             foundWatchonly = true;
                             position = i;
                             break;
@@ -376,13 +369,10 @@ public class HotAddressFragment extends Fragment implements Refreshable, Selecta
                     for (int i = 0;
                          i < addressesToShowAdded.size();
                          i++) {
-                        int position = lv.getFlatListPosition(ExpandableListView
-                                .getPackedPositionForChild(g, p + i));
-                        if (position >= lv.getFirstVisiblePosition() && position <= lv
-                                .getLastVisiblePosition()) {
+                        int position = lv.getFlatListPosition(ExpandableListView.getPackedPositionForChild(g, p + i));
+                        if (position >= lv.getFirstVisiblePosition() && position <= lv.getLastVisiblePosition()) {
                             View v = lv.getChildAt(position - lv.getFirstVisiblePosition());
-                            v.startAnimation(AnimationUtils.loadAnimation(getActivity(),
-                                    R.anim.address_notification));
+                            v.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.address_notification));
                         }
                     }
                     addressesToShowAdded = null;

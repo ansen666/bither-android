@@ -38,8 +38,8 @@ public class AndroidImplAbstractApp extends AbstractApp {
 
     @Override
     public TrustCert initTrustCert() {
-        return new TrustCert(BitherApplication.mContext.getResources().openRawResource(R.raw
-                .bithertruststore), "bither".toCharArray(), "BKS");
+        return new TrustCert(BitherApplication.mContext.getResources().
+                openRawResource(R.raw.bithertruststore), "bither".toCharArray(), "BKS");
     }
 
     @Override
@@ -117,9 +117,6 @@ public class AndroidImplAbstractApp extends AbstractApp {
             public CookieStore getCookieStore() {
                 return PersistentCookieStore.getInstance();
             }
-
-
-            
         };
     }
 

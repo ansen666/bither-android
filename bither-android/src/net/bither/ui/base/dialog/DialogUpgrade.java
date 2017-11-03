@@ -29,8 +29,6 @@ public class DialogUpgrade extends CenterDialog {
         super(context);
         setContentView(R.layout.dialog_upgrade);
         tvMsg = (TextView) findViewById(R.id.tv_message);
-
-
     }
 
     public void setMessage(SpannableString msg) {

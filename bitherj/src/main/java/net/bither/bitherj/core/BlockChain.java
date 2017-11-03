@@ -91,7 +91,12 @@ public class BlockChain {
                 b = AbstractDb.blockProvider.getMainChainBlock(b.getBlockPrev());
             }
         }
-        locators.add(BitherjSettings.GENESIS_BLOCK_HASH);
+        if(BitherjSettings.BITCOIN_TESTNET){
+            locators.add(BitherjSettings.GENESIS_BLOCK_HASH_TEST);
+        }
+        else {
+            locators.add(BitherjSettings.GENESIS_BLOCK_HASH);
+        }
 
         return locators;
     }
@@ -211,9 +216,17 @@ public class BlockChain {
         } else if (this.inMainChain(block)) {
             result = true;
         } else {
-            if (block.getBlockNo() <= BitherjSettings.BITCOIN_REFERENCE_BLOCK_HEIGHT) {
-                log.debug("block is too old");
-                return false;
+            if(BitherjSettings.BITCOIN_TESTNET){
+                if (block.getBlockNo() <= BitherjSettings.BITCOIN_REFERENCE_BLOCK_HEIGHT_TEST) {
+                    log.debug("block is too old");
+                    return false;
+                }
+            }
+            else {
+                if (block.getBlockNo() <= BitherjSettings.BITCOIN_REFERENCE_BLOCK_HEIGHT) {
+                    log.debug("block is too old");
+                    return false;
+                }
             }
             if (block.getBlockNo() <= this.lastBlock.getBlockNo()) {
                 this.addOrphan(block);

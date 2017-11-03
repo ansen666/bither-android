@@ -40,8 +40,7 @@ public class AddColdAddressHDMActivity extends AddPrivateKeyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cold_address_hdm);
-        fragment = (AddAddressColdHDMFragment) getSupportFragmentManager().findFragmentById(R.id
-                .fragment);
+        fragment = (AddAddressColdHDMFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         findViewById(R.id.ibtn_cancel).setOnClickListener(new IBackClickListener());
     }
 

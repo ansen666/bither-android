@@ -24,12 +24,13 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.StrictMode;
 
+import com.facebook.stetho.Stetho;
+
 import net.bither.activity.cold.ColdActivity;
 import net.bither.activity.hot.HotActivity;
 import net.bither.bitherj.AbstractApp;
 import net.bither.bitherj.BitherjSettings;
 import net.bither.bitherj.core.AddressManager;
-import net.bither.bitherj.crypto.mnemonic.MnemonicCode;
 import net.bither.bitherj.utils.Threading;
 import net.bither.db.AddressDatabaseHelper;
 import net.bither.db.AndroidDbImpl;
@@ -72,7 +73,6 @@ public class BitherApplication extends Application {
 
     private static int FEE_UPDATE_CODE = 0;
 
-
     @Override
     public void onCreate() {
         new LinuxSecureRandom();
@@ -85,8 +85,7 @@ public class BitherApplication extends Application {
         AndroidImplAbstractApp appAndroid = new AndroidImplAbstractApp();
         appAndroid.construct();
         AbstractApp.notificationService.removeAddressLoadCompleteState();
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
-                .permitDiskReads().permitDiskWrites().penaltyLog().build());
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().permitDiskReads().permitDiskWrites().penaltyLog().build());
         Threading.throwOnLockCycles();
         initApp();
         mBitherApplication = this;
@@ -95,6 +94,9 @@ public class BitherApplication extends Application {
         activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 
         upgrade();
+
+        //facebook开源的一款在线调试的东西
+        Stetho.initializeWithDefaults(this);
     }
 
     @Override

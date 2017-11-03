@@ -51,10 +51,9 @@ import java.util.Arrays;
 public abstract class EntryKeyboardView extends KeyboardView implements KeyboardView
         .OnKeyboardActionListener, View.OnFocusChangeListener, View.OnClickListener,
         View.OnTouchListener, EntryKeyboard.DrawKeyListener {
-    public static interface EntryKeyboardViewListener {
-        public void onEntryKeyboardHide(EntryKeyboardView v);
-
-        public void onEntryKeyboardShow(EntryKeyboardView v);
+    public interface EntryKeyboardViewListener {
+        void onEntryKeyboardHide(EntryKeyboardView v);
+        void onEntryKeyboardShow(EntryKeyboardView v);
     }
 
     private static final String TAG = "EntryKeyboardHelper";

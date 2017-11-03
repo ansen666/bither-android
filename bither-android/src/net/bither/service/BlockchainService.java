@@ -136,8 +136,7 @@ public class BlockchainService extends android.app.Service {
         } else
         // workaround for no inexact set() before KitKat
         {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, now + interval,
-                    AlarmManager.INTERVAL_HOUR, alarmIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, now + interval,AlarmManager.INTERVAL_HOUR, alarmIntent);
         }
     }
 
@@ -180,8 +179,7 @@ public class BlockchainService extends android.app.Service {
     }
 
     @Override
-    public int onStartCommand(final Intent intent, final int flags,
-                              final int startId) {
+    public int onStartCommand(final Intent intent, final int flags,final int startId) {
         if (intent == null) {
             return START_NOT_STICKY;
         }

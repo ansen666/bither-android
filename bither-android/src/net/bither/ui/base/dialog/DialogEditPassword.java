@@ -102,8 +102,7 @@ public class DialogEditPassword extends Dialog implements Check.CheckListener,
         tvPasswordStrength = (TextView) findViewById(R.id.tv_password_strength);
         pbPasswordStrength = (ProgressBar) findViewById(R.id.pb_password_strength);
         flPasswordStrength = (FrameLayout) findViewById(R.id.fl_password_strength);
-        flPasswordStrengthContainer = (FrameLayout) findViewById(R.id
-                .fl_password_strength_container);
+        flPasswordStrengthContainer = (FrameLayout) findViewById(R.id.fl_password_strength_container);
         kv = (PasswordEntryKeyboardView) findViewById(R.id.kv);
         PasswordWatcher watcher = new PasswordWatcher();
         etOldPassword.addTextChangedListener(watcher);
@@ -156,8 +155,7 @@ public class DialogEditPassword extends Dialog implements Check.CheckListener,
                 return;
             }
             if (AppSharedPreference.getInstance().getPasswordStrengthCheck()) {
-                PasswordStrengthUtil.PasswordStrength strength = PasswordStrengthUtil
-                        .checkPassword(newP);
+                PasswordStrengthUtil.PasswordStrength strength = PasswordStrengthUtil.checkPassword(newP);
                 oldP.wipe();
                 newP.wipe();
                 newCP.wipe();

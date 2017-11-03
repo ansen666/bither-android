@@ -24,6 +24,12 @@
             android:layout_marginLeft="3dp"
             android:background="@drawable/ui_touchable_bg"
             android:src="@drawable/address_full_show_button" />
+
+        <TextView
+            android:id="@+id/tv_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
     </LinearLayout>
 
     <LinearLayout

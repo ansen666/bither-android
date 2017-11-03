@@ -106,24 +106,47 @@ public class ScriptBuilder {
      */
     public static Script createOutputScript(String to) {
         try {
-            if (Utils.getAddressHeader(to) == BitherjSettings.p2shHeader) {
-                // OP_HASH160 <scriptHash> OP_EQUAL
-                return new ScriptBuilder()
-                        .op(OP_HASH160)
-                        .data(Utils.getAddressHash(to))
-                        .op(OP_EQUAL)
-                        .build();
-            } else if (Utils.getAddressHeader(to) == BitherjSettings.addressHeader)  {
-                // OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
-                return new ScriptBuilder()
-                        .op(OP_DUP)
-                        .op(OP_HASH160)
-                        .data(Utils.getAddressHash(to))
-                        .op(OP_EQUALVERIFY)
-                        .op(OP_CHECKSIG)
-                        .build();
-            } else {
-                return null;
+            if(BitherjSettings.BITCOIN_TESTNET){
+                if (Utils.getAddressHeader(to) == BitherjSettings.p2shHeader_test ) {
+                    // OP_HASH160 <scriptHash> OP_EQUAL
+                    return new ScriptBuilder()
+                            .op(OP_HASH160)
+                            .data(Utils.getAddressHash(to))
+                            .op(OP_EQUAL)
+                            .build();
+                } else if (Utils.getAddressHeader(to) == BitherjSettings.addressHeader_test)  {
+                    // OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+                    return new ScriptBuilder()
+                            .op(OP_DUP)
+                            .op(OP_HASH160)
+                            .data(Utils.getAddressHash(to))
+                            .op(OP_EQUALVERIFY)
+                            .op(OP_CHECKSIG)
+                            .build();
+                } else {
+                    return null;
+                }
+            }
+            else {
+                if (Utils.getAddressHeader(to) == BitherjSettings.p2shHeader) {
+                    // OP_HASH160 <scriptHash> OP_EQUAL
+                    return new ScriptBuilder()
+                            .op(OP_HASH160)
+                            .data(Utils.getAddressHash(to))
+                            .op(OP_EQUAL)
+                            .build();
+                } else if (Utils.getAddressHeader(to) == BitherjSettings.addressHeader) {
+                    // OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+                    return new ScriptBuilder()
+                            .op(OP_DUP)
+                            .op(OP_HASH160)
+                            .data(Utils.getAddressHash(to))
+                            .op(OP_EQUALVERIFY)
+                            .op(OP_CHECKSIG)
+                            .build();
+                } else {
+                    return null;
+                }
             }
         } catch (AddressFormatException ex) {
             return null;

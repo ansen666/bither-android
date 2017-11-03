@@ -125,11 +125,9 @@ public class UnitUtilWrapper {
             boldLength = dotPosition + boldLengthAfterDot + 1;
         }
         SpannableString spannable = new SpannableString(str);
-        spannable.setSpan(new StyleSpan(Typeface.BOLD), 0, boldLength,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new StyleSpan(Typeface.BOLD), 0, boldLength,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         if (boldLength < str.length()) {
-            spannable.setSpan(new RelativeSizeSpan(0.8f), boldLength, str.length(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new RelativeSizeSpan(0.8f), boldLength, str.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return spannable;
     }
@@ -160,8 +158,7 @@ public class UnitUtilWrapper {
     }
 
     public static Bitmap getBtcSlimSymbol(TextView tv, BitcoinUnitWrapper unit) {
-        return getBtcSlimSymbol(adjustTextColor(tv.getTextColors().getDefaultColor()),
-                tv.getTextSize(), unit);
+        return getBtcSlimSymbol(adjustTextColor(tv.getTextColors().getDefaultColor()),tv.getTextSize(), unit);
     }
 
     public static Bitmap getBtcSlimSymbol(int color) {
@@ -187,7 +184,7 @@ public class UnitUtilWrapper {
     }
 
     public static Bitmap changeBitmapColor(Bitmap bmp, int color) {
-        Bitmap result = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
+        Bitmap result = Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(), bmp.getConfig());
         Canvas c = new Canvas(result);
         Paint paint = new Paint();
         ColorFilter filter = new LightingColorFilter(color, 1);

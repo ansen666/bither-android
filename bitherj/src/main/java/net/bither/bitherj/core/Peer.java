@@ -35,6 +35,7 @@ import net.bither.bitherj.message.InventoryMessage;
 import net.bither.bitherj.message.MemoryPoolMessage;
 import net.bither.bitherj.message.Message;
 import net.bither.bitherj.message.NotFoundMessage;
+import net.bither.bitherj.message.PeerAddress;
 import net.bither.bitherj.message.PingMessage;
 import net.bither.bitherj.message.PongMessage;
 import net.bither.bitherj.message.RejectMessage;
@@ -54,6 +55,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -61,6 +63,9 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+
+import static net.bither.bitherj.utils.Utils.bytesToHexString;
+import static net.bither.bitherj.utils.Utils.reverseBytes;
 
 public class Peer extends PeerSocketHandler {
     private static final int MAX_GETDATA_HASHES = 50000;
@@ -126,11 +131,15 @@ public class Peer extends PeerSocketHandler {
     private List<Block> syncBlocks; // todo: this cache is no use
     private List<Sha256Hash> syncBlockHashes;
 
+    private InetAddress localHost=null;
+    private PeerAddress my=null;
+    private PeerAddress remote = null;
 
     public Peer(InetAddress address) {
-        super(new InetSocketAddress(address, BitherjSettings.port));
+        super(new InetSocketAddress(address, BitherjSettings.getPort()));
         this.peerAddress = address;
-        peerPort = BitherjSettings.port;
+
+        peerPort = BitherjSettings.getPort();
         state = State.Disconnected;
         peerServices = 1;
         currentTxHashes = new HashSet<Sha256Hash>();
@@ -146,6 +155,13 @@ public class Peer extends PeerSocketHandler {
         synchronising = false;
         syncBlocks = new ArrayList<Block>();
         syncBlockHashes = new ArrayList<Sha256Hash>();
+
+        final byte[] localhost = {127, 0, 0, 1};
+        try {
+            localHost = InetAddress.getByAddress(localhost);
+        }catch (Exception e){
+
+        }
     }
 
     public void connect() {
@@ -165,7 +181,7 @@ public class Peer extends PeerSocketHandler {
             bloomFilterSent = false;
             try {
                 NioClientManager.instance().openConnection(new InetSocketAddress(getPeerAddress(),
-                        BitherjSettings.port), this);
+                        getPeerPort()), this);
             } catch (Exception ex) {
                 exceptionCaught(ex);
             }
@@ -821,7 +837,13 @@ public class Peer extends PeerSocketHandler {
     }
 
     private void sendVersionMessage() {
-        sendMessage(new VersionMessage((int) PeerManager.instance().getLastBlockHeight(), false));
+        if(my==null)
+            my = new PeerAddress(localHost,BitherjSettings.getPort(),BitherjSettings.PROTOCOL_VERSION);
+
+        if(remote==null)
+            remote = new PeerAddress(peerAddress,peerPort,0);
+
+        sendMessage(new VersionMessage((int) PeerManager.instance().getLastBlockHeight(), false,my,remote));
         log.info("Send version message to peer {}", getPeerAddress().getHostAddress());
         sentVerAck = true;
     }
@@ -913,7 +935,9 @@ public class Peer extends PeerSocketHandler {
         }
         GetHeadersMessage m = new GetHeadersMessage(locators, hashStop == null ? Sha256Hash
                 .ZERO_HASH.getBytes() : hashStop);
-        log.info("Peer {} send get header message", getPeerAddress().getHostAddress());
+        String first = bytesToHexString(reverseBytes(locators.get(0)));
+        String last = bytesToHexString(reverseBytes(locators.get(locators.size()-1)));
+        log.info("Peer "+getPeerAddress().getHostAddress()+" send get header message:start:"+first+" stop:"+last);
         sendMessage(m);
     }
 

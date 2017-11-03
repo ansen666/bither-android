@@ -104,7 +104,7 @@ public class Address implements Comparable<Address> {
     }
 
     public List<Tx> getTxs(int page) {
-        List<Tx> txs = AbstractDb.txProvider.getTxAndDetailByAddress(this.address, page);
+        List<Tx> txs = AbstractDb.txProvider.getTxAndDetailByAddress(this.address,page);
         return txs;
     }
 

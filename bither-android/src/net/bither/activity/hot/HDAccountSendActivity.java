@@ -37,6 +37,7 @@ import net.bither.bitherj.utils.Utils;
 import net.bither.runnable.CompleteTransactionRunnable;
 import net.bither.ui.base.DropdownMessage;
 import net.bither.ui.base.dialog.DialogHdSendConfirm;
+import net.bither.util.LogUtil;
 
 /**
  * Created by songchenwen on 15/4/17.
@@ -64,6 +65,7 @@ public class HDAccountSendActivity extends SendActivity implements DialogHdSendC
 
     @Override
     protected void sendClicked() {
+        LogUtil.i("ansen","发送按钮点击");
         final long btc = amountCalculatorLink.getAmount();
         if (btc > 0) {
             btcAmount = btc;
@@ -92,6 +94,7 @@ public class HDAccountSendActivity extends SendActivity implements DialogHdSendC
         HDAccount account = (HDAccount) address;
         SecureCharSequence password = new SecureCharSequence(etPassword.getText());
         try {
+            LogUtil.i("ansen","创建新交易 toAddress:"+toAddress+" btcAmount:"+btcAmount);
             tx = account.newTx(toAddress, btcAmount, password);
         } catch (Exception e) {
             e.printStackTrace();

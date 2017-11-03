@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 public class DnsDiscovery {
     private static final Logger log = LoggerFactory.getLogger(DnsDiscovery.class);
 
-    private final String[] hostNames = BitherjSettings.dnsSeeds;
+    private final String[] hostNames = BitherjSettings.getDNSSeed();
 
     private static DnsDiscovery instance;
 
@@ -53,6 +53,7 @@ public class DnsDiscovery {
     }
 
     private DnsDiscovery() {
+
     }
 
     public Peer[] getPeers(long timeoutValue, TimeUnit timeoutUnit) {

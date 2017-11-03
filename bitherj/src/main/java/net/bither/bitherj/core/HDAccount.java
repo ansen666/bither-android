@@ -489,10 +489,8 @@ public class HDAccount extends Address {
             return null;
         }
         DeterministicKey accountKey = getAccount(master);
-        DeterministicKey external = getChainRootKey(accountKey, AbstractHD.PathType
-                .EXTERNAL_ROOT_PATH);
-        DeterministicKey internal = getChainRootKey(accountKey, AbstractHD.PathType
-                .INTERNAL_ROOT_PATH);
+        DeterministicKey external = getChainRootKey(accountKey, AbstractHD.PathType.EXTERNAL_ROOT_PATH);
+        DeterministicKey internal = getChainRootKey(accountKey, AbstractHD.PathType.INTERNAL_ROOT_PATH);
         accountKey.wipe();
         master.wipe();
         List<byte[]> unsignedHashes = tx.getUnsignedInHashes();
@@ -501,9 +499,7 @@ public class HDAccount extends Address {
         HashMap<String, DeterministicKey> addressToKeyMap = new HashMap<String, DeterministicKey>
                 (signingAddresses.size());
 
-        for (int i = 0;
-             i < signingAddresses.size();
-             i++) {
+        for (int i = 0;i < signingAddresses.size();i++) {
             HDAccountAddress a = signingAddresses.get(i);
             byte[] unsigned = unsignedHashes.get(i);
 
@@ -518,8 +514,7 @@ public class HDAccount extends Address {
             DeterministicKey key = addressToKeyMap.get(a.getAddress());
             assert key != null;
 
-            TransactionSignature signature = new TransactionSignature(key.sign(unsigned, null),
-                    TransactionSignature.SigHash.ALL, false);
+            TransactionSignature signature = new TransactionSignature(key.sign(unsigned, null),TransactionSignature.SigHash.ALL, false);
             signatures.add(ScriptBuilder.createInputScript(signature, key).getProgram());
         }
 
@@ -531,7 +526,6 @@ public class HDAccount extends Address {
         for (DeterministicKey key : addressToKeyMap.values()) {
             key.wipe();
         }
-
         return tx;
     }
 
@@ -559,9 +553,7 @@ public class HDAccount extends Address {
         ArrayList<byte[]> signatures = new ArrayList<byte[]>();
         HashMap<String, DeterministicKey> addressToKeyMap = new HashMap<String, DeterministicKey>
                 (signingAddresses.size());
-        for (int i = 0;
-             i < signingAddresses.size();
-             i++) {
+        for (int i = 0;i < signingAddresses.size();i++) {
             HDAccountAddress a = signingAddresses.get(i);
             byte[] unsigned = unsignedHashes.get(i);
 

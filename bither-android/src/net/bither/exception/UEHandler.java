@@ -45,8 +45,7 @@ public class UEHandler implements UncaughtExceptionHandler {
             logDir = BitherApplication.mContext.getCacheDir().getAbsolutePath();
         }
         logDir = logDir + File.separator + "bither";
-        appInfo = "ver:" + Integer.toString(SystemUtil.getAppVersionCode())
-                + ",sdk:" + Build.VERSION.SDK_INT + ",";
+        appInfo = "ver:" + Integer.toString(SystemUtil.getAppVersionCode()) + ",sdk:" + Build.VERSION.SDK_INT + ",";
         return logDir;
     }
 

@@ -16,6 +16,7 @@
 
 package net.bither.runnable;
 
+import net.bither.bitherj.BitherjSettings;
 import net.bither.bitherj.api.PushTxThirdParty;
 import net.bither.bitherj.core.Address;
 import net.bither.bitherj.core.AddressManager;
@@ -28,10 +29,10 @@ import net.bither.ui.base.dialog.DialogProgress;
 import net.bither.util.ThreadUtil;
 
 public class CommitTransactionThread extends ThreadNeedService {
-    public static interface CommitTransactionListener {
-        public void onCommitTransactionSuccess(Tx tx);
+    public interface CommitTransactionListener {
+        void onCommitTransactionSuccess(Tx tx);
 
-        public void onCommitTransactionFailed();
+        void onCommitTransactionFailed();
     }
 
     private int addressPosition;
@@ -46,8 +47,7 @@ public class CommitTransactionThread extends ThreadNeedService {
         this.addressPosition = addressPosition;
         this.listener = listener;
         if (isHDM) {
-            wallet = AddressManager.getInstance().getHdmKeychain().getAddresses().get
-                    (addressPosition);
+            wallet = AddressManager.getInstance().getHdmKeychain().getAddresses().get(addressPosition);
         } else if (withPrivateKey) {
             Address a = AddressManager.getInstance().getPrivKeyAddresses().get(addressPosition);
             if (a.hasPrivKey()) {
@@ -65,7 +65,11 @@ public class CommitTransactionThread extends ThreadNeedService {
     public void runWithService(BlockchainService service) {
         boolean success = false;
         try {
-            PushTxThirdParty.getInstance().pushTx(tx);
+            if(BitherjSettings.BITCOIN_TESTNET){
+                PushTxThirdParty.getInstance().pushTx_test(tx);
+            }else {
+                PushTxThirdParty.getInstance().pushTx(tx);
+            }
             PeerManager.instance().publishTransaction(tx);
             TransactionsUtil.removeSignTx(new UnSignTransaction(tx, wallet.getAddress()));
             success = true;

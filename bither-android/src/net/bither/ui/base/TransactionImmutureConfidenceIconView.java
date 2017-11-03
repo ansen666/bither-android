@@ -52,8 +52,7 @@ public class TransactionImmutureConfidenceIconView extends FrameLayout {
     }
 
     private void initView() {
-        LayoutInflater.from(getContext()).inflate(R.layout
-                .layout_transaction_immuture_confidence_icon, this);
+        LayoutInflater.from(getContext()).inflate(R.layout.layout_transaction_immuture_confidence_icon, this);
         iv = (ImageView) findViewById(R.id.iv_confidence);
         tv = (TextView) findViewById(R.id.tv_confidence);
         tv.setVisibility(View.GONE);

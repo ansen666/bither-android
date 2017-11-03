@@ -399,10 +399,13 @@ public class Tx extends Message implements Comparable<Tx> {
         long amount = 0;
         for (In in : getIns()) {
             Tx preTx = AbstractDb.txProvider.getTxDetailByTxHash(in.getPrevTxHash());
+            log.info("ansen address:"+in.getFromAddress()+" preTx:"+preTx);
+            log.info("ansen getPrevTxHash:"+in.getPrevTxHash().toString());
             boolean hasOut = false;
             for (Out out : preTx.getOuts()) {
                 if (in.getPrevOutSn() == out.getOutSn()) {
                     amount += out.getOutValue();
+                    log.info("ansen out1:"+out.getOutValue());
                     hasOut = true;
                 }
 
@@ -412,6 +415,7 @@ public class Tx extends Message implements Comparable<Tx> {
             }
         }
         for (Out out : getOuts()) {
+            log.info("ansen out2:"+out.getOutValue());
             amount -= out.getOutValue();
         }
         return amount;

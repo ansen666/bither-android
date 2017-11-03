@@ -43,6 +43,9 @@ public class DumpedPrivateKey {
     // Used by ECKey.getPrivateKeyEncoded()
     public DumpedPrivateKey(byte[] keyBytes, boolean compressed) {
         version = BitherjSettings.dumpedPrivateKeyHeader;
+        if(BitherjSettings.BITCOIN_TESTNET){
+            version = BitherjSettings.dumpedPrivateKeyHeader_test;
+        }
         bytes = encode(keyBytes, compressed);
         checkArgument(version < 256 && version >= 0);
         this.compressed = compressed;
@@ -75,9 +78,16 @@ public class DumpedPrivateKey {
         bytes = new byte[tmp.length - 1];
         System.arraycopy(tmp, 1, bytes, 0, tmp.length - 1);
 
-        if (version != BitherjSettings.dumpedPrivateKeyHeader)
-            throw new AddressFormatException("Mismatched version number, trying to cross networks? " + version +
-                    " vs " + BitherjSettings.dumpedPrivateKeyHeader);
+        if(BitherjSettings.BITCOIN_TESTNET){
+            if (version != BitherjSettings.dumpedPrivateKeyHeader_test)
+                throw new AddressFormatException("Mismatched version number, trying to cross networks? " + version +
+                        " vs " + BitherjSettings.dumpedPrivateKeyHeader);
+        }
+        else {
+            if (version != BitherjSettings.dumpedPrivateKeyHeader)
+                throw new AddressFormatException("Mismatched version number, trying to cross networks? " + version +
+                        " vs " + BitherjSettings.dumpedPrivateKeyHeader);
+        }
         if (bytes.length == 33 && bytes[32] == 1) {
             compressed = true;
             bytes = Arrays.copyOf(bytes, 32);  // Chop off the additional marker byte.

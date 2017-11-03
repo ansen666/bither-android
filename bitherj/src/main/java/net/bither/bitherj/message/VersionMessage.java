@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import net.bither.bitherj.core.Peer;
 
 import javax.annotation.Nullable;
 
@@ -89,6 +90,9 @@ public class VersionMessage extends Message {
         super(msg, 0);
     }
 
+    private VersionMessage(){
+
+    }
     // It doesn't really make sense to ever lazily parse a version message or to retain the
     // backing bytes.
     // If you're receiving this on the wire you need to check the protocol version and it will
@@ -98,11 +102,11 @@ public class VersionMessage extends Message {
     /**
      * Equivalent to VersionMessage(params, newBestHeight, true)
      */
-    public VersionMessage(int newBestHeight) {
-        this(newBestHeight, true);
-    }
+//    public VersionMessage(int newBestHeight) {
+//        this(newBestHeight, true);
+//    }
 
-    public VersionMessage(int newBestHeight, boolean relayTxesBeforeFilter) {
+    public VersionMessage(int newBestHeight, boolean relayTxesBeforeFilter,PeerAddress myAddr,PeerAddress remote) {
         super();
         clientVersion = BitherjSettings.PROTOCOL_VERSION;
         localServices = 0;
@@ -110,18 +114,22 @@ public class VersionMessage extends Message {
         // Note that the official client doesn't do anything with these,
         // and finding out your own external IP address
         // is kind of tricky anyway, so we just put nonsense here for now.
-        try {
-            // We hard-code the IPv4 localhost address here rather than use InetAddress
-            // .getLocalHost() because some
-            // mobile phones have broken localhost DNS entries, also, this is faster.
-            final byte[] localhost = {127, 0, 0, 1};
-            myAddr = new PeerAddress(InetAddress.getByAddress(localhost), BitherjSettings.port, 0);
-            theirAddr = new PeerAddress(InetAddress.getByAddress(localhost),
-                    BitherjSettings.port, 0);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);  // Cannot happen (illegal IP length).
-        }
-        subVer = "/Bither" + Version.version + "/";
+//        try {
+//            // We hard-code the IPv4 localhost address here rather than use InetAddress
+//            // .getLocalHost() because some
+//            // mobile phones have broken localhost DNS entries, also, this is faster.
+//            final byte[] localhost = {127, 0, 0, 1};
+//            myAddr = new PeerAddress(InetAddress.getByAddress(localhost), BitherjSettings.getPort(), 0);
+//            theirAddr = new PeerAddress(InetAddress.getByAddress(localhost),
+//                    BitherjSettings.getPort(), 0);
+//        } catch (UnknownHostException e) {
+//            throw new RuntimeException(e);  // Cannot happen (illegal IP length).
+//        }
+
+        this.myAddr = myAddr;
+        this.theirAddr = remote;
+
+        subVer = "/GP" + Version.version + "/";
         bestHeight = newBestHeight;
         this.relayTxesBeforeFilter = relayTxesBeforeFilter;
 
@@ -178,16 +186,18 @@ public class VersionMessage extends Message {
         Utils.uint32ToByteStreamLE(localServices >> 32, buf);
         Utils.uint32ToByteStreamLE(time, buf);
         Utils.uint32ToByteStreamLE(time >> 32, buf);
-        try {
-            // My address.
-            myAddr.bitcoinSerialize(buf);
-            // Their address.
-            theirAddr.bitcoinSerialize(buf);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);  // Can't happen.
-        } catch (IOException e) {
-            throw new RuntimeException(e);  // Can't happen.
-        }
+//        try {
+        // Their address.
+        theirAddr.bitcoinSerialize(buf);
+        // My address.
+        myAddr.bitcoinSerialize(buf);
+
+
+//        } catch (UnknownHostException e) {
+//            throw new RuntimeException(e);  // Can't happen.
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);  // Can't happen.
+//        }
         // Next up is the "local host nonce", this is to detect the case of connecting
         // back to yourself. We don't care about this as we won't be accepting inbound 
         // connections.
@@ -264,13 +274,15 @@ public class VersionMessage extends Message {
     }
 
     public VersionMessage duplicate() {
-        VersionMessage v = new VersionMessage((int) bestHeight, relayTxesBeforeFilter);
+        VersionMessage v = new VersionMessage();
         v.clientVersion = clientVersion;
         v.localServices = localServices;
         v.time = time;
         v.myAddr = myAddr;
         v.theirAddr = theirAddr;
         v.subVer = subVer;
+        v.bestHeight = bestHeight;
+        v.relayTxesBeforeFilter = relayTxesBeforeFilter;
         return v;
     }
 

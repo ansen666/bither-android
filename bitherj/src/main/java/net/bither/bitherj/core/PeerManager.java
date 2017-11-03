@@ -118,7 +118,6 @@ public class PeerManager {
                 publishedTx.put(new Sha256Hash(tx.getTxHash()), tx);
             }
         }
-
     }
 
     public boolean isConnected() {
@@ -1104,6 +1103,7 @@ public class PeerManager {
         } else {
             return BitherjSettings.MaxPeerBackgroundConnections;
         }
+        //return 1;
     }
 
     public boolean isSynchronizing() {

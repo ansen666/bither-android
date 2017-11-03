@@ -39,8 +39,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class QrCodeImageView extends FrameLayout implements OnClickListener {
-    public static interface QrCodeFullScreenListener {
-        public void onShowFullScreenQr(String content, Bitmap placeHolder, View fromView);
+    public interface QrCodeFullScreenListener {
+        void onShowFullScreenQr(String content, Bitmap placeHolder, View fromView);
     }
 
     private static ThreadPoolExecutor threadPool;

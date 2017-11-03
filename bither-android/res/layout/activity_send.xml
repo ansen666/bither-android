@@ -286,5 +286,4 @@
                 android:src="@drawable/title_bar_option_icon"/>
         </LinearLayout>
     </net.bither.ui.base.SwipeRightTouchView>
-
 </FrameLayout>

@@ -77,8 +77,9 @@ public class AddressDetailActivity extends SwipeRightFragmentActivity implements
         overridePendingTransition(R.anim.slide_in_right, 0);
         setContentView(R.layout.activity_address_detail);
 
-        LogUtil.i("ansen","AddressDetailActivity onCreate");
+        LogUtil.i("ansen","AddressDetailActivity onCreate address:");
         initAddress();
+        LogUtil.i("ansen","AddressDetailActivity address:"+address.getAddress());
         if (address == null) {
             finish();
             return;
@@ -87,10 +88,12 @@ public class AddressDetailActivity extends SwipeRightFragmentActivity implements
     }
 
     protected void initAddress() {
+        LogUtil.i("ansen","AddressDetailActivity 初始化地址");
         if (getIntent().getExtras().containsKey(BitherSetting.INTENT_REF.ADDRESS_POSITION_PASS_VALUE_TAG)) {
             addressPosition = getIntent().getExtras().getInt(BitherSetting.INTENT_REF.ADDRESS_POSITION_PASS_VALUE_TAG);
             boolean hasPrivateKey = getIntent().getExtras().getBoolean(BitherSetting.INTENT_REF.ADDRESS_HAS_PRIVATE_KEY_PASS_VALUE_TAG, false);
             boolean isHDM = getIntent().getExtras().getBoolean(BitherSetting.INTENT_REF.ADDRESS_IS_HDM_KEY_PASS_VALUE_TAG, false);
+            LogUtil.i("ansen","AddressDetailActivity hasPrivateKey:"+hasPrivateKey+" isHDM:"+isHDM+" addressPosition:"+addressPosition);
             if (isHDM) {
                 if (addressPosition >= 0 && AddressManager.getInstance().hasHDMKeychain() &&
                         AddressManager.getInstance().getHdmKeychain().getAddresses().size() > addressPosition) {
@@ -132,7 +135,6 @@ public class AddressDetailActivity extends SwipeRightFragmentActivity implements
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
                 if (firstVisibleItem + visibleItemCount >= totalItemCount - 6 && hasMore && !isLoding && lastFirstVisibleItem < firstVisibleItem) {
                     page++;
                     loadTx();
@@ -187,6 +189,7 @@ public class AddressDetailActivity extends SwipeRightFragmentActivity implements
     }
 
     public void loadData() {
+        LogUtil.i("ansen","AddressDetailActivity loadData getBalance:"+address.getBalance());
         header.showAddress(address, addressPosition);
         onAddressAliasChanged(address, address.getAlias());
         page = 1;
@@ -306,20 +309,23 @@ public class AddressDetailActivity extends SwipeRightFragmentActivity implements
     }
 
     private final class TxAndBlockBroadcastReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
+            LogUtil.i("ansen","AddressDetailActivity 收到广播");
+
             if (intent == null || (!Utils.compareString(NotificationAndroidImpl
                     .ACTION_ADDRESS_BALANCE, intent.getAction()) && !Utils.compareString
                     (NotificationAndroidImpl.ACTION_SYNC_LAST_BLOCK_CHANGE, intent.getAction()))) {
                 return;
             }
+            LogUtil.i("ansen","AddressDetailActivity  哈哈哈哈");
             if (intent.hasExtra(NotificationAndroidImpl.ACTION_ADDRESS_BALANCE)) {
-                String receiveAddressStr = intent.getStringExtra(NotificationAndroidImpl
-                        .MESSAGE_ADDRESS);
+                String receiveAddressStr = intent.getStringExtra(NotificationAndroidImpl.MESSAGE_ADDRESS);
+                LogUtil.i("ansen","AddressDetailActivity 接收地址:"+receiveAddressStr);
                 notifyAddressBalanceChange(receiveAddressStr);
             } else {
                 loadData();
+                LogUtil.i("ansen","AddressDetailActivity  加载数据....");
             }
 
         }

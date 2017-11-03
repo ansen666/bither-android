@@ -58,7 +58,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public final class CurrencyAmountView extends FrameLayout {
-    public static interface Listener {
+    public interface Listener {
         void changed();
 
         void done();
@@ -219,8 +219,7 @@ public final class CurrencyAmountView extends FrameLayout {
     public void setHint(@Nullable final long amount) {
         final SpannableStringBuilder hint;
         if (amount != 0) {
-            hint = new SpannableStringBuilder(GenericUtils.formatValue(amount, hintPrecision,
-                    shift));
+            hint = new SpannableStringBuilder(GenericUtils.formatValue(amount, hintPrecision,shift));
         } else {
             hint = new SpannableStringBuilder("0.00");
         }

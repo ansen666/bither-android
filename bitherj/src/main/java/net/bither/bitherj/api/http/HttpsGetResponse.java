@@ -1,13 +1,18 @@
 package net.bither.bitherj.api.http;
 
+import org.slf4j.Logger;
+
 import java.io.IOException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public abstract class HttpsGetResponse<T> extends BaseHttpsResponse<T> {
+    private Logger log=null;
+
 
     public void handleHttpGet() throws Exception {
+
         trustCerts();
         URL url;
         HttpsURLConnection con = null;

@@ -24,6 +24,7 @@ import java.math.BigInteger;
 
 public class BitherjSettings {
 
+    public static final boolean BITCOIN_TESTNET=true;
     public static final boolean LOG_DEBUG = true;
     public static final boolean DEV_DEBUG = true;
 
@@ -53,11 +54,22 @@ public class BitherjSettings {
 
 
     public static final BigInteger proofOfWorkLimit = Utils.decodeCompactBits(0x1d00ffffL);
-    public static final int port = 8333;
+//    public static final int port = 8333;
+//    public static final int port_test = 18333;
+
     public static final long packetMagic = 0xf9beb4d9L;
+    public static final long packetMagic_test = 0x0b110907L;
+
     public static final int addressHeader = 0;
+    public static final int addressHeader_test = 111;
+
     public static final int p2shHeader = 5;
+    public static final int p2shHeader_test= 196;
+
     public static final int dumpedPrivateKeyHeader = 128;
+    public static final int dumpedPrivateKeyHeader_test = 239;
+
+
     public static final int TARGET_TIMESPAN = 14 * 24 * 60 * 60;  // 2 weeks per difficulty cycle, on average.
     public static final int TARGET_SPACING = 10 * 60;  // 10 minutes per block.
     public static final int INTERVAL = TARGET_TIMESPAN / TARGET_SPACING;
@@ -73,20 +85,17 @@ public class BitherjSettings {
      * The depth of blocks required for a coinbase transaction to be spendable.
      */
     public static final int spendableCoinbaseDepth = 100;
-    public static final String[] dnsSeeds = new String[]{
-            "seed.bitcoin.sipa.be",        // Pieter Wuille
-            "dnsseed.bluematt.me",         // Matt Corallo
-            "seed.bitcoinstats.com",       // Chris Decker
-            "bitseed.xf2.org",
-            "seed.bitcoinstats.com",
-            "seed.bitnodes.io"
-    };
+
 
     public static final long MAX_MONEY = 21000000l * 100000000l;
 
     public static final byte[] GENESIS_BLOCK_HASH = Utils.reverseBytes(Hex.decode("000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
+    public static final byte[] GENESIS_BLOCK_HASH_TEST = Utils.reverseBytes(Hex.decode("000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
+
     public static final int BLOCK_DIFFICULTY_INTERVAL = 2016;
     public static final int BITCOIN_REFERENCE_BLOCK_HEIGHT = 250000;
+    public static final int BITCOIN_REFERENCE_BLOCK_HEIGHT_TEST = 150000;
+
     public static final int MaxPeerConnections = 6;
     public static final int MaxPeerBackgroundConnections = 2;
 
@@ -95,7 +104,7 @@ public class BitherjSettings {
     }
 
     public static enum ApiConfig {
-        BLOCKCHAIN_INFO(1), BITHER_NET(0);
+        BLOCKCHAIN_INFO(1), BITHER_NET(0),BLOCKEXPLORER_COM(2);
 
         private int value;
         ApiConfig(int value){
@@ -195,4 +204,30 @@ public class BitherjSettings {
     }
 
 
+    public static String[] getDNSSeed(){
+        if(BITCOIN_TESTNET){
+            return new String[]{
+                    "testnet-seed.bitcoin.petertodd.org",
+                    "testnet-seed.bluematt.me"
+                    //"116.62.102.29"
+            };
+        }
+
+        return new String[]{
+                "seed.bitcoin.sipa.be",        // Pieter Wuille
+                "dnsseed.bluematt.me",         // Matt Corallo
+                "seed.bitcoinstats.com",       // Chris Decker
+                "bitseed.xf2.org",
+                "seed.bitcoinstats.com",
+                "seed.bitnodes.io"
+  //              "116.62.102.29"
+        };
+    }
+
+    public static int getPort(){
+        if(BITCOIN_TESTNET){
+            return  18333;
+        }
+        return 8333;
+    }
 }

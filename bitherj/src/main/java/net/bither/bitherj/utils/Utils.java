@@ -696,6 +696,9 @@ public class Utils {
         checkArgument(pubKeyHash.length == 20, "Addresses are 160-bit hashes, " + "so you must provide 20 bytes");
 
         int version = BitherjSettings.addressHeader;
+        if(BitherjSettings.BITCOIN_TESTNET){
+            version =BitherjSettings.addressHeader_test;
+        }
         checkArgument(version < 256 && version >= 0);
 
         byte[] addressBytes = new byte[1 + pubKeyHash.length + 4];
@@ -711,6 +714,9 @@ public class Utils {
                 "so you must provide 20 bytes");
 
         int version = BitherjSettings.p2shHeader;
+        if(BitherjSettings.BITCOIN_TESTNET){
+            version =BitherjSettings.p2shHeader_test;
+        }
         checkArgument(version < 256 && version >= 0);
 
         byte[] addressBytes = new byte[1 + pubKeyHash.length + 4];
@@ -912,8 +918,14 @@ public class Utils {
     public static boolean validBicoinAddress(String str) {
         try {
             int addressHeader = getAddressHeader(str);
-            return (addressHeader == BitherjSettings.p2shHeader
-                    || addressHeader == BitherjSettings.addressHeader);
+            if(BitherjSettings.BITCOIN_TESTNET){
+                return (addressHeader == BitherjSettings.p2shHeader_test
+                        || addressHeader == BitherjSettings.addressHeader_test);
+            }
+            else {
+                return (addressHeader == BitherjSettings.p2shHeader
+                        || addressHeader == BitherjSettings.addressHeader);
+            }
         } catch (final AddressFormatException x) {
             x.printStackTrace();
         }

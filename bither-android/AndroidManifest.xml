@@ -87,7 +87,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BitherTheme"
-            android:windowSoftInputMode="adjustNothing"></activity>
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name="ChooseModeActivity"
             android:screenOrientation="portrait"

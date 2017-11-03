@@ -42,8 +42,7 @@ public abstract class InputParser {
                     final String address = bitcoinUri.getAddress();
                     final String addressLabel = bitcoinUri.getLabel();
                     final long amount = bitcoinUri.getAmount();
-                    final String bluetoothMac = (String) bitcoinUri.getParameterByName(Bluetooth
-                            .MAC_URI_PARAM);
+                    final String bluetoothMac = (String) bitcoinUri.getParameterByName(Bluetooth.MAC_URI_PARAM);
 
                     bitcoinRequest(address, addressLabel, amount, bluetoothMac);
                 } catch (final BitcoinURI.BitcoinURIParseException x) {

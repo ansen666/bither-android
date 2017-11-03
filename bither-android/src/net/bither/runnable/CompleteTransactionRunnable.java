@@ -96,6 +96,8 @@ public class CompleteTransactionRunnable extends BaseRunnable {
         sigFetcher1 = otherSigFetcher1;
         sigFetcher2 = otherSigFetcher2;
         this.isBtc = isBtc;
+
+        LogUtil.i("ansen","isHDM:"+isHDM+" password:"+password);
         if (isHDM) {
             Address a = AddressManager.getInstance().getHdmKeychain().getAddresses().get(addressPosition);
             wallet = a;
@@ -106,6 +108,8 @@ public class CompleteTransactionRunnable extends BaseRunnable {
             toSign = false;
         } else {
             Address a = AddressManager.getInstance().getPrivKeyAddresses().get(addressPosition);
+            LogUtil.i("ansen","当前地址位置:"+addressPosition+" address:"+a+
+                    "  地址数量:"+AddressManager.getInstance().getPrivKeyAddresses().size());
             if (a.hasPrivKey()) {
                 wallet = a;
             } else {
@@ -126,8 +130,7 @@ public class CompleteTransactionRunnable extends BaseRunnable {
         try {
             Tx tx = wallet.buildTx(amount, toAddress, changeAddress,isBtc);
             if (tx == null) {
-                obtainMessage(HandlerMessage.MSG_FAILURE, BitherApplication.mContext.getString(R
-                        .string.send_failed));
+                obtainMessage(HandlerMessage.MSG_FAILURE, BitherApplication.mContext.getString(R.string.send_failed));
                 return;
             }
             if (toSign) {
@@ -180,8 +183,7 @@ public class CompleteTransactionRunnable extends BaseRunnable {
     }
 
     public static void registerTxBuilderExceptionMessages() {
-        for (TxBuilderException.TxBuilderErrorType type : TxBuilderException.TxBuilderErrorType
-                .values()) {
+        for (TxBuilderException.TxBuilderErrorType type : TxBuilderException.TxBuilderErrorType.values()) {
             int format = R.string.send_failed;
             switch (type) {
                 case TxNotEnoughMoney:

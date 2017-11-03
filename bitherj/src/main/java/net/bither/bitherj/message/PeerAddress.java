@@ -90,7 +90,7 @@ public class PeerAddress extends ChildMessage {
      * Constructs a peer address from the given IP address. Port and protocol version are default for the prodnet.
      */
     public PeerAddress(InetAddress addr) {
-        this(addr, BitherjSettings.port);
+        this(addr, BitherjSettings.getPort());
     }
 
     public PeerAddress(InetSocketAddress addr) {
@@ -99,7 +99,7 @@ public class PeerAddress extends ChildMessage {
 
     public static PeerAddress localhost() {
         try {
-            return new PeerAddress(InetAddress.getLocalHost(), BitherjSettings.port);
+            return new PeerAddress(InetAddress.getLocalHost(), BitherjSettings.getPort());
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);  // Broken system.
         }

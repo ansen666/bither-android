@@ -18,6 +18,7 @@ package net.bither.ui.base;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -58,6 +59,8 @@ public class TransactionListItem extends FrameLayout implements MarketTickerChan
     private Tx transaction;
     private Address address;
 
+    private TextView tvFee;
+
     public TransactionListItem(AddressDetailActivity activity) {
         super(activity);
         this.activity = activity;
@@ -69,11 +72,11 @@ public class TransactionListItem extends FrameLayout implements MarketTickerChan
         addView(LayoutInflater.from(activity).inflate(R.layout
                 .list_item_address_detail_transaction, null), LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
-        vConfidenceIcon = (TransactionImmutureConfidenceIconView) findViewById(R.id
-                .fl_confidence_icon);
+        vConfidenceIcon = (TransactionImmutureConfidenceIconView) findViewById(R.id.fl_confidence_icon);
         tvTransactionAddress = (TextView) findViewById(R.id.tv_transaction_address);
         btnBtc = (BtcToMoneyButton) findViewById(R.id.btn_btc);
         tvTime = (TextView) findViewById(R.id.tv_time);
+        tvFee= (TextView) findViewById(R.id.tv_fee);
         ibtnAddressFull = (ImageButton) findViewById(R.id.ibtn_address_full);
         ibtnAddressFull.setOnClickListener(addressFullClick);
         vConfidenceIcon.setOnClickListener(confidenceClick);
@@ -105,6 +108,8 @@ public class TransactionListItem extends FrameLayout implements MarketTickerChan
             return;
         }
         vConfidenceIcon.setTx(transaction);
+//        long fee=transaction.getFee();
+//        Log.i("ansen","交易手续费:"+fee);
         boolean isReceived = value >= 0;
         btnBtc.setAmount(value);
         Date time = transaction.getTxDate();
@@ -159,8 +164,7 @@ public class TransactionListItem extends FrameLayout implements MarketTickerChan
         @Override
         public void onClick(View v) {
             if (transaction != null) {
-                DialogTransactionConfidence dialog = new DialogTransactionConfidence(getContext()
-                        , transaction, address);
+                DialogTransactionConfidence dialog = new DialogTransactionConfidence(getContext(),transaction,address);
                 dialog.show(v);
             }
         }
@@ -184,9 +188,7 @@ public class TransactionListItem extends FrameLayout implements MarketTickerChan
             int subCount = isIncoming ? transaction.getIns().size() : transaction.getOuts().size();
             String subAddress = null;
             long value;
-            for (int i = 0;
-                 i < subCount;
-                 i++) {
+            for (int i = 0;i < subCount;i++) {
                 subAddress = null;
                 if (isIncoming) {
                     if (transaction.isCoinBase()) {
@@ -215,7 +217,7 @@ public class TransactionListItem extends FrameLayout implements MarketTickerChan
                 if (Utils.compareString(subAddress, address.getAddress())) {
                     subAddress = getContext().getString(R.string.address_mine);
                 }
-                addresses.put(subAddress, value);
+                addresses.put(subAddress,value);
             }
             DialogAddressFull dialog = new DialogAddressFull(activity, addresses);
             dialog.show(v);

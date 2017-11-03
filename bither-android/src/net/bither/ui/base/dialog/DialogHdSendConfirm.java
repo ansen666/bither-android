@@ -27,6 +27,7 @@ import net.bither.BitherSetting;
 import net.bither.R;
 import net.bither.bitherj.core.Tx;
 import net.bither.preference.AppSharedPreference;
+import net.bither.util.LogUtil;
 import net.bither.util.UnitUtilWrapper;
 import net.bither.util.WalletUtils;
 
@@ -37,15 +38,13 @@ public class DialogHdSendConfirm extends CenterDialog implements DialogInterface
         .OnDismissListener, View.OnClickListener {
     public interface SendConfirmListener {
         void onConfirm();
-
         void onCancel();
     }
 
     private boolean confirmed = false;
     private SendConfirmListener listener;
 
-    public DialogHdSendConfirm(Context context, String toAddress, Tx tx,
-                               SendConfirmListener listener) {
+    public DialogHdSendConfirm(Context context, String toAddress, Tx tx,SendConfirmListener listener) {
         this(context,toAddress,tx,true,listener);
 
     }
@@ -77,6 +76,7 @@ public class DialogHdSendConfirm extends CenterDialog implements DialogInterface
         llChange.setVisibility(View.GONE);
         tvAddress.setText(WalletUtils.formatHash(toAddress, 4, 24));
         tvBtc.setText(UnitUtilWrapper.formatValueWithBold(tx.amountSentToAddress(toAddress)));
+        LogUtil.i("ansen","交易手续费:"+UnitUtilWrapper.formatValueWithBold(tx.getFee()));
         tvFee.setText(UnitUtilWrapper.formatValueWithBold(tx.getFee()));
     }
 

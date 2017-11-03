@@ -53,10 +53,11 @@ public class DialogAddressFullForHD extends DialogWithArrow {
     private LinkedHashMap<String, Long> foreignAddresses = new LinkedHashMap<String, Long>();
     private HashMap<String, Long> ownValues = new HashMap<String, Long>();
     private ListView lv;
+
     private BaseAdapter adapter = new BaseAdapter() {
         static final int ViewTypeLabel = 0;
-        static final int ViewTypeOwn = 1;
-        static final int ViewTypeForeign = 2;
+        static final int ViewTypeOwn = 1;//自己的地址
+        static final int ViewTypeForeign = 2;//外部地址
 
         @Override
         public int getViewTypeCount() {
@@ -119,8 +120,7 @@ public class DialogAddressFullForHD extends DialogWithArrow {
 
         private View getViewForLabel(int position, View convertView, ViewGroup parent) {
             SubtransactionLabelInHDAccountListItem view;
-            if (convertView == null || !(convertView instanceof
-                    SubtransactionLabelInHDAccountListItem)) {
+            if (convertView == null || !(convertView instanceof SubtransactionLabelInHDAccountListItem)) {
                 convertView = new SubtransactionLabelInHDAccountListItem(activity);
             }
             boolean own = ownAddresses != null && ownAddresses.size() > 0 && position == 0;
@@ -132,15 +132,13 @@ public class DialogAddressFullForHD extends DialogWithArrow {
 
         private View getViewForOwn(int position, View convertView, ViewGroup parent) {
             SubtransactionOfOwnInHDAccountListItem view;
-            if (convertView == null || !(convertView instanceof
-                    SubtransactionOfOwnInHDAccountListItem)) {
+            if (convertView == null || !(convertView instanceof SubtransactionOfOwnInHDAccountListItem)) {
                 convertView = new SubtransactionOfOwnInHDAccountListItem(activity);
             }
             int index = position - 1;
             view = (SubtransactionOfOwnInHDAccountListItem) convertView;
             view.setTextColor(Color.WHITE);
-            view.setContent(ownAddresses.get(index).getAddress(), ownValues.get(ownAddresses.get
-                    (index).getAddress()), ownAddresses.get(index).getPathType());
+            view.setContent(ownAddresses.get(index).getAddress(), ownValues.get(ownAddresses.get(index).getAddress()), ownAddresses.get(index).getPathType());
             return convertView;
         }
 
@@ -149,12 +147,10 @@ public class DialogAddressFullForHD extends DialogWithArrow {
             if (convertView == null || !(convertView instanceof SubtransactionListItem)) {
                 convertView = new SubtransactionListItem(activity);
             }
-            int index = position - 1 - (ownAddresses != null && ownAddresses.size() > 0 ?
-                    ownAddresses.size() + 1 : 0);
+            int index = position - 1 - (ownAddresses != null && ownAddresses.size() > 0 ? ownAddresses.size() + 1 : 0);
             view = (SubtransactionListItem) convertView;
             view.setTextColor(Color.WHITE);
-            view.setContent((String) foreignAddresses.keySet().toArray()[index], (Long)
-                    foreignAddresses.values().toArray()[index]);
+            view.setContent((String) foreignAddresses.keySet().toArray()[index], (Long)foreignAddresses.values().toArray()[index]);
             return convertView;
         }
     };
@@ -164,7 +160,7 @@ public class DialogAddressFullForHD extends DialogWithArrow {
         activity = context;
         List<String> inAddresses = tx.getInAddresses();
         List<String> outAddresses = tx.getOutAddressList();
-        ownAddresses = account.getRelatedAddressesForTx(tx, inAddresses);
+        ownAddresses = account.getRelatedAddressesForTx(tx,inAddresses);
         Collections.sort(ownAddresses, new Comparator<HDAccount.HDAccountAddress>() {
             @Override
             public int compare(HDAccount.HDAccountAddress lhs, HDAccount.HDAccountAddress rhs) {
@@ -188,9 +184,7 @@ public class DialogAddressFullForHD extends DialogWithArrow {
     private void initForeignAddresses(boolean isIncoming, Tx tx, List<String> foreign) {
         String subAddress;
         long value;
-        for (int i = 0;
-             i < tx.getIns().size();
-             i++) {
+        for (int i = 0;i < tx.getIns().size();i++) {
             subAddress = null;
             if (tx.isCoinBase()) {
                 subAddress = getContext().getResources().getString(R.string.input_coinbase);
@@ -214,9 +208,7 @@ public class DialogAddressFullForHD extends DialogWithArrow {
                 foreignAddresses.put(subAddress, value);
             }
         }
-        for (int i = 0;
-             i < tx.getOuts().size();
-             i++) {
+        for (int i = 0;i < tx.getOuts().size();i++) {
             subAddress = null;
             Out out = tx.getOuts().get(i);
             value = out.getOutValue();
@@ -243,8 +235,7 @@ public class DialogAddressFullForHD extends DialogWithArrow {
         setContentView(R.layout.dialog_address_full);
         lv = (ListView) findViewById(R.id.lv);
         lv.getLayoutParams().height = Math.min(caculateHeight(), MaxHeight);
-        lv.getLayoutParams().width = Math.min(UIUtil.getScreenWidth() - UIUtil.dip2pix(100),
-                UIUtil.dip2pix(220));
+        lv.getLayoutParams().width = Math.min(UIUtil.getScreenWidth() - UIUtil.dip2pix(100),UIUtil.dip2pix(220));
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

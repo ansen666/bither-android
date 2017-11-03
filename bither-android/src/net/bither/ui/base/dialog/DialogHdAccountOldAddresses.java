@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * 旧地址列表
  * Created by songchenwen on 15/7/3.
  */
 public class DialogHdAccountOldAddresses extends CenterDialog {
@@ -71,6 +72,12 @@ public class DialogHdAccountOldAddresses extends CenterDialog {
         lv = (ListView) findViewById(R.id.lv);
         lv.setAdapter(adapter);
         lv.getLayoutParams().height = caculateHeight();
+
+        int count=issuedExternalAddressCount();
+        for(int i=0;i<count;i++){
+            String address=addressForIndex(i);
+        }
+
     }
 
     private BaseAdapter adapter = new BaseAdapter() {
@@ -129,8 +136,7 @@ public class DialogHdAccountOldAddresses extends CenterDialog {
     }
 
     private String addressForIndex(int index) {
-            return hdAccount.addressForPath(AbstractHD.PathType.EXTERNAL_ROOT_PATH, index)
-                    .getAddress();
+            return hdAccount.addressForPath(AbstractHD.PathType.EXTERNAL_ROOT_PATH, index).getAddress();
     }
 
     private void showMsg(int msg) {

@@ -85,8 +85,7 @@ public class AddressDetailHeader extends FrameLayout implements DialogFragmentFa
 
     private void initView() {
         removeAllViews();
-        addView(LayoutInflater.from(getContext()).inflate(R.layout.layout_address_detail_header,
-                null), LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        addView(LayoutInflater.from(getContext()).inflate(R.layout.layout_address_detail_header,null), LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         flAddress = (FrameLayout) findViewById(R.id.fl_address);
         ivQr = (QrCodeImageView) findViewById(R.id.iv_qrcode);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -134,8 +133,7 @@ public class AddressDetailHeader extends FrameLayout implements DialogFragmentFa
                 ()) {
             btnSend.setCompoundDrawables(null, null, null, null);
         } else {
-            Drawable d = getContext().getResources().getDrawable(R.drawable
-                    .unsigned_transaction_button_icon);
+            Drawable d = getContext().getResources().getDrawable(R.drawable.unsigned_transaction_button_icon);
             int size = UIUtil.dip2pix(20);
             int topOffset = UIUtil.dip2pix(0.5f);
             d.setBounds(0, topOffset, size, size + topOffset);

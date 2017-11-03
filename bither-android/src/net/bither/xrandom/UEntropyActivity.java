@@ -197,8 +197,7 @@ public abstract class UEntropyActivity extends BaseFragmentActivity implements U
             @Override
             public void run() {
                 PlaySound.play(R.raw.xrandom_open_sound, null);
-                TranslateAnimation topAnim = new TranslateAnimation(0, 0, 0, -vOverlayTop
-                        .getHeight());
+                TranslateAnimation topAnim = new TranslateAnimation(0, 0, 0, -vOverlayTop.getHeight());
                 topAnim.setFillAfter(true);
                 topAnim.setDuration(600);
                 TranslateAnimation bottomAnim = new TranslateAnimation(0, 0, 0, vOverlayBottom

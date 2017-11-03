@@ -45,8 +45,7 @@ public class SubtransactionLabelInHDAccountListItem extends FrameLayout {
         addView(parent, new LayoutParams(LayoutParams.MATCH_PARENT, MessageHeight));
         tv = new TextView(context);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
-                Gravity.BOTTOM);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,Gravity.BOTTOM);
         lp.bottomMargin = UIUtil.dip2pix(1);
         parent.addView(tv, lp);
     }
@@ -56,7 +55,6 @@ public class SubtransactionLabelInHDAccountListItem extends FrameLayout {
     }
 
     public void setContent(boolean own) {
-        tv.setText(own ? R.string.address_full_for_hd_label_own : R.string
-                .address_full_for_hd_label_foreign);
+        tv.setText(own ? R.string.address_full_for_hd_label_own : R.string.address_full_for_hd_label_foreign);
     }
 }

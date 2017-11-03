@@ -37,6 +37,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.stetho.common.LogUtil;
+
 import net.bither.activity.hot.SelectAddressToSendActivity;
 import net.bither.bitherj.BitherjSettings;
 import net.bither.bitherj.core.Address;
@@ -109,10 +111,12 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
     }
 
     protected void initAddress() {
+        LogUtil.i("ansen","SendActivity initAddress: ");
         if (getIntent().getExtras().containsKey(BitherSetting.INTENT_REF
                 .ADDRESS_POSITION_PASS_VALUE_TAG)) {
             addressPosition = getIntent().getExtras().getInt(BitherSetting.INTENT_REF
                     .ADDRESS_POSITION_PASS_VALUE_TAG);
+            LogUtil.i("ansen","SendActivity addressPosition:"+addressPosition);
             if (addressPosition >= 0 && addressPosition < AddressManager.getInstance()
                     .getPrivKeyAddresses().size()) {
                 address = AddressManager.getInstance().getPrivKeyAddresses().get(addressPosition);
@@ -146,8 +150,7 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
         btcAmountView.setHintPrecision(Math.min(4, precision));
         btcAmountView.setShift(8 - precision);
 
-        final CurrencyAmountView localAmountView = (CurrencyAmountView) findViewById(R.id
-                .cav_local);
+        final CurrencyAmountView localAmountView = (CurrencyAmountView) findViewById(R.id.cav_local);
         localAmountView.setInputPrecision(2);
         localAmountView.setHintPrecision(2);
         amountCalculatorLink = new CurrencyCalculatorLink(btcAmountView, localAmountView);
@@ -159,8 +162,10 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
         btnSend.setOnClickListener(sendClick);
         kvPassword.registerEditText(etPassword).setListener(this);
         kvAmount.registerEditText((EditText) findViewById(R.id.send_coins_amount_btc_edittext),
-                (EditText) findViewById(R.id.send_coins_amount_local_edittext)).setListener(this);
+        (EditText) findViewById(R.id.send_coins_amount_local_edittext)).setListener(this);
         findViewById(R.id.ll_balance).setOnClickListener(balanceClick);
+
+        LogUtil.i("ansen","SendActivity initView");
     }
 
     private OnClickListener balanceClick = new OnClickListener() {
@@ -181,7 +186,6 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
     };
 
     private SendConfirmListener sendConfirmListener = new SendConfirmListener() {
-
         @Override
         public void onConfirm(Tx tx) {
             etPassword.setText("");
@@ -303,8 +307,10 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
 
     protected void sendClicked() {
         final long btc = amountCalculatorLink.getAmount();
+        LogUtil.i("ansen","SendActivity 点击发送按钮:"+btc);
         if (btc > 0) {
             String address = etAddress.getText().toString().trim();
+            LogUtil.i("ansen","SendActivity 发送的地址是:"+address);
             if (Utils.validBicoinAddress(address)) {
                 if (Utils.compareString(address,
                         dialogSelectChangeAddress.getChangeAddress().getAddress())) {
@@ -313,10 +319,16 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
                     return;
                 }
                 try {
+                    net.bither.util.LogUtil.i("ansen","SendActivity addressPosition:"+addressPosition+
+                            " amount:"+amountCalculatorLink.getAmount()+" toAddress:"+address
+                    +" changeAddress:"+dialogSelectChangeAddress.getChangeAddress().getAddress()+
+                    " 密码:"+etPassword.getText().toString());
+
                     CompleteTransactionRunnable completeRunnable = new CompleteTransactionRunnable(addressPosition,
                             amountCalculatorLink.getAmount(), address
                             , dialogSelectChangeAddress.getChangeAddress().getAddress
                             (), new SecureCharSequence(etPassword.getText()));
+                    LogUtil.i("ansen","SendActivity completeRunnable:"+completeRunnable);
                     completeRunnable.setHandler(completeTransactionHandler);
                     Thread thread = new Thread(completeRunnable);
                     dp.setThread(thread);
@@ -324,6 +336,7 @@ public class SendActivity extends SwipeRightActivity implements EntryKeyboardVie
                         dp.show();
                     }
                     thread.start();
+                    LogUtil.i("ansen","SendActivity 开启线程");
                 } catch (Exception e) {
                     e.printStackTrace();
                     DropdownMessage.showDropdownMessage(SendActivity.this,

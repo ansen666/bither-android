@@ -89,7 +89,6 @@ public class UpgradeUtil {
         };
         baseRunnable.setHandler(handler);
         new Thread(baseRunnable).start();
-
     }
 
     //upgrde when version code <9

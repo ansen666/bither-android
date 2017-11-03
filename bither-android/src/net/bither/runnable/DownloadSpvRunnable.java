@@ -21,8 +21,6 @@ import net.bither.bitherj.utils.BlockUtil;
 
 
 public class DownloadSpvRunnable extends BaseRunnable {
-
-
     @Override
     public void run() {
         obtainMessage(HandlerMessage.MSG_PREPARE);

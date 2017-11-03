@@ -35,8 +35,7 @@ public class TransactionListAdapter extends BaseAdapter {
     private List<Tx> transactions;
     private Address address;
 
-    public TransactionListAdapter(AddressDetailActivity activity,
-                                  List<Tx> transactions, Address address) {
+    public TransactionListAdapter(AddressDetailActivity activity,List<Tx> transactions, Address address) {
         this.activity = activity;
         this.transactions = transactions;
         this.address = address;
@@ -60,8 +59,7 @@ public class TransactionListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TransactionListItem view;
-        if (convertView == null
-                || !(convertView instanceof TransactionListItem)) {
+        if (convertView == null|| !(convertView instanceof TransactionListItem)) {
             convertView = new TransactionListItem(activity);
         }
         view = (TransactionListItem) convertView;

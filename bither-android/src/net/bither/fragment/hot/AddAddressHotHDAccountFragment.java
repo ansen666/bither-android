@@ -75,7 +75,7 @@ public class AddAddressHotHDAccountFragment extends Fragment implements AddHotAd
     private View.OnClickListener addClick = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
-            if (cbxXRandom.isChecked()) {
+            if (cbxXRandom.isChecked()) {//极随机
                 final Runnable run = new Runnable() {
                     @Override
                     public void run() {

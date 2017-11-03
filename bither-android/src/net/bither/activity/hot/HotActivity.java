@@ -129,7 +129,6 @@ public class HotActivity extends BaseFragmentActivity {
         unregisterReceiver(addressIsLoadedReceiver);
         super.onDestroy();
         BitherApplication.hotActivity = null;
-
     }
 
     @Override

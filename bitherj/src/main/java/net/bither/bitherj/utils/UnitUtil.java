@@ -22,7 +22,7 @@ package net.bither.bitherj.utils;
  * Created by songchenwen on 14-11-12.
  */
 public class UnitUtil {
-    public static enum BitcoinUnit {
+    public enum BitcoinUnit {
         BTC(100000000), bits(100);
 
         public long satoshis;

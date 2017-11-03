@@ -102,6 +102,7 @@ public abstract class PeerSocketHandler extends AbstractTimeoutHandler implement
             serializer.serialize(message, out);
             writeTarget.writeBytes(out.toByteArray());
         } catch (IOException e) {
+            e.printStackTrace();
             exceptionCaught(e);
         }
     }

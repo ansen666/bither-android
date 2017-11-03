@@ -3,18 +3,32 @@ package net.bither.bitherj.api.http;
 import net.bither.bitherj.AbstractApp;
 import net.bither.bitherj.api.ConnectHttps;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public abstract class BaseHttpsResponse<T> {
+
     private static boolean isTrust = false;
     protected T result;
     private String mUrl;
+    private Logger log=null;
 
+
+    public  BaseHttpsResponse(){
+        log=LoggerFactory.getLogger(BaseHttpResponse.class);
+    }
+
+    public void logInfo(String logMsg){
+        log.info(logMsg);
+    }
 
     public T getResult() {
+        logInfo(result.toString());
         return result;
     }
 
@@ -33,6 +47,7 @@ public abstract class BaseHttpsResponse<T> {
     }
 
     protected void setUrl(String url) {
+        logInfo(url);
         this.mUrl = url;
     }
 

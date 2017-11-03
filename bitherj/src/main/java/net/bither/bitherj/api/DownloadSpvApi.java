@@ -29,7 +29,7 @@ import org.json.JSONObject;
 
 public class DownloadSpvApi extends HttpGetResponse<Block> {
 
-    public DownloadSpvApi() {
+    public  DownloadSpvApi() {
         setUrl(BitherUrl.BITHER_GET_ONE_SPVBLOCK_API);
     }
 

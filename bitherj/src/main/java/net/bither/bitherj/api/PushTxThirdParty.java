@@ -63,6 +63,11 @@ public class PushTxThirdParty {
         pushToBlockExplorer(raw);
     }
 
+    public void pushTx_test(Tx tx) {
+        String rawTx = Utils.bytesToHexString(tx.bitcoinSerialize());
+        pushTo("https://testnet.blockexplorer.com/api/tx/send", "rawtx", rawTx, "BlockExplorer");
+    }
+
     private void pushToBlockChainInfo(String rawTx) {
         pushTo("https://blockchain.info/pushtx", "tx", rawTx, "blockchain.info");
     }

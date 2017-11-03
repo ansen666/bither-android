@@ -92,8 +92,12 @@ public class BitcoinSerializer {
      */
     public void serialize(String name, byte[] message, OutputStream out) throws IOException {
         byte[] header = new byte[4 + COMMAND_LEN + 4 + 4 /* checksum */];
-        uint32ToByteArrayBE(BitherjSettings.packetMagic, header, 0);
-
+        if(BitherjSettings.BITCOIN_TESTNET){
+            uint32ToByteArrayBE(BitherjSettings.packetMagic_test, header, 0);
+        }
+        else {
+            uint32ToByteArrayBE(BitherjSettings.packetMagic, header, 0);
+        }
         // The header array is initialized to zero by Java so we don't have to worry about
         // NULL terminating the string here.
         for (int i = 0; i < name.length() && i < COMMAND_LEN; i++) {
@@ -110,7 +114,6 @@ public class BitcoinSerializer {
         if (log.isDebugEnabled())
             log.debug("Sending {} message: {}", name, bytesToHexString(header) + bytesToHexString(message));
     }
-
     /**
      * Writes message to to the output stream.
      */
@@ -234,11 +237,15 @@ public class BitcoinSerializer {
 
     public void seekPastMagicBytes(ByteBuffer in) throws BufferUnderflowException {
         int magicCursor = 3;  // Which byte of the magic we're looking for currently.
+        long magic = BitherjSettings.packetMagic;
+        if(BitherjSettings.BITCOIN_TESTNET){
+            magic = BitherjSettings.packetMagic_test;
+        }
         while (true) {
             byte b = in.get();
             // We're looking for a run of bytes that is the same as the packet magic but we want to ignore partial
             // magics that aren't complete. So we keep track of where we're up to with magicCursor.
-            byte expectedByte = (byte) (0xFF & BitherjSettings.packetMagic >>> (magicCursor * 8));
+            byte expectedByte = (byte) (0xFF & magic >>> (magicCursor * 8));
             if (b == expectedByte) {
                 magicCursor--;
                 if (magicCursor < 0) {

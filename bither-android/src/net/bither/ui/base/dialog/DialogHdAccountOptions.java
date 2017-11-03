@@ -28,6 +28,9 @@ import net.bither.ui.base.DropdownMessage;
 import net.bither.ui.base.listener.IDialogPasswordListener;
 import net.bither.util.ThreadUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class DialogHdAccountOptions extends DialogWithActions {
     private HDAccount account;
     private boolean fromDetail;
     private Activity activity;
+    private Logger logger=LoggerFactory.getLogger(DialogHdAccountOptions.class);
+
 
     public DialogHdAccountOptions(Activity context, HDAccount account) {
         super(context);
@@ -48,18 +53,23 @@ public class DialogHdAccountOptions extends DialogWithActions {
 
     @Override
     protected List<Action> getActions() {
-        final ArrayList<Action> actions = new ArrayList<Action>();
+        final ArrayList<Action> actions = new ArrayList<>();
+
+        logger.info("ansen DialogHdAccountOptions getActions:"+actions.size()+" fromDetail:"+fromDetail);
+
         if (fromDetail) {
             actions.add(new Action(R.string.hd_account_request_new_receiving_address, new Runnable() {
                 @Override
                 public void run() {
-                    final DialogProgress dp = new DialogProgress(activity, R.string.please_wait);
+                    logger.info("ansen DialogHdAccountOptions 生成新地址");
+                    final DialogProgress dp = new DialogProgress(activity,R.string.please_wait);
                     dp.setCancelable(false);
                     dp.show();
                     new Thread() {
                         @Override
                         public void run() {
                             final boolean result = account.requestNewReceivingAddress();
+                            logger.info("ansen DialogHdAccountOptions 生成新地址结果:"+result);
                             ThreadUtil.runOnMainThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -67,6 +77,7 @@ public class DialogHdAccountOptions extends DialogWithActions {
                                     if (result) {
                                         ((HDAccountDetailActivity) activity).loadData();
                                     } else {
+                                        //生成失败, 您最多只能生成20个未使用的新地址.
                                         DropdownMessage.showDropdownMessage(activity, R.string.hd_account_request_new_receiving_address_failed);
                                     }
                                 }
@@ -75,6 +86,8 @@ public class DialogHdAccountOptions extends DialogWithActions {
                     }.start();
                 }
             }));
+
+            //旧地址列表
             actions.add(new Action(R.string.hd_account_old_addresses, new Runnable() {
                 @Override
                 public void run() {

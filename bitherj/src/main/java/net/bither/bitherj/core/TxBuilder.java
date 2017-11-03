@@ -45,7 +45,6 @@ public class TxBuilder {
     }
 
     public Tx buildTxFromAllAddress(List<Out> unspendOuts, String changeAddress, List<Long> amounts, List<String> addresses) throws TxBuilderException {
-
         long value = 0;
         for (long amount : amounts) {
             value += amount;
@@ -55,8 +54,7 @@ public class TxBuilder {
             throw new TxBuilderException.TxBuilderNotEnoughMoneyException(value - TxBuilder.getAmount(unspendOuts));
         }
 
-        Tx emptyWalletTx = emptyWallet.buildTx(changeAddress, unspendOuts, prepareTx(amounts,
-                addresses));
+        Tx emptyWalletTx = emptyWallet.buildTx(changeAddress, unspendOuts, prepareTx(amounts,addresses));
         if (emptyWalletTx != null && TxBuilder.estimationTxSize(emptyWalletTx.getIns().size(),
                 emptyWalletTx.getOuts().size()) <= BitherjSettings.MAX_TX_SIZE) {
             return emptyWalletTx;
@@ -70,7 +68,7 @@ public class TxBuilder {
             }
         }
 
-        boolean mayMaxTxSize = false;
+        boolean mayMaxTxSize = false;//交易是否达到极限
         List<Tx> txs = new ArrayList<Tx>();
         for (TxBuilderProtocol builder : this.txBuilders) {
             Tx tx = builder.buildTx(changeAddress, unspendOuts, prepareTx(amounts, addresses));
@@ -240,9 +238,9 @@ public class TxBuilder {
 }
 
 interface TxBuilderProtocol {
-    public Tx buildTx(Address address, String changeAddress, List<Tx> unspendTxs, Tx tx);
+    Tx buildTx(Address address, String changeAddress, List<Tx> unspendTxs, Tx tx);
 
-    public Tx buildTx(String changeAddress, List<Out> unspendOuts, Tx tx);
+    Tx buildTx(String changeAddress, List<Out> unspendOuts, Tx tx);
 }
 
 class TxBuilderEmptyWallet implements TxBuilderProtocol {

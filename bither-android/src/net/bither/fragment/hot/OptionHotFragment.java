@@ -432,6 +432,8 @@ public class OptionHotFragment extends Fragment implements Selectable,
             dialog.show();
         }
     };
+
+    //高级选项
     private OnClickListener advanceClick = new OnClickListener() {
         @Override
         public void onClick(View v) {

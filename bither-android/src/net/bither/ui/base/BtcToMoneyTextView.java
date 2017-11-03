@@ -29,8 +29,7 @@ import net.bither.util.UIUtil;
 
 import java.math.BigInteger;
 
-public class BtcToMoneyTextView extends TextView implements
-		MarketTickerChangedObserver {
+public class BtcToMoneyTextView extends TextView implements MarketTickerChangedObserver {
 	private double price = 0;
 	private BigInteger btc;
 
